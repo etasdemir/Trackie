@@ -1,0 +1,37 @@
+// prettier-ignore
+{
+    "extends": "@tsconfig/react-native/tsconfig.json", /* Recommended React Native TSConfig base */
+    "compilerOptions": {
+        "skipLibCheck": true, /* Skip type checking all .d.ts files. */
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "jsx": "react-native",
+        "lib": [
+            "es2017"
+        ],
+        "moduleResolution": "node",
+        "noEmit": true,
+        "strict": true,
+        "target": "esnext",
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictNullChecks": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "strictFunctionTypes": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+    },
+    "exclude": [
+        "node_modules",
+        "babel.config.js",
+        "metro.config.js",
+        "jest.config.js"
+    ]
+}
