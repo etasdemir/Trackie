@@ -1,11 +1,9 @@
 import React from 'react';
-import {Text} from 'react-native';
-import styled from 'styled-components';
+
+import Home from 'src/screens/home';
 
 function App() {
-  return <Temp>HELLO</Temp>;
+  return <Home />;
 }
-
-const Temp = styled(Text)``;
 
 export default App;

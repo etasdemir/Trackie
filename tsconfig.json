@@ -5,6 +5,15 @@
         "skipLibCheck": true, /* Skip type checking all .d.ts files. */
         "strict": true,
         "target": "esnext",
+        "baseUrl": ".",
+        "paths": {
+            "src": [
+                "src/*"
+            ],
+            "tests": [
+                "tests/*"
+            ],
+        },
         "noImplicitAny": true,
         "noImplicitOverride": true,
         "noImplicitReturns": true,
