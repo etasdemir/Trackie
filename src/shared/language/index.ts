@@ -4,7 +4,7 @@ class Language {
   language = 'en';
 
   getText(key: string, ...params: String[]): String {
-    const text = resolveLanguage(this.language, key);
+    const text = resolveLanguage(this.getLanguage(), key);
     if (text instanceof Function) {
       if (params && params.length > 0) {
         return text(params);
@@ -17,6 +17,10 @@ class Language {
     } else {
       return text;
     }
+  }
+
+  getLanguage() {
+    return this.language;
   }
 
   setLanguage(newLang: string) {
