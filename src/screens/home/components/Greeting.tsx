@@ -51,7 +51,9 @@ function Greeting(props: Props) {
           <UnfinishedMangaView onPress={onUnfinishedMangaClick}>
             <MangaCoverImage url={img} />
             <MangaInnerContainer>
-              <MangaNameText numberOfLines={1}>{title}</MangaNameText>
+              <MangaNameText color={theme.onView} numberOfLines={1}>
+                {title}
+              </MangaNameText>
               <ProgressBarContainer>
                 <ProgressBar
                   targetProgress={progress}
@@ -72,11 +74,11 @@ function Greeting(props: Props) {
 }
 
 const Container = styled.View`
-  height: 380px;
+  height: 370px;
 `;
 
 const GreetingContainer = styled.View<ColorProps>`
-  height: 40%;
+  height: 50%;
   background-color: ${({color}) => color};
   align-items: center;
   border-radius: 40px;
@@ -129,8 +131,9 @@ const MangaInnerContainer = styled.View`
   margin-left: 15px;
 `;
 
-const MangaNameText = styled.Text`
+const MangaNameText = styled.Text<ColorProps>`
   font-size: 16px;
+  color: ${({color}) => color};
 `;
 
 const ProgressBarContainer = styled.View`
