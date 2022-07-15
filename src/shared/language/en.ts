@@ -9,7 +9,8 @@ export const en: StringToLang = {
   view_all: 'View All',
   currently_reading: 'Currently Reading',
   favourite_list: 'Favourites',
-  reviews: (count: number) => `${count} reviews`,
+  reviews: (params: string[]) =>
+    `${parseFloat(params[0]).toFixed(1)} / ${params[1]} reviews`,
 
   // Onboarding
   onboarding_title_part1: 'Find Your Next',
@@ -18,8 +19,8 @@ export const en: StringToLang = {
 
   // Home
   greeting: 'Hello, which manga suits your current mood?',
-  home_unfinished_manga: (date: String) =>
-    `Remember, you have an unfinished manga since ${date}`,
+  home_unfinished_manga: (params: string[]) =>
+    `Remember, you have an unfinished manga since ${params[0]}`,
 
   // Search
   search_place_holder: 'Search manga, characters, or authors',

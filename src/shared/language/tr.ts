@@ -9,7 +9,8 @@ export const tr: StringToLang = {
   view_all: 'Hepsini Gör',
   currently_reading: 'Şu An Okunanlar',
   favourite_list: 'Favoriler',
-  reviews: (count: number) => `${count} değerlendirme`,
+  reviews: (params: string[]) =>
+    `${parseFloat(params[0]).toFixed(1)} / ${params[1]} değerlendirme`,
 
   // Onboarding
   onboarding_title_part1: 'Sıradaki Harika',
