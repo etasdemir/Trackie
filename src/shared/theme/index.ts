@@ -1,15 +1,17 @@
 const themeJson: ITheme = require('./theme.json');
 
 interface ITheme {
-  [theme: string]: {
-    background: string;
-    surface: string;
-    primary: string;
-    primaryDark: string;
-    primaryLight: string;
-    onView: string;
-    onViewFaint: string;
-  };
+  [theme: string]: ThemeInterface;
+}
+
+export interface ThemeInterface {
+  background: string;
+  surface: string;
+  primary: string;
+  primaryDark: string;
+  primaryLight: string;
+  onView: string;
+  onViewFaint: string;
 }
 
 class ThemeStore {

@@ -42,6 +42,8 @@ const data = {
 
 // TODO getMangaGenres and persist.
 // TODO I dropped reading this manga option
+// TODO in Currently Reading, Category screens: add progress bar under the score component.
+// TODO Theme and language can be hook?
 
 function App() {
   return <Home />;
