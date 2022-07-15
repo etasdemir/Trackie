@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text} from 'react-native';
 import styled from 'styled-components';
 
 import {CoverManga, Genre, UnfinishedManga} from 'src/shared/Types';
@@ -20,9 +20,7 @@ function Home(props: Props) {
 
   return (
     <HomeContainer>
-      <View style={{height: 400}}>
-        <Greeting />
-      </View>
+      <Greeting unfinishedManga={unfinishedManga} />
       <Text>ASKDASKDAKSDK</Text>
     </HomeContainer>
   );

@@ -19,7 +19,7 @@ export interface CategoryManga extends CoverManga {
   synopsis: string;
 }
 
-export interface UnfinishedManga extends CategoryManga {
+export interface UnfinishedManga extends CoverManga {
   currentChapter: number;
   totalChapter: number;
   lastReadingDate: string;
