@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FlatList} from 'react-native';
 
 import {CategoryManga, Genre} from 'src/shared/Types';
 import TopBar from 'src/components/TopBar';
-import VerticalMangaItem from 'src/components/VerticalMangaItem';
+import VerticalMangaList from 'src/components/VerticalMangaList';
 
 export interface CategoryProps {
   genre: Genre;
@@ -21,13 +20,7 @@ function Category(props: CategoryProps) {
   return (
     <Container>
       <TopBar title={genre.name} onBackPress={onBackPress} />
-      <FlatList
-        data={categoryMangaList}
-        renderItem={({item}) => (
-          <VerticalMangaItem key={item.id} categoryManga={item} />
-        )}
-        showsVerticalScrollIndicator={false}
-      />
+      <VerticalMangaList categoryMangaList={categoryMangaList} />
     </Container>
   );
 }

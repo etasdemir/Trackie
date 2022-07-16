@@ -3,7 +3,7 @@ import {resolveLanguage} from './languageResolver';
 class Language {
   language = 'en';
 
-  getText(key: string, ...params: String[]): String {
+  getText(key: string, ...params: String[]): string {
     const text = resolveLanguage(this.getLanguage(), key);
     if (text instanceof Function) {
       if (params && params.length > 0) {
@@ -15,7 +15,7 @@ class Language {
         return 'Error';
       }
     } else {
-      return text;
+      return text.toString();
     }
   }
 
