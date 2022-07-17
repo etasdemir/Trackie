@@ -8,6 +8,7 @@ import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import SocialMediaIcon, {SocialMedia} from './components/SocialMediaIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
+import FavouriteIcon from 'src/components/FavouriteIcon';
 
 export interface AuthorDetailProps {
   author: AuthorDetail;
@@ -21,16 +22,24 @@ function AuthorDetailScreen(props: AuthorDetailProps) {
     height: 400,
     width: 250,
   };
+
   const onBackPress = () => {
     console.log('author detail screen back press');
   };
+
+  const onFavouriteClick = () => {};
 
   return (
     <Container>
       <HeaderContainer>
         <BackgroundView color={theme.primary} />
         <Header color={theme.primaryLight}>
-          <TopBar onBackPress={onBackPress} />
+          <TopBar
+            onBackPress={onBackPress}
+            RightElement={
+              <FavouriteIcon onPress={onFavouriteClick} color={theme.primary} />
+            }
+          />
           <AuthorImage resizeMode="cover" source={imageSource} />
           <AuthorName color={theme.onView}>{author.name}</AuthorName>
           <HeaderSubText color={theme.onViewFaint}>

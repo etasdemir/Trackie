@@ -7,15 +7,25 @@ import theme from 'src/shared/theme';
 export interface TopBarProps {
   title?: string;
   onBackPress: () => void;
+  RightElement?: JSX.Element;
 }
 
 function TopBar(props: TopBarProps) {
-  const {title, onBackPress} = props;
+  const {title, onBackPress, RightElement} = props;
 
   return (
     <Container>
       <BackButton color={theme.onView} onPress={onBackPress} />
-      {title ? <Title color={theme.onView}>{title}</Title> : null}
+      {title ? (
+        <Title numberOfLines={1} color={theme.onView}>
+          {title}
+        </Title>
+      ) : null}
+      {RightElement ? (
+        <RightElementContainer>
+          {RightElement as JSX.Element}
+        </RightElementContainer>
+      ) : null}
     </Container>
   );
 }
@@ -37,6 +47,13 @@ const BackButton = styled.TouchableOpacity<ColorProps>`
   position: absolute;
   left: 40px;
   background-color: ${({color}) => color};
+  width: 30px;
+  height: 30px;
+`;
+
+const RightElementContainer = styled.View`
+  position: absolute;
+  right: 40px;
   width: 30px;
   height: 30px;
 `;

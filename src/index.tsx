@@ -41,7 +41,9 @@ function App() {
   );
   const ProfileComponent = <Profile stats={stats.stats} />;
 
-  return <AuthorDetailScreen author={author} />;
+  const AuthorDetailComponent = <AuthorDetailScreen author={author} />;
+
+  return AuthorDetailComponent;
 }
 
 export default App;
