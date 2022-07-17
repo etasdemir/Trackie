@@ -12,6 +12,8 @@ import Profile from 'src/screens/profile';
 import {stats} from 'src/assets/ProfileComponentData';
 import AuthorDetailScreen from 'src/screens/author_detail';
 import {author} from 'src/assets/AuthorDetailComponent';
+import MangaDetailScreen from 'src/screens/manga_detail';
+import {mangaDetail} from 'src/assets/MangaDetail';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
@@ -43,7 +45,9 @@ function App() {
 
   const AuthorDetailComponent = <AuthorDetailScreen author={author} />;
 
-  return AuthorDetailComponent;
+  const MangaDetailComponent = <MangaDetailScreen manga={mangaDetail} />;
+
+  return MangaDetailComponent;
 }
 
 export default App;

@@ -8,13 +8,14 @@ export interface TopBarProps {
   title?: string;
   onBackPress: () => void;
   RightElement?: JSX.Element;
+  backgroundColor?: string;
 }
 
 function TopBar(props: TopBarProps) {
-  const {title, onBackPress, RightElement} = props;
+  const {title, onBackPress, RightElement, backgroundColor} = props;
 
   return (
-    <Container>
+    <Container color={backgroundColor ?? 'transparent'}>
       <BackButton color={theme.onView} onPress={onBackPress} />
       {title ? (
         <Title numberOfLines={1} color={theme.onView}>
@@ -30,7 +31,8 @@ function TopBar(props: TopBarProps) {
   );
 }
 
-const Container = styled.View`
+const Container = styled.View<ColorProps>`
+  background-color: ${({color}) => color};
   flex-direction: row;
   width: 100%;
   align-items: center;
