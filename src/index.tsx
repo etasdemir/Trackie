@@ -10,6 +10,8 @@ import Bookmark from 'src/screens/bookmark';
 import {bookmarkData} from 'src/assets/BookmarkComponentData';
 import Profile from 'src/screens/profile';
 import {stats} from 'src/assets/ProfileComponentData';
+import AuthorDetailScreen from 'src/screens/author_detail';
+import {author} from 'src/assets/AuthorDetailComponent';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
@@ -37,8 +39,9 @@ function App() {
       favoriteAuthors={bookmarkData.favoriteAuthors}
     />
   );
+  const ProfileComponent = <Profile stats={stats.stats} />;
 
-  return <Profile stats={stats.stats} />;
+  return <AuthorDetailScreen author={author} />;
 }
 
 export default App;
