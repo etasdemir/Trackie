@@ -8,6 +8,8 @@ import Search from 'src/screens/search';
 import {Recents, mostPopularMangaList} from 'src/assets/SearchComponentData';
 import Bookmark from 'src/screens/bookmark';
 import {bookmarkData} from 'src/assets/BookmarkComponentData';
+import Profile from 'src/screens/profile';
+import {stats} from 'src/assets/ProfileComponentData';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
@@ -15,6 +17,7 @@ import {bookmarkData} from 'src/assets/BookmarkComponentData';
 // TODO in Currently Reading, Category screens: add progress bar under the score component.
 // TODO Theme and language can be hook?
 // TODO Pagination for flatlists
+// TODO Icons
 
 function App() {
   const HomeComponent = (
@@ -35,7 +38,7 @@ function App() {
     />
   );
 
-  return BookmarkComponent;
+  return <Profile stats={stats.stats} />;
 }
 
 export default App;
