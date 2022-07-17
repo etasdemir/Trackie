@@ -55,9 +55,16 @@ export interface Author {
 }
 
 export interface AuthorDetail extends Author {
+  img: string;
   bio: string;
   birthPlace: string;
   birthDate: string;
   works: Array<CoverManga>;
-  socialMediaAccounts: never;
+  socialMediaAccounts: {
+    facebook?: string;
+    twitter?: string;
+    tumblr?: string;
+    instagram?: string;
+    website?: string;
+  };
 }

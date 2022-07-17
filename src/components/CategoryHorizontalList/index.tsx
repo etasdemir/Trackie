@@ -2,21 +2,19 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 
-import {ColorProps, CoverManga, Genre, UnfinishedManga} from 'src/shared/Types';
+import {ColorProps, Genre} from 'src/shared/Types';
 import theme from 'src/shared/theme';
 import ViewAllButton from 'src/components/ViewAllButton';
 import language from 'src/shared/language';
-import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
-
-type ItemType = CoverManga | UnfinishedManga;
+import {ItemType, resolveComponent} from './resolveComponent';
 
 interface Props {
   genre: Genre;
-  mangaList: Array<ItemType>;
+  items: ItemType[];
 }
 
 function CategoryHorizontalList(props: Props) {
-  const {genre, mangaList} = props;
+  const {genre, items} = props;
 
   const onCategoryViewAllPress = () => {
     console.log('navigate to category screen with id:', genre.id);
@@ -33,10 +31,8 @@ function CategoryHorizontalList(props: Props) {
       </CategoryHeader>
       <MangaFlatList
         showsHorizontalScrollIndicator={false}
-        data={mangaList}
-        renderItem={({item, index}) => (
-          <HorizontalMangaItem key={`${item.id}+${index}`} manga={item} />
-        )}
+        data={items}
+        renderItem={({item}) => resolveComponent(item)}
         horizontal={true}
       />
     </Container>

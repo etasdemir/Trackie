@@ -27,7 +27,7 @@ function Home(props: HomeProps) {
           <CategoryHorizontalList
             key={item.genre.id}
             genre={item.genre}
-            mangaList={item.mangaList}
+            items={item.mangaList}
           />
         )}
       />

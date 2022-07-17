@@ -6,6 +6,8 @@ import Category from 'src/screens/category';
 import {categoryMangaList, genre} from 'src/assets/CategoryComponentData';
 import Search from 'src/screens/search';
 import {Recents, mostPopularMangaList} from 'src/assets/SearchComponentData';
+import Bookmark from 'src/screens/bookmark';
+import {bookmarkData} from 'src/assets/BookmarkComponentData';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
@@ -24,8 +26,16 @@ function App() {
   const SearchComponent = (
     <Search recents={Recents} mostPopularMangaList={mostPopularMangaList} />
   );
+  const BookmarkComponent = (
+    <Bookmark
+      currentlyReadings={bookmarkData.currentlyReadings}
+      favourites={bookmarkData.favourites}
+      recentlyRead={bookmarkData.recentlyRead}
+      favoriteAuthors={bookmarkData.favoriteAuthors}
+    />
+  );
 
-  return null;
+  return BookmarkComponent;
 }
 
 export default App;

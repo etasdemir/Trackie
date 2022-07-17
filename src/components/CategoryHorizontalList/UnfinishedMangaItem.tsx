@@ -1,23 +1,24 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import {ColorProps, CoverManga} from 'src/shared/Types';
+import {ColorProps, UnfinishedManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import theme from 'src/shared/theme';
+import ProgressBar from 'src/components/ProgressBar';
 
-export interface HorizontalMangaItemProps {
-  manga: CoverManga;
+export interface UnfinishedMangaItemProps {
+  manga: UnfinishedManga;
 }
 
-function HorizontalMangaItem(props: HorizontalMangaItemProps) {
+function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
   const {
-    manga: {
-      id,
-      img,
-      title,
-      author: {name},
-    },
+    manga: {id, img, title, currentChapter, totalChapter},
   } = props;
+  const progress = parseInt(
+    ((currentChapter / totalChapter) * 100).toFixed(0),
+    10,
+  );
+  console.log('progress', progress);
 
   const onMangaPress = () => {
     console.log('navigate to manga detail with id:', id);
@@ -30,16 +31,23 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
         {title}
       </Name>
       <Name numberOfLines={1} color={theme.onViewFaint}>
-        {name}
+        {`${currentChapter}/${totalChapter}`}
       </Name>
+      <ProgressBar
+        targetProgress={progress}
+        style={{
+          outerColor: theme.primaryDark,
+          progressColor: theme.primary,
+        }}
+      />
     </Container>
   );
 }
 
 const Container = styled.TouchableOpacity`
-  padding: 0 4px;
   width: 120px;
   margin: 4px;
+  padding: 0 4px;
 `;
 
 const Name = styled.Text<ColorProps>`
@@ -47,4 +55,4 @@ const Name = styled.Text<ColorProps>`
   color: ${({color}) => color};
 `;
 
-export default HorizontalMangaItem;
+export default UnfinishedMangaItem;
