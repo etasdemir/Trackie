@@ -16,6 +16,7 @@ import MangaDetailScreen from 'src/screens/manga_detail';
 import {mangaDetail} from 'src/assets/MangaDetailData';
 import CharacterDetailScreen from 'src/screens/character_detail';
 import {character} from 'src/assets/CharacterDetailData';
+import Onboarding from 'src/screens/onboarding';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
@@ -53,7 +54,9 @@ function App() {
     <CharacterDetailScreen character={character} />
   );
 
-  return CharacterDetailComponent;
+  const OnboardingComponent = <Onboarding />;
+
+  return OnboardingComponent;
 }
 
 export default App;
