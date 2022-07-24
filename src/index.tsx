@@ -18,6 +18,9 @@ import CharacterDetailScreen from 'src/screens/character_detail';
 import {character} from 'src/assets/CharacterDetailData';
 import Onboarding from 'src/screens/onboarding';
 
+import CategoryService from 'src/api/remote/service/CategoryService';
+import PeopleService from 'src/api/remote/service/PeopleService';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
 // TODO I dropped reading this manga option
@@ -25,6 +28,7 @@ import Onboarding from 'src/screens/onboarding';
 // TODO Theme and language can be hook?
 // TODO Pagination for flatlists
 // TODO Icons
+// TODO Search active screen
 
 function App() {
   const HomeComponent = (
@@ -55,6 +59,20 @@ function App() {
   );
 
   const OnboardingComponent = <Onboarding />;
+
+  CategoryService.getGenres().then(items => {
+    console.log(items);
+  });
+  PeopleService.getAuthorById(1883).then(authorDetail => {
+    console.log('====================================');
+    console.log('authorDetail: \n', authorDetail);
+    console.log('====================================');
+  });
+  PeopleService.getCharacterById(991).then(characterDetail => {
+    console.log('====================================');
+    console.log('characterDetail: \n', characterDetail);
+    console.log('====================================');
+  });
 
   return OnboardingComponent;
 }

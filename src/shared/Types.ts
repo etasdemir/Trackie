@@ -36,6 +36,7 @@ export interface MangaDetail extends CategoryManga {
 export interface Genre {
   id: number;
   name: string;
+  count: number;
 }
 
 export interface Character {
@@ -57,7 +58,7 @@ export interface Author {
 export interface AuthorDetail extends Author {
   img: string;
   bio: string;
-  birthPlace: string;
+  birthPlace?: string;
   birthDate: string;
   works: Array<CoverManga>;
   socialMediaAccounts: {
@@ -65,6 +66,7 @@ export interface AuthorDetail extends Author {
     twitter?: string;
     tumblr?: string;
     instagram?: string;
+    tiktok?: string;
     website?: string;
   };
 }

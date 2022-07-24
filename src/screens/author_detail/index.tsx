@@ -42,9 +42,11 @@ function AuthorDetailScreen(props: AuthorDetailProps) {
           />
           <AuthorImage resizeMode="cover" source={imageSource} />
           <AuthorName color={theme.onView}>{author.name}</AuthorName>
-          <HeaderSubText color={theme.onViewFaint}>
-            {author.birthPlace}
-          </HeaderSubText>
+          {author.birthPlace && (
+            <HeaderSubText color={theme.onViewFaint}>
+              {author.birthPlace}
+            </HeaderSubText>
+          )}
           <HeaderSubText color={theme.onViewFaint}>
             {author.birthDate}
           </HeaderSubText>
