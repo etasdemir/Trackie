@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 
 import {withAppStore} from 'src/redux/AppStore';
 import Home from 'src/screens/home';
@@ -29,6 +30,7 @@ import Onboarding from 'src/screens/onboarding';
 // TODO Search active screen
 // TODO unnecessary renders and network calls check
 // TODO Add repository, it would do necessary updates, cache, and decide retrieve from local or remote. Do not use Service classses directly.
+// TODO currently there is only manga search.
 
 function App() {
   const HomeComponent = (
@@ -60,7 +62,7 @@ function App() {
 
   const OnboardingComponent = <Onboarding />;
 
-  return OnboardingComponent;
+  return <NavigationContainer>{OnboardingComponent}</NavigationContainer>;
 }
 
 export default withAppStore(App);
