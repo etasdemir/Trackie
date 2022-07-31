@@ -12,6 +12,7 @@ class RequestGateway {
   async get<T>(endpoint: string): Promise<SuccessResponse<T> | ErrorResponse> {
     try {
       await this.processRequest();
+      console.log('Network request to', endpoint);
       const response = await fetch(this.rootUrl + endpoint);
       const result = await response.json();
       if (result.type && result.message) {

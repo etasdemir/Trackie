@@ -3,6 +3,7 @@ import {CategoryManga} from 'src/shared/Types';
 export const genre = {
   id: 1,
   name: 'Action',
+  count: 153,
 };
 
 export const categoryMangaList: CategoryManga[] = [

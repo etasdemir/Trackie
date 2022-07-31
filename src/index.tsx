@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {withAppStore} from 'src/redux/AppStore';
 import Home from 'src/screens/home';
 import {unfinishedManga, homeCategories} from 'src/assets/HomeComponentData';
 import Category from 'src/screens/category';
@@ -18,9 +19,6 @@ import CharacterDetailScreen from 'src/screens/character_detail';
 import {character} from 'src/assets/CharacterDetailData';
 import Onboarding from 'src/screens/onboarding';
 
-import CategoryService from 'src/api/remote/service/CategoryService';
-import PeopleService from 'src/api/remote/service/PeopleService';
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // TODO getMangaGenres and persist.
 // TODO I dropped reading this manga option
@@ -29,6 +27,8 @@ import PeopleService from 'src/api/remote/service/PeopleService';
 // TODO Pagination for flatlists
 // TODO Icons
 // TODO Search active screen
+// TODO unnecessary renders and network calls check
+// TODO Add repository, it would do necessary updates, cache, and decide retrieve from local or remote. Do not use Service classses directly.
 
 function App() {
   const HomeComponent = (
@@ -60,21 +60,7 @@ function App() {
 
   const OnboardingComponent = <Onboarding />;
 
-  CategoryService.getGenres().then(items => {
-    console.log(items);
-  });
-  PeopleService.getAuthorById(1883).then(authorDetail => {
-    console.log('====================================');
-    console.log('authorDetail: \n', authorDetail);
-    console.log('====================================');
-  });
-  PeopleService.getCharacterById(991).then(characterDetail => {
-    console.log('====================================');
-    console.log('characterDetail: \n', characterDetail);
-    console.log('====================================');
-  });
-
   return OnboardingComponent;
 }
 
-export default App;
+export default withAppStore(App);
