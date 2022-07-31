@@ -14,7 +14,7 @@ function Onboarding() {
 
   const onOnboardImageClick = () => {
     console.log('navigate to home screen');
-    // appDispatcher(getGenresThunk());
+    appDispatcher(getGenresThunk());
     appDispatcher(categoryMangasThunk(73, 1));
     appDispatcher(categoryMangasThunk(73, 1));
     appDispatcher(categoryMangasThunk(73, 1));

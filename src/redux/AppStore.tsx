@@ -3,14 +3,16 @@ import {configureStore} from '@reduxjs/toolkit';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 
 import {categoryReducer} from './reducers/CategoryReducers';
-// import {testReducer} from './reducers/MangaReducers';
-// import {testReducer} from './reducers/PeopleReducers';
+import {mangaReducer} from './reducers/MangaReducers';
+import {peopleReducer} from './reducers/PeopleReducers';
 
 // TODO Logger middleware
 
 const store = configureStore({
   reducer: {
     category: categoryReducer,
+    mangas: mangaReducer,
+    people: peopleReducer,
   },
 });
 

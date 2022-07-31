@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {CategoryState} from '../Types';
+import {CategoryState} from '../ReduxTypes';
 import {
   getGenresAction,
   mostPopularMangasAction,

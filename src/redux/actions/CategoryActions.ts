@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import CategoryService from 'src/api/remote/service/CategoryService';
 import {AppDispatch} from '../AppStore';
-import {CategoryState} from '../Types';
+import {CategoryState} from '../ReduxTypes';
 
 function withPayloadType<T>() {
   return (t: T) => ({payload: t});
