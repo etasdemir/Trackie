@@ -12,6 +12,7 @@ class CategoryService {
       const genres: Genre[] = response.result.data.map(item =>
         genreModelToGenre(item),
       );
+      genres.sort((a, b) => b.count - a.count);
       return genres;
     }
   }

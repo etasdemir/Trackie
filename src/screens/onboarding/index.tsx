@@ -2,12 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import {useAppDispatch, useAppState} from 'src/redux/AppStore';
-import {
-  getGenresThunk,
-  categoryMangasThunk,
-} from 'src/redux/actions/CategoryActions';
+import {getGenresThunk} from 'src/redux/actions/CategoryActions';
+import {OnboardingScreenProp} from 'src/navigation/types';
 
-function Onboarding() {
+function Onboarding({navigation}: OnboardingScreenProp) {
   const state = useAppState().category;
   console.log('Onboarding rendered', state);
   const appDispatcher = useAppDispatch();
@@ -15,11 +13,9 @@ function Onboarding() {
   const onOnboardImageClick = () => {
     console.log('navigate to home screen');
     appDispatcher(getGenresThunk());
-    appDispatcher(categoryMangasThunk(73, 1));
-    appDispatcher(categoryMangasThunk(73, 1));
-    appDispatcher(categoryMangasThunk(73, 1));
-    appDispatcher(categoryMangasThunk(73, 1));
-    appDispatcher(categoryMangasThunk(73, 1));
+    navigation.navigate('bottom_bar', {
+      screen: 'bottom_bar_home',
+    });
   };
 
   return (

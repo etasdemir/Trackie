@@ -7,14 +7,15 @@ import VerticalMangaList from 'src/components/VerticalMangaList';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
 import theme from 'src/shared/theme';
 import language from 'src/shared/language';
+import {SearchScreenProp} from 'src/navigation/types';
 
-export interface SearchProps {
+export interface SearchProps extends SearchScreenProp {
   mostPopularMangaList: CategoryManga[];
   recents: SearchRecentProps['recents'];
 }
 
-function Search(props: SearchProps) {
-  const {mostPopularMangaList, recents} = props;
+function Search(props: SearchScreenProp) {
+  const {navigation} = props;
   let setSearchRecentVisibility: (isVisible: boolean) => void | undefined;
 
   const onScrollTop = () => {

@@ -5,8 +5,9 @@ import styled from 'styled-components/native';
 import {CoverManga, Genre, UnfinishedManga} from 'src/shared/Types';
 import Greeting from './components/Greeting';
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
+import {HomeScreenProp} from 'src/navigation/types';
 
-export interface HomeProps {
+export interface HomeProps extends HomeScreenProp {
   unfinishedManga: UnfinishedManga;
   categories: {
     genre: Genre;
@@ -14,8 +15,11 @@ export interface HomeProps {
   }[];
 }
 
-function Home(props: HomeProps) {
-  const {unfinishedManga, categories} = props;
+function Home(props: HomeScreenProp) {
+  // const {unfinishedManga, categories} = props;
+  const {navigation} = props;
+
+  return null;
 
   return (
     <HomeContainer>
