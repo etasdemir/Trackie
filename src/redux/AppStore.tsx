@@ -1,12 +1,25 @@
 import React from 'react';
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider, useDispatch} from 'react-redux';
+import {createLogger} from 'redux-logger';
 
 import {categoryReducer} from './reducers/CategoryReducers';
 import {mangaReducer} from './reducers/MangaReducers';
 import {peopleReducer} from './reducers/PeopleReducers';
 
-// TODO Logger middleware
+const logger = createLogger({
+  level: {
+    prevState: false,
+    nextState: false,
+  },
+  colors: {
+    title: () => 'inherit',
+    prevState: () => '#9E9E9E',
+    action: () => '#03A9F4',
+    nextState: () => '#4CAF50',
+    error: () => '#F20404',
+  },
+});
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +27,7 @@ export const store = configureStore({
     mangas: mangaReducer,
     people: peopleReducer,
   },
+  middleware: defaultMiddleware => defaultMiddleware().concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
