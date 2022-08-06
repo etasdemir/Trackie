@@ -1,4 +1,4 @@
-export const REQUEST_LIMIT_PER_SEC = 3;
+export const REQUEST_LIMIT_PER_SEC = 1;
 
 export interface SuccessResponse<T> {
   readonly result: T;

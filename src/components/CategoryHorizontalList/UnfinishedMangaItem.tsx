@@ -18,7 +18,6 @@ function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
     ((currentChapter / totalChapter) * 100).toFixed(0),
     10,
   );
-  console.log('progress', progress);
 
   const onMangaPress = () => {
     console.log('navigate to manga detail with id:', id);

@@ -5,7 +5,9 @@ import {genreModelToGenre, mangaModelToMangaDetail} from '../Mappers';
 
 class CategoryService {
   async getGenres(): Promise<Genre[]> {
-    const response = await RequestGateway.get<GenresResponse>('/genres/manga');
+    const response = await RequestGateway.get<GenresResponse>(
+      '/genres/manga?filter=genres',
+    );
     if (isError(response)) {
       return [];
     } else {

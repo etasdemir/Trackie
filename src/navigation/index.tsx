@@ -19,7 +19,11 @@ const BottomBar = createBottomTabNavigator<BottomBarParamList>();
 
 function BottomBarTab() {
   return (
-    <BottomBar.Navigator initialRouteName="bottom_bar_home">
+    <BottomBar.Navigator
+      initialRouteName="bottom_bar_home"
+      screenOptions={() => ({
+        headerShown: false,
+      })}>
       <BottomBar.Screen
         name="bottom_bar_home"
         component={Home}

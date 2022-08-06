@@ -12,7 +12,7 @@ import AppNavigation from 'src/navigation';
 // TODO Icons
 // TODO Search active screen
 // TODO unnecessary renders and network calls check
-// TODO Add repository, it would do necessary updates, cache, and decide retrieve from local or remote. Do not use Service classses directly.
+// TODO Add repository, it would do necessary updates, cache, and decide retrieve from local or remote. Do not use Service classses directly. isFetched[genre.id] eğer bir item fetching haldeyse tekrar çağrıldığında bir şey yapmamalı ve bu kod repositoryde olmalı.
 // TODO currently there is only manga search.
 
 function App() {

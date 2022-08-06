@@ -16,7 +16,11 @@ const initialState: CategoryState = {
 
 export const categoryReducer = createReducer(initialState, builder => {
   builder.addCase(getGenresAction, (state, action) => {
+    if (state.genres.length !== 0) {
+      return state;
+    }
     state.genres = action.payload;
+    return state;
   });
   builder.addCase(topMangasAction, (state, action) => {
     state.topMangas = action.payload;
@@ -26,8 +30,6 @@ export const categoryReducer = createReducer(initialState, builder => {
   });
   builder.addCase(categoryMangasAction, (state, action) => {
     const {id, value} = action.payload;
-    if (!state.categoryToMangaList[id]) {
-      state.categoryToMangaList[id] = value;
-    }
+    state.categoryToMangaList[id] = value;
   });
 });

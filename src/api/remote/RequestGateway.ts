@@ -58,7 +58,7 @@ class RequestGateway {
         ? this.requestTimeQueue[index - REQUEST_LIMIT_PER_SEC]
         : undefined;
     if (prevElement === getSec()) {
-      await this.delay(index * 1250);
+      await this.delay(index * 1000);
       this.requestTimeQueue[index] = getSec();
       await this.checkSecLimit(index);
     }

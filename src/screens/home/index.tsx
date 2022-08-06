@@ -1,46 +1,49 @@
 import React from 'react';
-import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
-import {CoverManga, Genre, UnfinishedManga} from 'src/shared/Types';
-import Greeting from './components/Greeting';
-import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
-import {HomeScreenProp} from 'src/navigation/types';
+import {RootState, useAppDispatch} from 'src/redux/AppStore';
+import {getGenresThunk} from 'src/redux/actions/CategoryActions';
+import MangaList from './components/MangaList';
 
-export interface HomeProps extends HomeScreenProp {
-  unfinishedManga: UnfinishedManga;
-  categories: {
-    genre: Genre;
-    mangaList: CoverManga[];
-  }[];
-}
+// Delete later
+const unfinishedManga = {
+  id: 15,
+  currentChapter: 191,
+  totalChapter: 355,
+  lastReadingDate: 'July 30, 2022',
+  img: 'https://cdn.myanimelist.net/images/manga/2/253146l.jpg',
+  title: 'Mahou Sensei Negima! Mahou Sensei Negima!',
+  author: {
+    id: 1883,
+    name: 'Akamatsu, Ken',
+  },
+};
 
-function Home(props: HomeScreenProp) {
-  // const {unfinishedManga, categories} = props;
-  const {navigation} = props;
+function Home() {
+  console.log('home rendered');
 
-  return null;
-
-  return (
-    <HomeContainer>
-      <FlatList
-        ListHeaderComponent={<Greeting unfinishedManga={unfinishedManga} />}
-        showsVerticalScrollIndicator={false}
-        data={categories}
-        renderItem={({item}) => (
-          <CategoryHorizontalList
-            key={item.genre.id}
-            genre={item.genre}
-            items={item.mangaList}
-          />
-        )}
-      />
-    </HomeContainer>
+  const allGenres = useSelector(
+    (state: RootState) => state.category.genres,
+    (a, b) => a.length === b.length,
   );
+  const appDispatcher = useAppDispatch();
+
+  if (allGenres.length === 0) {
+    appDispatcher(getGenresThunk());
+    // TODO Show loading skeleton
+    return null;
+  } else {
+    return (
+      <HomeContainer>
+        <MangaList allGenres={allGenres} unfinishedManga={unfinishedManga} />
+      </HomeContainer>
+    );
+  }
 }
 
 const HomeContainer = styled.View`
   padding: 16px 16px 0;
 `;
 
-export default Home;
+export default React.memo(Home);
