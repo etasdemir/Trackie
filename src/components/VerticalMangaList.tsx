@@ -9,6 +9,7 @@ export interface VerticalMangaListProps {
   scrollHandlers?: {
     onScrollTop?: () => void;
     onScrollBottom?: () => void;
+    onEndReached?: () => void;
   };
 }
 
@@ -86,6 +87,7 @@ function VerticalMangaList(props: VerticalMangaListProps) {
       )}
       showsVerticalScrollIndicator={false}
       onScroll={onScroll}
+      onEndReached={scrollHandlers?.onEndReached}
     />
   );
 }

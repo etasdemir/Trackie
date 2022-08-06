@@ -6,17 +6,19 @@ import {ColorProps, Genre, UnfinishedManga} from 'src/shared/Types';
 import Greeting from './Greeting';
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import theme from 'src/shared/theme';
+import {MenuChildScreenProp} from 'src/navigation/types';
 
 interface Props {
   allGenres: Genre[];
   unfinishedManga: UnfinishedManga;
+  navigation: MenuChildScreenProp;
 }
 
 const HOME_MANGA_PER_SCROLL = 1;
 
 function MangaList(props: Props) {
   console.log('home mangalist rendered');
-  const {allGenres, unfinishedManga} = props;
+  const {allGenres, unfinishedManga, navigation} = props;
   const [genres, setGenres] = useState(
     allGenres.slice(0, HOME_MANGA_PER_SCROLL),
   );
@@ -54,7 +56,11 @@ function MangaList(props: Props) {
       showsVerticalScrollIndicator={false}
       data={getData()}
       renderItem={({item}) => (
-        <CategoryHorizontalList key={item.id} genre={item} />
+        <CategoryHorizontalList
+          key={item.id}
+          genre={item}
+          navigation={navigation}
+        />
       )}
       onEndReached={onEndReached}
     />

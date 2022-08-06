@@ -19,20 +19,24 @@ function StarRating(props: StarRatingProps) {
 
   return (
     <RatingContainer>
-      <Rating
-        type="custom"
-        ratingCount={5}
-        readonly
-        imageSize={20}
-        fractions={1}
-        startingValue={props.score}
-        ratingColor={theme.primary}
-        ratingBackgroundColor={theme.background}
-        style={props.style}
-      />
-      <ReviewText color={theme.onViewFaint}>
-        {language.getText('reviews', score.toString(), scoredBy.toString())}
-      </ReviewText>
+      {score && score > 0 ? (
+        <Rating
+          type="custom"
+          ratingCount={5}
+          readonly
+          imageSize={20}
+          fractions={1}
+          startingValue={props.score}
+          ratingColor={theme.primary}
+          ratingBackgroundColor={theme.background}
+          style={props.style}
+        />
+      ) : null}
+      {scoredBy && (
+        <ReviewText color={theme.onViewFaint}>
+          {language.getText('reviews', score.toString(), scoredBy.toString())}
+        </ReviewText>
+      )}
     </RatingContainer>
   );
 }

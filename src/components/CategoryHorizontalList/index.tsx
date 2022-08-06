@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {FlatList} from 'react-native';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
@@ -10,21 +10,27 @@ import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {categoryMangasThunk} from 'src/redux/actions/CategoryActions';
+import {MenuChildScreenProp} from 'src/navigation/types';
 
 interface Props {
   genre: Genre;
+  navigation: MenuChildScreenProp;
 }
 
 const isFetched: {[key: number]: boolean} = {};
 
 function CategoryHorizontalList(props: Props) {
   console.log('CategoryHorizontalList rendered', props.genre.id);
-  const {genre} = props;
+  const {genre, navigation} = props;
 
   const {categoryToMangaList} = useSelector(
     (state: RootState) => state.category,
   );
   const dispatch = useAppDispatch();
+
+  const onCategoryViewAllPress = useCallback(() => {
+    navigation.navigate('category', {genre});
+  }, [genre, navigation]);
 
   if (!categoryToMangaList[genre.id] && !isFetched[genre.id]) {
     isFetched[genre.id] = true;
@@ -32,10 +38,6 @@ function CategoryHorizontalList(props: Props) {
     dispatch(categoryMangasThunk(genre.id, page));
     return null;
   }
-
-  const onCategoryViewAllPress = () => {
-    console.log('navigate to category screen with id:', genre.id);
-  };
 
   if (
     !categoryToMangaList[genre.id] ||

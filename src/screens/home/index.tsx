@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {getGenresThunk} from 'src/redux/actions/CategoryActions';
 import MangaList from './components/MangaList';
+import {HomeScreenProp} from 'src/navigation/types';
 
 // Delete later
 const unfinishedManga = {
@@ -20,7 +21,7 @@ const unfinishedManga = {
   },
 };
 
-function Home() {
+function Home(props: HomeScreenProp) {
   console.log('home rendered');
 
   const allGenres = useSelector(
@@ -36,7 +37,11 @@ function Home() {
   } else {
     return (
       <HomeContainer>
-        <MangaList allGenres={allGenres} unfinishedManga={unfinishedManga} />
+        <MangaList
+          allGenres={allGenres}
+          unfinishedManga={unfinishedManga}
+          navigation={props.navigation}
+        />
       </HomeContainer>
     );
   }

@@ -71,3 +71,9 @@ export type ProfileScreenProp = CompositeScreenProps<
   BottomTabScreenProps<BottomBarParamList, 'bottom_bar_profile'>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export type MenuChildScreenProp =
+  | HomeScreenProp['navigation']
+  | SearchScreenProp['navigation']
+  | BookmarkScreenProp['navigation']
+  | ProfileScreenProp['navigation'];
