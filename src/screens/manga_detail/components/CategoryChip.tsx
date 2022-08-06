@@ -3,24 +3,24 @@ import styled from 'styled-components/native';
 
 import {ColorProps, Genre} from 'src/shared/Types';
 import theme from 'src/shared/theme';
+import {RootChildScreenProp} from 'src/navigation/types';
 
 export interface CategoryChipProps {
   genre: Genre;
+  navigation: RootChildScreenProp;
 }
 
 function CategoryChip(props: CategoryChipProps) {
-  const {
-    genre: {id, name},
-  } = props;
+  const {navigation, genre} = props;
 
   const onCategoryChipClick = () => {
-    console.log('navigate to category with id:', id);
+    navigation.navigate('category', {genre});
   };
 
   return (
     <ChipButton onPress={onCategoryChipClick} color={theme.primary}>
       <ChipName numberOfLines={1} color={theme.onView}>
-        {name}
+        {genre.name}
       </ChipName>
     </ChipButton>
   );

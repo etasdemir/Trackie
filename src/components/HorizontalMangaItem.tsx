@@ -4,9 +4,11 @@ import styled from 'styled-components/native';
 import {ColorProps, CoverManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import theme from 'src/shared/theme';
+import {BottomBarChildScreenProp} from 'src/navigation/types';
 
 export interface HorizontalMangaItemProps {
   manga: CoverManga;
+  navigation: BottomBarChildScreenProp;
 }
 
 function HorizontalMangaItem(props: HorizontalMangaItemProps) {
@@ -17,10 +19,11 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
       title,
       author: {name},
     },
+    navigation,
   } = props;
 
   const onMangaPress = () => {
-    console.log('navigate to manga detail with id:', id);
+    navigation.navigate('manga_detail', {mangaId: id});
   };
 
   return (

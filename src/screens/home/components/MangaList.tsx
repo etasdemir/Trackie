@@ -6,12 +6,12 @@ import {ColorProps, Genre, UnfinishedManga} from 'src/shared/Types';
 import Greeting from './Greeting';
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import theme from 'src/shared/theme';
-import {MenuChildScreenProp} from 'src/navigation/types';
+import {BottomBarChildScreenProp} from 'src/navigation/types';
 
 interface Props {
   allGenres: Genre[];
   unfinishedManga: UnfinishedManga;
-  navigation: MenuChildScreenProp;
+  navigation: BottomBarChildScreenProp;
 }
 
 const HOME_MANGA_PER_SCROLL = 1;

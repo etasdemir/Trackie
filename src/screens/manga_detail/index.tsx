@@ -1,42 +1,66 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
-import {MangaDetail, ColorProps, Genre} from 'src/shared/Types';
+import {ColorProps, Genre} from 'src/shared/Types';
+import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import StarRating from 'src/components/StarRating';
 import CategoryChip from './components/CategoryChip';
 import CharacterItem from './components/CharacterItem';
+import {
+  getMangaCharactersThunk,
+  getMangaThunk,
+} from 'src/redux/actions/MangaActions';
+import {MangaScreenProp} from 'src/navigation/types';
 
-export interface MangaDetailScreenProps {
-  manga: MangaDetail;
-}
+function MangaDetailScreen(props: MangaScreenProp) {
+  const {
+    navigation,
+    route: {
+      params: {mangaId},
+    },
+  } = props;
+  const dispatch = useAppDispatch();
+  const {characters, manga} = useSelector((state: RootState) => ({
+    manga: state.mangas.mangas[mangaId],
+    characters: state.mangas.mangaCharacters[mangaId],
+  }));
 
-function MangaDetailScreen(props: MangaDetailScreenProps) {
-  const {manga} = props;
+  const onBackPress = useCallback(() => {
+    navigation.pop();
+  }, [navigation]);
+
+  const onFavouriteClick = useCallback(() => {}, []);
+
+  const onAuthorClick = useCallback(() => {
+    console.log('navigate to author detail with id:', manga.author.id);
+  }, [manga?.author.id]);
+
+  const onFinishedReading = useCallback(() => {
+    console.log('finished reading manga:', manga.id);
+  }, [manga?.id]);
+
+  const onReadingNow = useCallback(() => {
+    console.log('reading manga:', manga.id);
+  }, [manga?.id]);
+
+  if (!manga) {
+    dispatch(getMangaThunk(mangaId));
+    return null;
+  }
+  if (!characters) {
+    dispatch(getMangaCharactersThunk(mangaId));
+  }
+
   const imageSource: ImageSourcePropType = {
     uri: manga.img,
     height: 400,
     width: 250,
-  };
-
-  const onBackPress = () => {};
-
-  const onFavouriteClick = () => {};
-
-  const onAuthorClick = () => {
-    console.log('navigate to author detail with id:', manga.author.id);
-  };
-
-  const onFinishedReading = () => {
-    console.log('finished reading manga:', manga.id);
-  };
-
-  const onReadingNow = () => {
-    console.log('reading manga:', manga.id);
   };
 
   return (
@@ -56,7 +80,11 @@ function MangaDetailScreen(props: MangaDetailScreenProps) {
         <StarRating score={manga.score / 2} scoredBy={manga.scoredBy} />
         <CategoryChipContainer>
           {manga.genres.map((genre: Genre) => (
-            <CategoryChip key={genre.id} genre={genre} />
+            <CategoryChip
+              key={genre.id}
+              genre={genre}
+              navigation={navigation}
+            />
           ))}
         </CategoryChipContainer>
         <IconContainer>
@@ -86,7 +114,7 @@ function MangaDetailScreen(props: MangaDetailScreenProps) {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          data={manga.characters}
+          data={characters}
           renderItem={({item}) => (
             <CharacterItem key={item.id} character={item} />
           )}

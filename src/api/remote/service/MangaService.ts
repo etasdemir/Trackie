@@ -7,13 +7,13 @@ import {CharacterResponse} from 'src/api/remote/model/CharacterModel';
 
 class MangaService {
   async getMangaById(id: number): Promise<MangaDetail | undefined> {
-    const response = await RequestGateway.get<MangaDetailModel>(
+    const response = await RequestGateway.get<{data: MangaDetailModel}>(
       `/manga/${id}/full`,
     );
     if (isError(response)) {
       return undefined;
     } else {
-      return mangaModelToMangaDetail(response.result);
+      return mangaModelToMangaDetail(response.result.data);
     }
   }
 

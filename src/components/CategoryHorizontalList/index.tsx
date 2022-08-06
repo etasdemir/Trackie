@@ -10,11 +10,11 @@ import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {categoryMangasThunk} from 'src/redux/actions/CategoryActions';
-import {MenuChildScreenProp} from 'src/navigation/types';
+import {BottomBarChildScreenProp} from 'src/navigation/types';
 
 interface Props {
   genre: Genre;
-  navigation: MenuChildScreenProp;
+  navigation: BottomBarChildScreenProp;
 }
 
 const isFetched: {[key: number]: boolean} = {};
@@ -58,7 +58,11 @@ function CategoryHorizontalList(props: Props) {
           showsHorizontalScrollIndicator={false}
           data={categoryToMangaList[genre.id]}
           renderItem={({item}) => (
-            <HorizontalMangaItem key={item.id.toString()} manga={item} />
+            <HorizontalMangaItem
+              key={item.id.toString()}
+              manga={item}
+              navigation={navigation}
+            />
           )}
           horizontal={true}
         />

@@ -72,8 +72,10 @@ export type ProfileScreenProp = CompositeScreenProps<
   NativeStackScreenProps<RootStackParamList>
 >;
 
-export type MenuChildScreenProp =
+export type BottomBarChildScreenProp =
   | HomeScreenProp['navigation']
   | SearchScreenProp['navigation']
   | BookmarkScreenProp['navigation']
   | ProfileScreenProp['navigation'];
+
+export type RootChildScreenProp = MangaScreenProp['navigation'];
