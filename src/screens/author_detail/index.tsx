@@ -1,33 +1,48 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
-import {AuthorDetail, ColorProps, CoverManga} from 'src/shared/Types';
+import {ColorProps, CoverManga} from 'src/shared/Types';
 import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import SocialMediaIcon, {SocialMedia} from './components/SocialMediaIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import FavouriteIcon from 'src/components/FavouriteIcon';
+import {AuthorScreenProp} from 'src/navigation/types';
+import {RootState, useAppDispatch} from 'src/redux/AppStore';
+import {getAuthorThunk} from 'src/redux/actions/PeopleActions';
 
-export interface AuthorDetailProps {
-  author: AuthorDetail;
-}
+function AuthorDetailScreen(props: AuthorScreenProp) {
+  const {
+    route: {
+      params: {authorId},
+    },
+    navigation,
+  } = props;
+  const author = useSelector(
+    (state: RootState) => state.people.authors[authorId],
+  );
+  const dispatcher = useAppDispatch();
 
-function AuthorDetailScreen(props: AuthorDetailProps) {
-  const {author} = props;
+  const onBackPress = useCallback(() => {
+    navigation.pop();
+  }, [navigation]);
+
+  const onFavouriteClick = useCallback(() => {}, []);
+
+  if (!author) {
+    dispatcher(getAuthorThunk(authorId));
+    return null;
+  }
+
   const links = author.socialMediaAccounts;
   const imageSource: ImageSourcePropType = {
     uri: author.img,
     height: 400,
     width: 250,
   };
-
-  const onBackPress = () => {
-    console.log('author detail screen back press');
-  };
-
-  const onFavouriteClick = () => {};
 
   return (
     <Container>

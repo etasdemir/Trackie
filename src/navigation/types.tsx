@@ -78,4 +78,8 @@ export type BottomBarChildScreenProp =
   | BookmarkScreenProp['navigation']
   | ProfileScreenProp['navigation'];
 
-export type RootChildScreenProp = MangaScreenProp['navigation'];
+export type RootChildScreenProp =
+  | MangaScreenProp['navigation']
+  | CategoryScreenProp['navigation']
+  | AuthorScreenProp['navigation']
+  | CharacterScreenProp['navigation'];

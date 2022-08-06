@@ -1,33 +1,50 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
-import {ColorProps, CharacterDetail} from 'src/shared/Types';
+import {ColorProps} from 'src/shared/Types';
 import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
+import {RootState, useAppDispatch} from 'src/redux/AppStore';
+import {CharacterScreenProp} from 'src/navigation/types';
+import {getCharacterThunk} from 'src/redux/actions/PeopleActions';
 
-export interface CharacterDetailScreenProps {
-  character: CharacterDetail;
-}
+function CharacterDetailScreen(props: CharacterScreenProp) {
+  const {
+    navigation,
+    route: {
+      params: {characterId},
+    },
+  } = props;
+  const dispatcher = useAppDispatch();
+  const character = useSelector(
+    (state: RootState) => state.people.characters[characterId],
+  );
 
-function CharacterDetailScreen(props: CharacterDetailScreenProps) {
-  const {character} = props;
-  const imageSource: ImageSourcePropType = {
-    uri: character.img,
-    height: 400,
-    width: 250,
-  };
-
-  const onBackPress = () => {};
+  const onBackPress = useCallback(() => {
+    navigation.pop();
+  }, [navigation]);
 
   const onFavouriteClick = () => {
     console.log(
       'add or remove character from favourites with id:',
       character.id,
     );
+  };
+
+  if (!character) {
+    dispatcher(getCharacterThunk(characterId));
+    return null;
+  }
+
+  const imageSource: ImageSourcePropType = {
+    uri: character.img,
+    height: 400,
+    width: 250,
   };
 
   return (
@@ -50,7 +67,11 @@ function CharacterDetailScreen(props: CharacterDetailScreenProps) {
           showsHorizontalScrollIndicator={false}
           data={character.mangaAppearances}
           renderItem={({item}) => (
-            <HorizontalMangaItem key={item.id} manga={item} />
+            <HorizontalMangaItem
+              key={item.id}
+              manga={item}
+              navigation={navigation}
+            />
           )}
         />
       </ContentContainer>

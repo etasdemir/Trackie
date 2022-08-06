@@ -1,25 +1,27 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {ImageSourcePropType} from 'react-native';
 
 import {Character, ColorProps} from 'src/shared/Types';
 import theme from 'src/shared/theme';
+import {RootChildScreenProp} from 'src/navigation/types';
 
 interface CharacterItemProps {
   character: Character;
+  navigation: RootChildScreenProp;
 }
 
 function CharacterItem(props: CharacterItemProps) {
-  const {character} = props;
+  const {character, navigation} = props;
   const imageSource: ImageSourcePropType = {
     uri: character.img,
     height: 130,
     width: 90,
   };
 
-  const onCharacterSelect = () => {
-    console.log('navigate to character detail with id:', character.id);
-  };
+  const onCharacterSelect = useCallback(() => {
+    navigation.navigate('character_detail', {characterId: character.id});
+  }, [character.id, navigation]);
 
   return (
     <Container onPress={onCharacterSelect}>

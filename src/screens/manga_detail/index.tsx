@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
-import {FlatList, ImageSourcePropType} from 'react-native';
+import {FlatList, ImageSourcePropType, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
@@ -38,8 +38,8 @@ function MangaDetailScreen(props: MangaScreenProp) {
   const onFavouriteClick = useCallback(() => {}, []);
 
   const onAuthorClick = useCallback(() => {
-    console.log('navigate to author detail with id:', manga.author.id);
-  }, [manga?.author.id]);
+    navigation.navigate('author_detail', {authorId: manga.author.id});
+  }, [manga?.author.id, navigation]);
 
   const onFinishedReading = useCallback(() => {
     console.log('finished reading manga:', manga.id);
@@ -74,9 +74,9 @@ function MangaDetailScreen(props: MangaScreenProp) {
         />
         <MangaImage resizeMode="cover" source={imageSource} />
         <MangaName color={theme.onView}>{manga.title}</MangaName>
-        <AuthorName onPress={onAuthorClick} color={theme.onViewFaint}>
-          {manga.author.name}
-        </AuthorName>
+        <TouchableOpacity onPress={onAuthorClick}>
+          <AuthorName color={theme.onViewFaint}>{manga.author.name}</AuthorName>
+        </TouchableOpacity>
         <StarRating score={manga.score / 2} scoredBy={manga.scoredBy} />
         <CategoryChipContainer>
           {manga.genres.map((genre: Genre) => (
@@ -116,7 +116,11 @@ function MangaDetailScreen(props: MangaScreenProp) {
           showsHorizontalScrollIndicator={false}
           data={characters}
           renderItem={({item}) => (
-            <CharacterItem key={item.id} character={item} />
+            <CharacterItem
+              key={item.id}
+              character={item}
+              navigation={navigation}
+            />
           )}
         />
       </SubContainer>

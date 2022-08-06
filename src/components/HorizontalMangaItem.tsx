@@ -4,11 +4,14 @@ import styled from 'styled-components/native';
 import {ColorProps, CoverManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import theme from 'src/shared/theme';
-import {BottomBarChildScreenProp} from 'src/navigation/types';
+import {
+  BottomBarChildScreenProp,
+  RootChildScreenProp,
+} from 'src/navigation/types';
 
 export interface HorizontalMangaItemProps {
   manga: CoverManga;
-  navigation: BottomBarChildScreenProp;
+  navigation: BottomBarChildScreenProp | RootChildScreenProp;
 }
 
 function HorizontalMangaItem(props: HorizontalMangaItemProps) {
