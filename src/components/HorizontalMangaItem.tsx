@@ -26,7 +26,7 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
   } = props;
 
   const onMangaPress = () => {
-    navigation.navigate('manga_detail', {mangaId: id});
+    (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
   };
 
   return (

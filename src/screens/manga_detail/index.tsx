@@ -94,15 +94,24 @@ function MangaDetailScreen(props: MangaScreenProp) {
       </Header>
       <SubContainer>
         <RankingContainer>
-          <RankingText color={theme.onViewFaint}>
-            {language.getText('manga_ranked', manga.rank.toString())}
-          </RankingText>
-          <RankingText color={theme.onViewFaint}>
-            {language.getText('manga_popularity', manga.popularity.toString())}
-          </RankingText>
-          <RankingText color={theme.onViewFaint}>
-            {language.getText('manga_members', manga.members.toString())}
-          </RankingText>
+          {manga.rank && (
+            <RankingText color={theme.onViewFaint}>
+              {language.getText('manga_ranked', manga.rank.toString())}
+            </RankingText>
+          )}
+          {manga.popularity && (
+            <RankingText color={theme.onViewFaint}>
+              {language.getText(
+                'manga_popularity',
+                manga.popularity.toString(),
+              )}
+            </RankingText>
+          )}
+          {manga.members && (
+            <RankingText color={theme.onViewFaint}>
+              {language.getText('manga_members', manga.members.toString())}
+            </RankingText>
+          )}
         </RankingContainer>
         <CategoryTitle color={theme.onView}>
           {language.getText('manga_synopsis')}
@@ -149,7 +158,8 @@ const MangaName = styled.Text<ColorProps>`
   color: ${({color}) => color};
   font-size: 24px;
   font-weight: bold;
-  margin-top: 15px;
+  margin: 15px 20px 20px 0;
+  text-align: center;
 `;
 
 const AuthorName = styled.Text<ColorProps>`
