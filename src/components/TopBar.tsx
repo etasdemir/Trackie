@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ColorProps} from 'src/shared/Types';
 import theme from 'src/shared/theme';
@@ -16,7 +17,9 @@ function TopBar(props: TopBarProps) {
 
   return (
     <Container color={backgroundColor ?? 'transparent'}>
-      <BackButton color={theme.onView} onPress={onBackPress} />
+      <BackButton color={theme.onView} onPress={onBackPress}>
+        <Icon name="keyboard-backspace" size={36} color="#000" />
+      </BackButton>
       {title ? (
         <Title numberOfLines={1} color={theme.onView}>
           {title}
@@ -47,17 +50,12 @@ const Title = styled.Text<ColorProps>`
 
 const BackButton = styled.TouchableOpacity<ColorProps>`
   position: absolute;
-  left: 40px;
-  background-color: ${({color}) => color};
-  width: 30px;
-  height: 30px;
+  left: 30px;
 `;
 
 const RightElementContainer = styled.View`
   position: absolute;
-  right: 40px;
-  width: 30px;
-  height: 30px;
+  right: 30px;
 `;
 
 export default TopBar;

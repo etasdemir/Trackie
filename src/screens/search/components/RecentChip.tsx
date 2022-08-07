@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ColorProps} from 'src/shared/Types';
 import theme from 'src/shared/theme';
@@ -19,7 +20,7 @@ function RecentChip(props: RecentChipProps) {
         {name}
       </ChipName>
       <DeleteIconButton onPress={() => onClear(name)}>
-        <DeleteIcon color={theme.primary} />
+        <Icon name="close" color={theme.primaryDark} size={22} />
       </DeleteIconButton>
     </Container>
   );
@@ -31,6 +32,7 @@ const Container = styled.TouchableOpacity<ColorProps>`
   background-color: ${({color}) => color};
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   padding: 4px 10px;
   margin: 5px;
 `;
@@ -41,12 +43,7 @@ const ChipName = styled.Text<ColorProps>`
 
 const DeleteIconButton = styled.TouchableOpacity`
   margin-left: 8px;
-`;
-
-const DeleteIcon = styled.View<ColorProps>`
-  height: 20px;
-  width: 20px;
-  background-color: ${({color}) => color};
+  padding: 0 4px;
 `;
 
 export default RecentChip;

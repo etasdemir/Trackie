@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -24,17 +24,21 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
   const character = useSelector(
     (state: RootState) => state.people.characters[characterId],
   );
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
-  const onFavouriteClick = () => {
-    console.log(
-      'add or remove character from favourites with id:',
-      character.id,
-    );
-  };
+  const onFavouriteClick = useCallback(() => {
+    if (character) {
+      setIsFavourite(prev => !prev);
+      console.log(
+        'add or remove character from favourites with id:',
+        character.id,
+      );
+    }
+  }, [character]);
 
   if (!character) {
     dispatcher(getCharacterThunk(characterId));
@@ -53,7 +57,11 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
         onBackPress={onBackPress}
         title={character.name}
         RightElement={
-          <FavouriteIcon onPress={onFavouriteClick} color={theme.primary} />
+          <FavouriteIcon
+            onPress={onFavouriteClick}
+            color={theme.primary}
+            isEnabled={isFavourite}
+          />
         }
       />
       <ContentContainer>

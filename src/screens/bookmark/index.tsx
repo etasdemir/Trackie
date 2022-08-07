@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import {AuthorDetail, CoverManga, UnfinishedManga} from 'src/shared/Types';
@@ -36,9 +37,12 @@ function Bookmark(props: BookmarkProps) {
       data: favoriteAuthors,
     },
   ];
+  const tabBarHeight = useBottomTabBarHeight();
 
   return (
-    <ScrollContainer showsVerticalScrollIndicator={false}>
+    <ScrollContainer
+      showsVerticalScrollIndicator={false}
+      tabBarHeight={tabBarHeight}>
       {genres.map(genre => (
         <CategoryHorizontalList
           key={genre.id}
@@ -50,8 +54,12 @@ function Bookmark(props: BookmarkProps) {
   );
 }
 
-const ScrollContainer = styled.ScrollView`
-  padding: 16px 16px 0;
+interface ContainerProps {
+  tabBarHeight: number;
+}
+
+const ScrollContainer = styled.ScrollView<ContainerProps>`
+  padding: 16px 16px ${({tabBarHeight}) => tabBarHeight}px 16px;
   flex: 1;
 `;
 

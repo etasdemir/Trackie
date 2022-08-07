@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import Stat from './components/Stat';
 import {ColorProps} from 'src/shared/Types';
@@ -22,6 +23,7 @@ enum MODAL_KEY {
 
 function Profile(props: ProfileProps) {
   const {stats} = props;
+  const tabBarHeight = useBottomTabBarHeight();
 
   const onSettingsPress = (key: MODAL_KEY) => {
     switch (key) {
@@ -43,7 +45,7 @@ function Profile(props: ProfileProps) {
   };
 
   return (
-    <Container>
+    <Container tabBarHeight={tabBarHeight}>
       <StatContainer color={theme.primary}>
         {stats.map((stat, index) => (
           <Stat
@@ -72,9 +74,13 @@ function Profile(props: ProfileProps) {
   );
 }
 
-const Container = styled.View`
+interface ContainerProps {
+  tabBarHeight: number;
+}
+
+const Container = styled.View<ContainerProps>`
   flex: 1;
-  padding: 16px;
+  padding: 16px 16px ${({tabBarHeight}) => tabBarHeight + 16}px 16px;
 `;
 
 const StatContainer = styled.View<ColorProps>`

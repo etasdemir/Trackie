@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -25,12 +25,16 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
     (state: RootState) => state.people.authors[authorId],
   );
   const dispatcher = useAppDispatch();
+  // TODO
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
-  const onFavouriteClick = useCallback(() => {}, []);
+  const onFavouriteClick = useCallback(() => {
+    setIsFavourite(prev => !prev);
+  }, [setIsFavourite]);
 
   if (!author) {
     dispatcher(getAuthorThunk(authorId));
@@ -52,7 +56,11 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
           <TopBar
             onBackPress={onBackPress}
             RightElement={
-              <FavouriteIcon onPress={onFavouriteClick} color={theme.primary} />
+              <FavouriteIcon
+                onPress={onFavouriteClick}
+                color={theme.primary}
+                isEnabled={isFavourite}
+              />
             }
           />
           <AuthorImage resizeMode="cover" source={imageSource} />
@@ -96,7 +104,11 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
           showsHorizontalScrollIndicator={false}
           data={author.works}
           renderItem={({item}) => (
-            <HorizontalMangaItem key={`${item.id}`} manga={item} />
+            <HorizontalMangaItem
+              key={`${item.id}`}
+              manga={item}
+              navigation={navigation}
+            />
           )}
           horizontal
         />

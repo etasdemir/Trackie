@@ -1,6 +1,8 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIIcon from 'react-native-vector-icons/MaterialIcons';
 
 import language from 'src/shared/language';
 import Home from 'src/screens/home';
@@ -13,6 +15,7 @@ import MangaDetailScreen from 'src/screens/manga_detail';
 import CharacterDetailScreen from 'src/screens/character_detail';
 import Onboarding from 'src/screens/onboarding';
 import {BottomBarParamList, RootStackParamList} from './types';
+import theme from 'src/shared/theme';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
@@ -23,26 +26,88 @@ function BottomBarTab() {
       initialRouteName="bottom_bar_home"
       screenOptions={() => ({
         headerShown: false,
+        tabBarActiveTintColor: '#000',
+        tabBarInactiveTintColor: theme.primaryDark,
+        tabBarStyle: {
+          height: 60,
+          position: 'absolute',
+          bottom: 16,
+          left: 16,
+          right: 16,
+          borderRadius: 30,
+        },
+        tabBarLabelStyle: {
+          marginBottom: 5,
+        },
+        tabBarIconStyle: {
+          marginTop: 5,
+        },
       })}>
       <BottomBar.Screen
         name="bottom_bar_home"
         component={Home}
-        options={{title: language.getText('home')}}
+        options={{
+          title: language.getText('home'),
+          tabBarIcon: ({focused, size, color}) => {
+            return (
+              <MCIIcon
+                size={size}
+                name={focused ? 'home-variant' : 'home-variant-outline'}
+                color={color}
+              />
+            );
+          },
+        }}
       />
       <BottomBar.Screen
         name="bottom_bar_search"
         component={Search}
-        options={{title: language.getText('search')}}
+        options={{
+          title: language.getText('search'),
+          tabBarIcon: ({focused, size, color}) => {
+            return (
+              <MIIcon
+                size={size}
+                name={focused ? 'search' : 'search'}
+                color={color}
+              />
+            );
+          },
+        }}
       />
       <BottomBar.Screen
         name="bottom_bar_bookmark"
         component={Bookmark}
-        options={{title: language.getText('bookmark')}}
+        options={{
+          title: language.getText('bookmark'),
+          tabBarIcon: ({focused, size, color}) => {
+            return (
+              <MCIIcon
+                size={size}
+                name={
+                  focused ? 'bookmark-multiple' : 'bookmark-multiple-outline'
+                }
+                color={color}
+              />
+            );
+          },
+        }}
       />
       <BottomBar.Screen
         name="bottom_bar_profile"
         component={Profile}
-        options={{title: language.getText('profile')}}
+        options={{
+          title: language.getText('profile'),
+          tabBarIcon: ({focused, size, color}) => {
+            return (
+              <MCIIcon
+                size={size}
+                name={focused ? 'account' : 'account-outline'}
+                color={color}
+              />
+            );
+          },
+        }}
       />
     </BottomBar.Navigator>
   );

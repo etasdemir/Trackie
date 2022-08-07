@@ -41,6 +41,7 @@ function Category(props: CategoryScreenProp) {
       <VerticalMangaList
         categoryMangaList={categoryToMangaList[genre.id]}
         scrollHandlers={{onEndReached}}
+        navigation={navigation}
       />
     </Container>
   );

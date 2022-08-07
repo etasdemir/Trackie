@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 
 import theme from 'src/shared/theme';
 import StarRating from 'src/components/StarRating';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
+import {
+  BottomBarChildScreenProp,
+  RootChildScreenProp,
+} from 'src/navigation/types';
 
 export interface VerticalMangaItemProps {
   categoryManga: CategoryManga;
+  navigation: BottomBarChildScreenProp | RootChildScreenProp;
 }
 
 function VerticalMangaItem(props: VerticalMangaItemProps) {
   const {
+    navigation,
     categoryManga: {
       id,
       img,
@@ -23,9 +29,9 @@ function VerticalMangaItem(props: VerticalMangaItemProps) {
     },
   } = props;
 
-  const onMangaClick = () => {
-    console.log('navigate to manga detail with id:', id);
-  };
+  const onMangaClick = useCallback(() => {
+    (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
+  }, [id, navigation]);
 
   return (
     <MangaButton onPress={onMangaClick}>

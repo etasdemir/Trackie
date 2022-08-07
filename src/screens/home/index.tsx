@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {getGenresThunk} from 'src/redux/actions/CategoryActions';
@@ -24,6 +25,7 @@ const unfinishedManga = {
 function Home(props: HomeScreenProp) {
   console.log('home rendered');
 
+  const tabBarHeight = useBottomTabBarHeight();
   const allGenres = useSelector(
     (state: RootState) => state.category.genres,
     (a, b) => a.length === b.length,
@@ -36,7 +38,7 @@ function Home(props: HomeScreenProp) {
     return null;
   } else {
     return (
-      <HomeContainer>
+      <HomeContainer tabBarHeight={tabBarHeight}>
         <MangaList
           allGenres={allGenres}
           unfinishedManga={unfinishedManga}
@@ -47,8 +49,12 @@ function Home(props: HomeScreenProp) {
   }
 }
 
-const HomeContainer = styled.View`
-  padding: 16px 16px 0;
+interface ContainerProps {
+  tabBarHeight: number;
+}
+
+const HomeContainer = styled.View<ContainerProps>`
+  padding: 16px 16px ${({tabBarHeight}) => tabBarHeight}px 16px;
 `;
 
 export default React.memo(Home);

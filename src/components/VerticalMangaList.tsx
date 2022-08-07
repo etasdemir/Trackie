@@ -1,8 +1,17 @@
 import React, {useCallback, useMemo} from 'react';
-import {FlatList, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
+import {
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Platform,
+} from 'react-native';
 
 import VerticalMangaItem from 'src/components/VerticalMangaItem';
 import {CategoryManga} from 'src/shared/Types';
+import {
+  BottomBarChildScreenProp,
+  RootChildScreenProp,
+} from 'src/navigation/types';
 
 export interface VerticalMangaListProps {
   categoryMangaList: CategoryManga[];
@@ -11,6 +20,7 @@ export interface VerticalMangaListProps {
     onScrollBottom?: () => void;
     onEndReached?: () => void;
   };
+  navigation: BottomBarChildScreenProp | RootChildScreenProp;
 }
 
 interface ScrollEvents {
@@ -23,10 +33,10 @@ interface ScrollEvents {
 }
 
 const SCROLL_EVENT_THRESHOLD = 10;
-const SCROLL_EVENT_TIME_THRESHOLD = 500;
+const SCROLL_EVENT_TIME_THRESHOLD = 850;
 
 function VerticalMangaList(props: VerticalMangaListProps) {
-  const {categoryMangaList, scrollHandlers} = props;
+  const {categoryMangaList, scrollHandlers, navigation} = props;
   let scrollEvents: ScrollEvents = useMemo(
     () => ({
       lastEvent: 'none',
@@ -79,15 +89,26 @@ function VerticalMangaList(props: VerticalMangaListProps) {
     [scrollEvents, scrollHandlers],
   );
 
+  const decelerationRate = useMemo(
+    () => (Platform.OS === 'android' ? 0.85 : 0.96),
+    [],
+  );
+
   return (
     <FlatList
       data={categoryMangaList}
       renderItem={({item}) => (
-        <VerticalMangaItem key={item.id} categoryManga={item} />
+        <VerticalMangaItem
+          key={item.id}
+          categoryManga={item}
+          navigation={navigation}
+        />
       )}
       showsVerticalScrollIndicator={false}
       onScroll={onScroll}
       onEndReached={scrollHandlers?.onEndReached}
+      disableIntervalMomentum={true}
+      decelerationRate={decelerationRate}
     />
   );
 }
