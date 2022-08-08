@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
@@ -12,6 +12,8 @@ import language from 'src/shared/language';
 import {SearchScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {mostPopularMangasThunk} from 'src/redux/actions/CategoryActions';
+import SearchResult from './components/SearchResult';
+import {searchMangaThunk} from 'src/redux/actions/MangaActions';
 
 export interface SearchProps extends SearchScreenProp {
   mostPopularMangaList: CategoryManga[];
@@ -26,6 +28,10 @@ const recents: SearchRecentProps['recents'] = [
   'Sed ut perspiciatis unde omnis iste natus error sit voluptatem',
 ];
 
+// TODO
+// 1. ekran değişince search text sıfırlanmıyor. SearchResultItem tıklanırsa sil;
+// 2. text yazıp search yapıp text silinirse hala search active olacak. Text '' ise isActive = false;
+
 function Search(props: SearchScreenProp) {
   const {navigation} = props;
   const mostPopulars = useSelector(
@@ -33,8 +39,33 @@ function Search(props: SearchScreenProp) {
   );
   const dispatcher = useAppDispatch();
   const tabBarHeight = useBottomTabBarHeight();
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   let setSearchRecentVisibility: (isVisible: boolean) => void | undefined;
+
+  const searchText = useCallback(
+    (text: string) => {
+      if (!isSearchActive) {
+        setIsSearchActive(true);
+      }
+      const page = 1;
+      dispatcher(searchMangaThunk(text, page));
+    },
+    [dispatcher, isSearchActive],
+  );
+
+  const onTextClear = useCallback(() => {
+    if (isSearchActive) {
+      setIsSearchActive(false);
+    }
+  }, [isSearchActive]);
+
+  const onSearchItemPress = useCallback(() => {
+    if (isSearchActive) {
+      setIsSearchActive(false);
+    }
+    // Add to recents
+  }, [isSearchActive]);
 
   const onScrollTop = () => {
     if (setSearchRecentVisibility) {
@@ -55,23 +86,30 @@ function Search(props: SearchScreenProp) {
 
   return (
     <Container tabBarHeight={tabBarHeight}>
-      <SearchInput />
-      <SearchRecent
-        recents={recents}
-        callback={(setter: (isVisible: boolean) => void) =>
-          (setSearchRecentVisibility = setter)
-        }
-      />
-      {mostPopulars.length > 0 && (
+      <SearchInput searchText={searchText} onTextClear={onTextClear} />
+      {isSearchActive && (
+        <SearchResult onPress={onSearchItemPress} navigation={navigation} />
+      )}
+      {!isSearchActive && (
+        <SearchRecent
+          recents={recents}
+          callback={(setter: (isVisible: boolean) => void) =>
+            (setSearchRecentVisibility = setter)
+          }
+        />
+      )}
+      {!isSearchActive && mostPopulars.length > 0 && (
         <MostPopularMangaTitle color={theme.onView}>
           {language.getText('genre_most_popular')}
         </MostPopularMangaTitle>
       )}
-      <VerticalMangaList
-        categoryMangaList={mostPopulars}
-        scrollHandlers={{onScrollTop, onScrollBottom}}
-        navigation={navigation}
-      />
+      {!isSearchActive && (
+        <VerticalMangaList
+          categoryMangaList={mostPopulars}
+          scrollHandlers={{onScrollTop, onScrollBottom}}
+          navigation={navigation}
+        />
+      )}
     </Container>
   );
 }

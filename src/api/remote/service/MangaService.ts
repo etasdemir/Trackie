@@ -18,7 +18,7 @@ class MangaService {
   }
 
   async searchManga(query: string, page: number): Promise<MangaDetail[]> {
-    const url = `/manga?type=%22manga%22&page=${page}&q=${query}&order_by=members&sort=desc`;
+    const url = `/manga?type=manga&page=${page}&q=${query}&order_by=members&sort=desc`;
     const response = await RequestGateway.get<GenreResponse>(url);
     if (isError(response)) {
       return [];

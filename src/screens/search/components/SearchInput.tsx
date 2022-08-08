@@ -1,4 +1,5 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Keyboard, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIcon from 'react-native-vector-icons/MaterialIcons';
@@ -7,30 +8,82 @@ import language from 'src/shared/language';
 import theme from 'src/shared/theme';
 import {ColorProps} from 'src/shared/Types';
 
-interface TextInputProps {
-  textColor: string;
+interface Props {
+  searchText: (text: string) => void;
+  onTextClear: () => void;
 }
 
-// TODO search automatically every ~1 second and onSubmitSearch, left icon will be search icon and right icon is a clear search text.
-// TODO If not focused, right icon is invisible
+interface LastTextSearch {
+  timestamp: number;
+  text: string;
+}
 
-function SearchInput() {
-  const [searchText, setSearchText] = useState<string>('');
+const MIN_CHAR_TO_SEARCH = 2;
+const AUTO_SEARCH_THRESHOLD = 1;
 
-  const onSubmitSearch = useCallback((text: string) => {
-    console.log('searched with text:', text);
+const getSec = () => {
+  return Math.ceil(Date.now() / 1000);
+};
+
+let lastSearch: LastTextSearch = {timestamp: getSec(), text: ''};
+
+function SearchInput(props: Props) {
+  const {searchText, onTextClear} = props;
+  const [input, setInput] = useState<string>('');
+  const isTextTyped = input.length > 0;
+  const inputRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
+    });
+
+    return () => {
+      hideSubscription.remove();
+    };
   }, []);
 
-  const onChangeText = useCallback((text: string) => {
-    setSearchText(text);
-    console.log('auto search with text:', text);
-  }, []);
+  const textCleared = useCallback(() => {
+    onTextClear();
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  }, [onTextClear]);
 
-  const clearText = useCallback(() => {
-    setSearchText('');
-  }, []);
+  const onSubmitSearch = useCallback(
+    (text: string) => {
+      if (text.length >= MIN_CHAR_TO_SEARCH) {
+        searchText(text);
+      }
+    },
+    [searchText],
+  );
 
-  const isInputActive = searchText.length > 0;
+  const onChangeText = useCallback(
+    (text: string) => {
+      if (text === '') {
+        textCleared();
+      }
+      setInput(text);
+      const now = getSec();
+      if (
+        text.length >= MIN_CHAR_TO_SEARCH &&
+        now > lastSearch.timestamp + AUTO_SEARCH_THRESHOLD &&
+        text !== lastSearch.text
+      ) {
+        lastSearch = {timestamp: getSec(), text};
+        searchText(text);
+      }
+    },
+    [searchText, textCleared],
+  );
+
+  const clearTextBtn = useCallback(() => {
+    textCleared();
+    setInput('');
+  }, [textCleared]);
 
   return (
     <SearchContainer color={theme.primaryLight}>
@@ -38,7 +91,8 @@ function SearchInput() {
         <SearchIcon name="search" color={theme.primaryDark} size={30} />
       </LeftIconContainer>
       <SearchTextInput
-        value={searchText}
+        ref={inputRef}
+        value={input}
         onChangeText={onChangeText}
         placeholder={language.getText('search_place_holder')}
         textColor={theme.onView}
@@ -48,13 +102,17 @@ function SearchInput() {
         onSubmitEditing={({nativeEvent: {text}}) => onSubmitSearch(text)}
         returnKeyType={'search'}
       />
-      {isInputActive && (
-        <RightIconContainer onPress={clearText}>
+      {isTextTyped && (
+        <RightIconContainer onPress={clearTextBtn}>
           <DeleteIcon name="close" color={theme.primaryDark} size={30} />
         </RightIconContainer>
       )}
     </SearchContainer>
   );
+}
+
+interface TextInputProps {
+  textColor: string;
 }
 
 const SearchContainer = styled.View<ColorProps>`

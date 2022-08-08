@@ -45,3 +45,15 @@ export const getMangaCharactersThunk = (mangaId: number) => {
     );
   };
 };
+
+export const searchMangaAction = createAction(
+  'SEARCH_MANGA',
+  withPayloadType<MangaState['searchManga']>(),
+);
+
+export const searchMangaThunk = (query: string, page: number) => {
+  return async (dispatch: AppDispatch) => {
+    const searchResult = await MangaService.searchManga(query, page);
+    dispatch(searchMangaAction(searchResult));
+  };
+};

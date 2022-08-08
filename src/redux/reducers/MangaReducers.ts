@@ -3,12 +3,14 @@ import {createReducer} from '@reduxjs/toolkit';
 import {
   getMangaAction,
   getMangaCharactersAction,
+  searchMangaAction,
 } from '../actions/MangaActions';
 import {MangaState} from '../ReduxTypes';
 
 const initialState: MangaState = {
   mangas: {},
   mangaCharacters: {},
+  searchManga: [],
 };
 
 export const mangaReducer = createReducer(initialState, builder => {
@@ -23,5 +25,9 @@ export const mangaReducer = createReducer(initialState, builder => {
     if (!state.mangaCharacters[id]) {
       state.mangaCharacters[id] = value;
     }
+  });
+  builder.addCase(searchMangaAction, (state, action) => {
+    const mangaList = action.payload;
+    state.searchManga = mangaList;
   });
 });

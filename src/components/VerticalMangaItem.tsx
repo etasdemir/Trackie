@@ -13,10 +13,12 @@ import {
 export interface VerticalMangaItemProps {
   categoryManga: CategoryManga;
   navigation: BottomBarChildScreenProp | RootChildScreenProp;
+  onPress?: () => void;
 }
 
 function VerticalMangaItem(props: VerticalMangaItemProps) {
   const {
+    onPress,
     navigation,
     categoryManga: {
       id,
@@ -31,7 +33,8 @@ function VerticalMangaItem(props: VerticalMangaItemProps) {
 
   const onMangaClick = useCallback(() => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
-  }, [id, navigation]);
+    onPress && onPress();
+  }, [id, navigation, onPress]);
 
   return (
     <MangaButton onPress={onMangaClick}>

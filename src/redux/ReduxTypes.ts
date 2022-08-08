@@ -21,6 +21,7 @@ export interface CategoryState {
 export interface MangaState {
   mangas: {[key: number]: MangaDetail};
   mangaCharacters: {[key: number]: Character[]};
+  searchManga: MangaDetail[];
 }
 
 export interface PeopleState {

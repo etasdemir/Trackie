@@ -12,6 +12,7 @@ import {
 export interface HorizontalMangaItemProps {
   manga: CoverManga;
   navigation: BottomBarChildScreenProp | RootChildScreenProp;
+  onPress?: () => void;
 }
 
 function HorizontalMangaItem(props: HorizontalMangaItemProps) {
@@ -23,10 +24,12 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
       author: {name},
     },
     navigation,
+    onPress,
   } = props;
 
   const onMangaPress = () => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
+    onPress && onPress();
   };
 
   return (
