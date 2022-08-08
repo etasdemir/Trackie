@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Keyboard, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +11,7 @@ import {ColorProps} from 'src/shared/Types';
 interface Props {
   searchText: (text: string) => void;
   onTextClear: () => void;
+  inputRef: React.RefObject<TextInput>;
 }
 
 interface LastTextSearch {
@@ -28,10 +29,9 @@ const getSec = () => {
 let lastSearch: LastTextSearch = {timestamp: getSec(), text: ''};
 
 function SearchInput(props: Props) {
-  const {searchText, onTextClear} = props;
+  const {searchText, onTextClear, inputRef} = props;
   const [input, setInput] = useState<string>('');
   const isTextTyped = input.length > 0;
-  const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
@@ -43,14 +43,14 @@ function SearchInput(props: Props) {
     return () => {
       hideSubscription.remove();
     };
-  }, []);
+  }, [inputRef]);
 
   const textCleared = useCallback(() => {
     onTextClear();
     if (inputRef.current) {
       inputRef.current.blur();
     }
-  }, [onTextClear]);
+  }, [inputRef, onTextClear]);
 
   const onSubmitSearch = useCallback(
     (text: string) => {

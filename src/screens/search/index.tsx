@@ -1,7 +1,8 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {TextInput} from 'react-native';
 
 import SearchInput from './components/SearchInput';
 import SearchRecent, {SearchRecentProps} from './components/SearchRecent';
@@ -40,6 +41,7 @@ function Search(props: SearchScreenProp) {
   const dispatcher = useAppDispatch();
   const tabBarHeight = useBottomTabBarHeight();
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const inputRef = useRef<TextInput>(null);
 
   let setSearchRecentVisibility: (isVisible: boolean) => void | undefined;
 
@@ -64,7 +66,11 @@ function Search(props: SearchScreenProp) {
     if (isSearchActive) {
       setIsSearchActive(false);
     }
-    // Add to recents
+    if (inputRef.current) {
+      inputRef.current.clear();
+    }
+    // TODO
+    // Add to recents if not already added
   }, [isSearchActive]);
 
   const onScrollTop = () => {
@@ -86,7 +92,11 @@ function Search(props: SearchScreenProp) {
 
   return (
     <Container tabBarHeight={tabBarHeight}>
-      <SearchInput searchText={searchText} onTextClear={onTextClear} />
+      <SearchInput
+        inputRef={inputRef}
+        searchText={searchText}
+        onTextClear={onTextClear}
+      />
       {isSearchActive && (
         <SearchResult onPress={onSearchItemPress} navigation={navigation} />
       )}
