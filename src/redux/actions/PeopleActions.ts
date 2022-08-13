@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 
-import PeopleService from 'src/api/remote/service/PeopleService';
+import PeopleService from 'src/data/remote/service/PeopleService';
 import {AppDispatch} from '../AppStore';
 import {ActionMap, PeopleState} from '../ReduxTypes';
 

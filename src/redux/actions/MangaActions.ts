@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 
-import MangaService from 'src/api/remote/service/MangaService';
+import MangaService from 'src/data/remote/service/MangaService';
 import {AppDispatch} from 'src/redux/AppStore';
 import {ActionMap, MangaState} from '../ReduxTypes';
 

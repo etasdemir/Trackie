@@ -55,4 +55,7 @@ export const tr: StringToLang = {
 
   // Character Detail
   character_appearances: 'Diğer Yapıtlar',
+
+  // Category
+  top_mangas: 'En İyiler',
 };

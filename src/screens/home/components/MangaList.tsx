@@ -7,6 +7,7 @@ import Greeting from './Greeting';
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import theme from 'src/shared/theme';
 import {BottomBarChildScreenProp} from 'src/navigation/types';
+import TopMangas from './TopMangas';
 
 interface Props {
   allGenres: Genre[];
@@ -46,7 +47,12 @@ function MangaList(props: Props) {
 
   return (
     <FlatList
-      ListHeaderComponent={<Greeting unfinishedManga={unfinishedManga} />}
+      ListHeaderComponent={
+        <>
+          <Greeting unfinishedManga={unfinishedManga} />
+          <TopMangas navigation={navigation} />
+        </>
+      }
       ListFooterComponent={
         genres.length !== allGenres.length ? (
           <ItemLoading size={'large'} color={theme.primary} />

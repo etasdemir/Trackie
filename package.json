@@ -25,6 +25,7 @@
         "react-native-screens": "^3.15.0",
         "react-native-vector-icons": "^9.2.0",
         "react-redux": "^8.0.2",
+        "realm": "^10.19.5",
         "redux-logger": "^3.0.6",
         "redux-persist": "^6.0.0",
         "styled-components": "^5.3.5"

@@ -55,4 +55,7 @@ export const en: StringToLang = {
 
   // Character Detail
   character_appearances: 'Appearances',
+
+  // Category
+  top_mangas: 'Top Manga',
 };

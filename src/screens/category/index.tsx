@@ -6,7 +6,11 @@ import TopBar from 'src/components/TopBar';
 import VerticalMangaList from 'src/components/VerticalMangaList';
 import {CategoryScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import {categoryMangasThunk} from 'src/redux/actions/CategoryActions';
+import {
+  categoryMangasThunk,
+  topMangasThunk,
+} from 'src/redux/actions/CategoryActions';
+import {TOP_MANGA_GENRE_ID} from 'src/shared/Constant';
 
 function Category(props: CategoryScreenProp) {
   const {
@@ -21,6 +25,8 @@ function Category(props: CategoryScreenProp) {
     (state: RootState) => state.category.categoryToMangaList,
   );
 
+  const topMangas = useSelector((state: RootState) => state.category.topMangas);
+
   const onEndReached = useCallback(() => {
     console.log('category end reached. request next page');
   }, []);
@@ -29,17 +35,33 @@ function Category(props: CategoryScreenProp) {
     navigation.pop();
   }, [navigation]);
 
-  if (!categoryToMangaList[genre.id]) {
-    const page = 1;
-    dispach(categoryMangasThunk(genre.id, page));
-    return null;
+  if (genre.id === TOP_MANGA_GENRE_ID) {
+    if (!topMangas) {
+      const page = 1;
+      dispach(topMangasThunk(page));
+      return null;
+    }
+  } else {
+    if (!categoryToMangaList[genre.id]) {
+      const page = 1;
+      dispach(categoryMangasThunk(genre.id, page));
+      return null;
+    }
   }
+
+  const getData = () => {
+    if (genre.id === TOP_MANGA_GENRE_ID) {
+      return topMangas;
+    } else {
+      return categoryToMangaList[genre.id];
+    }
+  };
 
   return (
     <Container>
       <TopBar title={genre.name} onBackPress={onBackPress} />
       <VerticalMangaList
-        categoryMangaList={categoryToMangaList[genre.id]}
+        categoryMangaList={getData()}
         scrollHandlers={{onEndReached}}
         navigation={navigation}
       />

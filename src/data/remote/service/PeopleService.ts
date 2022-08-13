@@ -1,14 +1,14 @@
 import {AuthorDetail, CharacterDetail} from 'src/shared/Types';
-import RequestGateway, {isError} from 'src/api/remote/RequestGateway';
+import RequestGateway, {isError} from 'src/data/remote/RequestGateway';
 import {
   AuthorDetailModel,
   PeopleResponse,
-} from 'src/api/remote/model/AuthorModel';
+} from 'src/data/remote/model/AuthorModel';
 import {
   authorDetailModelToAuthorDetail,
   characterDetailModelToCharacterDetail,
-} from 'src/api/remote/Mappers';
-import {CharacterDetailResponse} from 'src/api/remote/model/CharacterModel';
+} from 'src/data/remote/Mappers';
+import {CharacterDetailResponse} from 'src/data/remote/model/CharacterModel';
 
 class PeopleService {
   async getCharacterById(id: number): Promise<CharacterDetail | undefined> {

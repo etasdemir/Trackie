@@ -1,5 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import CategoryService from 'src/api/remote/service/CategoryService';
+import CategoryService from 'src/data/remote/service/CategoryService';
 import {AppDispatch} from '../AppStore';
 import {CategoryState} from '../ReduxTypes';
 

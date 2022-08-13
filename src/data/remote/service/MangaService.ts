@@ -1,9 +1,9 @@
-import RequestGateway, {isError} from 'src/api/remote/RequestGateway';
+import RequestGateway, {isError} from 'src/data/remote/RequestGateway';
 import {Character, MangaDetail} from 'src/shared/Types';
-import {MangaDetailModel} from 'src/api/remote/model/MangaModel';
-import {mangaModelToMangaDetail} from 'src/api/remote/Mappers';
-import {GenreResponse} from 'src/api/remote/model/GenreModel';
-import {CharacterResponse} from 'src/api/remote/model/CharacterModel';
+import {MangaDetailModel} from 'src/data/remote/model/MangaModel';
+import {mangaModelToMangaDetail} from 'src/data/remote/Mappers';
+import {GenreResponse} from 'src/data/remote/model/GenreModel';
+import {CharacterResponse} from 'src/data/remote/model/CharacterModel';
 
 class MangaService {
   async getMangaById(id: number): Promise<MangaDetail | undefined> {

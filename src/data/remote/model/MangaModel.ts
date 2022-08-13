@@ -13,9 +13,6 @@ export interface MangaDetailModel {
   url: string;
   images: Images;
   title: string;
-  title_english: string;
-  title_japanese: string;
-  title_synonyms: string[];
   type: string;
   chapters?: number;
   volumes?: number;
@@ -32,11 +29,8 @@ export interface MangaDetailModel {
   synopsis: string;
   background: string;
   authors: AuthorModel[];
-  serializations: Serialization[];
   genres: GenreModel[];
   explicit_genres: any[];
-  themes: Theme[];
-  demographics: Demographic[];
 }
 
 export interface Jpg {
@@ -78,25 +72,4 @@ export interface Published {
   to?: Date;
   prop: Prop;
   string: string;
-}
-
-export interface Serialization {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
-}
-
-export interface Theme {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
-}
-
-export interface Demographic {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
 }
