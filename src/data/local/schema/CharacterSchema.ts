@@ -1,7 +1,8 @@
 import {CoverMangaSchema} from './MangaSchema';
+import {SCHEMA_NAME} from '../SchemaName';
 
 export const CharacterSchema = {
-  name: 'Character',
+  name: SCHEMA_NAME.CHARACTER_SIMPLE,
   primaryKey: 'id',
   properties: {
     id: 'int',
@@ -12,7 +13,7 @@ export const CharacterSchema = {
 };
 
 export const CharacterDetailSchema = {
-  name: 'CharacterDetail',
+  name: SCHEMA_NAME.CHARACTER_DETAIL,
   primaryKey: 'id',
   properties: {
     id: 'int',

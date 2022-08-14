@@ -1,7 +1,8 @@
 import {CoverMangaSchema} from './MangaSchema';
+import {SCHEMA_NAME} from '../SchemaName';
 
 export const AuthorSchema = {
-  name: 'Author',
+  name: SCHEMA_NAME.AUTHOR_SIMPLE,
   primaryKey: 'id',
   properties: {
     id: 'int',
@@ -11,7 +12,7 @@ export const AuthorSchema = {
 };
 
 export const AuthorDetailSchema = {
-  name: 'AuthorDetail',
+  name: SCHEMA_NAME.AUTHOR_DETAIL,
   primaryKey: 'id',
   properties: {
     id: 'int',
@@ -28,7 +29,7 @@ export const AuthorDetailSchema = {
 };
 
 export const SocialMediaSchema = {
-  name: 'SocialMedia',
+  name: SCHEMA_NAME.SOCIAL_MEDIA,
   embedded: true,
   properties: {
     facebook: 'string?',

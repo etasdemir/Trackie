@@ -1,28 +1,26 @@
 import {CoverMangaSchema, MangaSchema} from '../schema/MangaSchema';
 import {CoverManga, MangaDetail} from 'src/shared/Types';
-import CharacterService from './CharacterService';
-import AuthorService from './AuthorService';
-import ServiceManager from './ServiceManager';
+import CharacterDao from './CharacterDao';
+import AuthorDao from './AuthorDao';
+import DaoManager from './DaoManager';
 import {CharacterSchema} from '../schema/CharacterSchema';
-import GenreService from './GenreService';
+import GenreDao from './GenreDao';
+import {SCHEMA_NAME} from '../SchemaName';
 
 class MangaService {
-  private coverMangaSchema = 'CoverManga';
-  private mangaDetailSchema = 'Manga';
-
   async getCoverMangaById(id: number): Promise<CoverMangaSchema | undefined> {
-    return await ServiceManager.getObjectById(this.coverMangaSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.COVER_MANGA, id);
   }
 
   async getCoverMangasById(mangaIds: number[]): Promise<CoverMangaSchema[]> {
-    return await ServiceManager.getObjectsById<CoverMangaSchema>(
-      'CoverManga',
+    return await DaoManager.getObjectsById<CoverMangaSchema>(
+      SCHEMA_NAME.COVER_MANGA,
       mangaIds,
     );
   }
 
   async createCoverManga(manga: CoverManga) {
-    const author = await AuthorService.getAuthorById(manga.author.id);
+    const author = await AuthorDao.getAuthorById(manga.author.id);
     if (!author) {
       return;
     }
@@ -33,25 +31,25 @@ class MangaService {
       title: manga.title,
       author,
     };
-    ServiceManager.createObject(this.coverMangaSchema, coverManga);
+    DaoManager.createObject(SCHEMA_NAME.COVER_MANGA, coverManga);
   }
 
   // async updateCoverManga() {}
 
   async getMangaById(id: number): Promise<MangaSchema | undefined> {
-    return await ServiceManager.getObjectById(this.mangaDetailSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.MANGA_DETAIL, id);
   }
 
   async getMangasById(ids: number[]): Promise<MangaSchema[]> {
-    return await ServiceManager.getObjectsById(this.mangaDetailSchema, ids);
+    return await DaoManager.getObjectsById(SCHEMA_NAME.MANGA_DETAIL, ids);
   }
 
   async createManga(manga: MangaDetail) {
-    const author = await AuthorService.getAuthorById(manga.author.id);
+    const author = await AuthorDao.getAuthorById(manga.author.id);
     const characterIds = manga.characters.map(item => item.id);
-    const characters = await CharacterService.getCharactersById(characterIds);
+    const characters = await CharacterDao.getCharactersById(characterIds);
     const genreIds = manga.genres.map(item => item.id);
-    const genres = await GenreService.getGenresById(genreIds);
+    const genres = await GenreDao.getGenresById(genreIds);
     if (!author) {
       return;
     }
@@ -79,20 +77,20 @@ class MangaService {
         last_read_time: 0,
       },
     };
-    ServiceManager.createObject(this.mangaDetailSchema, obj);
+    DaoManager.createObject(SCHEMA_NAME.MANGA_DETAIL, obj);
   }
 
   async setFavouriteManga(isFavourite: boolean, mangaId: number) {
-    ServiceManager.setFavouriteField(
-      this.mangaDetailSchema,
+    DaoManager.setFavouriteField(
+      SCHEMA_NAME.MANGA_DETAIL,
       mangaId,
       isFavourite,
     );
   }
 
   async getMangaCharacters(mangaId: number): Promise<CharacterSchema[]> {
-    const manga = await ServiceManager.getObjectById<MangaSchema>(
-      this.mangaDetailSchema,
+    const manga = await DaoManager.getObjectById<MangaSchema>(
+      SCHEMA_NAME.MANGA_DETAIL,
       mangaId,
     );
     return manga?.characters ?? [];

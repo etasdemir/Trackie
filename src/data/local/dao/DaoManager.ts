@@ -63,7 +63,7 @@ class ServiceManager {
     realm.write(() => {
       if (obj) {
         for (let i = 0; i < fields.length; i++) {
-          (obj as never)[fields[i]] = values[i];
+          (obj as any)[fields[i]] = values[i];
         }
       }
     });

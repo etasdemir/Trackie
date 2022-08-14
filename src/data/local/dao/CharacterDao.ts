@@ -4,29 +4,30 @@ import {
 } from '../schema/CharacterSchema';
 import {Character, CharacterDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
-import ServiceManager from './ServiceManager';
-import MangaService from './MangaService';
+import DaoManager from './DaoManager';
+import MangaDao from './MangaDao';
+import {SCHEMA_NAME} from '../SchemaName';
 
 class CharacterService {
-  private detailSchema = 'CharacterDetail';
-  private simpleSchema = 'Character';
-
   async getCharacterDetailById(
     id: number,
   ): Promise<CharacterDetailSchema | undefined> {
-    return await ServiceManager.getObjectById(this.detailSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.CHARACTER_DETAIL, id);
   }
 
   async getCharacterDetailsById(
     characterIds: number[],
   ): Promise<CharacterDetailSchema[]> {
-    return await ServiceManager.getObjectsById(this.detailSchema, characterIds);
+    return await DaoManager.getObjectsById(
+      SCHEMA_NAME.CHARACTER_DETAIL,
+      characterIds,
+    );
   }
 
   async createCharacterDetail(character: CharacterDetail) {
     const mangaIds = character.mangaAppearances.map(item => item.id);
     const mangaAppearances: CoverMangaSchema[] =
-      await MangaService.getCoverMangasById(mangaIds);
+      await MangaDao.getCoverMangasById(mangaIds);
     const obj: CharacterDetailSchema = {
       id: character.id,
       modify_date: Date.now(),
@@ -36,12 +37,12 @@ class CharacterService {
       about: character.about,
       mangaAppearances,
     };
-    ServiceManager.createObject(this.detailSchema, obj);
+    DaoManager.createObject(SCHEMA_NAME.CHARACTER_DETAIL, obj);
   }
 
   async setFavouriteCharacter(isFavourite: boolean, characterId: number) {
-    ServiceManager.setFavouriteField(
-      this.detailSchema,
+    DaoManager.setFavouriteField(
+      SCHEMA_NAME.CHARACTER_DETAIL,
       characterId,
       isFavourite,
     );
@@ -71,11 +72,14 @@ class CharacterService {
   // }
 
   async getCharacterById(id: number): Promise<CharacterSchema | undefined> {
-    return await ServiceManager.getObjectById(this.simpleSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.CHARACTER_SIMPLE, id);
   }
 
   async getCharactersById(characterIds: number[]): Promise<CharacterSchema[]> {
-    return await ServiceManager.getObjectsById(this.simpleSchema, characterIds);
+    return await DaoManager.getObjectsById(
+      SCHEMA_NAME.CHARACTER_SIMPLE,
+      characterIds,
+    );
   }
 
   async createCharacter(character: Character) {
@@ -85,7 +89,7 @@ class CharacterService {
       img: character.img,
       name: character.name,
     };
-    ServiceManager.createObject(this.simpleSchema, obj);
+    DaoManager.createObject(SCHEMA_NAME.CHARACTER_SIMPLE, obj);
   }
 }
 

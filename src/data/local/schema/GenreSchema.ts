@@ -1,7 +1,8 @@
 import {MangaSchema} from './MangaSchema';
+import {SCHEMA_NAME} from '../SchemaName';
 
 export const GenreSchema = {
-  name: 'Genre',
+  name: SCHEMA_NAME.GENRE,
   primaryKey: 'id',
   properties: {
     id: 'int',

@@ -1,17 +1,16 @@
 import {GenreSchema} from '../schema/GenreSchema';
 import {Genre, MangaDetail} from 'src/shared/Types';
-import ServiceManager from './ServiceManager';
-import MangaService from './MangaService';
+import DaoManager from './DaoManager';
+import MangaDao from './MangaDao';
+import {SCHEMA_NAME} from '../SchemaName';
 
 class GenreService {
-  private genreSchema = 'Genre';
-
   async getGenres(): Promise<GenreSchema[]> {
-    return await ServiceManager.getAllObjects<GenreSchema>(this.genreSchema);
+    return await DaoManager.getAllObjects<GenreSchema>(SCHEMA_NAME.GENRE);
   }
 
   async getGenresById(genreIds: number[]): Promise<GenreSchema[]> {
-    return await ServiceManager.getObjectsById(this.genreSchema, genreIds);
+    return await DaoManager.getObjectsById(SCHEMA_NAME.GENRE, genreIds);
   }
 
   async createGenres(genres: Genre[]) {
@@ -27,12 +26,12 @@ class GenreService {
       genreSchemas.push(obj);
     }
 
-    ServiceManager.createObjects<GenreSchema>(this.genreSchema, genreSchemas);
+    DaoManager.createObjects<GenreSchema>(SCHEMA_NAME.GENRE, genreSchemas);
   }
 
   async getMangaListByGenreId(genreId: number): Promise<MangaDetail[]> {
-    const data = await ServiceManager.getObjectById<GenreSchema>(
-      this.genreSchema,
+    const data = await DaoManager.getObjectById<GenreSchema>(
+      SCHEMA_NAME.GENRE,
       genreId,
     );
     return data?.manga_list ?? [];
@@ -40,12 +39,12 @@ class GenreService {
 
   async createGenreMangaList(genreId: number, mangas: MangaDetail[]) {
     for (let manga of mangas) {
-      await MangaService.createManga(manga);
+      await MangaDao.createManga(manga);
     }
     const ids = mangas.map(item => item.id);
-    const values = await MangaService.getMangasById(ids);
-    await ServiceManager.updateFields(
-      this.genreSchema,
+    const values = await MangaDao.getMangasById(ids);
+    await DaoManager.updateFields(
+      SCHEMA_NAME.GENRE,
       genreId,
       ['manga_list'],
       values,

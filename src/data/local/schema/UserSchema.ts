@@ -1,5 +1,7 @@
+import {SCHEMA_NAME} from '../SchemaName';
+
 export const UserSchema = {
-  name: 'User',
+  name: SCHEMA_NAME.USER,
   properties: {
     modify_date: 'int',
     theme: 'string',

@@ -1,28 +1,29 @@
 import {AuthorDetailSchema, AuthorSchema} from '../schema/AuthorSchema';
 import {Author, AuthorDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
-import MangaService from './MangaService';
-import ServiceManager from './ServiceManager';
+import MangaDao from './MangaDao';
+import DaoManager from './DaoManager';
+import {SCHEMA_NAME} from '../SchemaName';
 
 class AuthorService {
-  private detailSchema = 'AuthorDetail';
-  private simpleSchema = 'Author';
-
   async getAuthorDetailById(
     id: number,
   ): Promise<AuthorDetailSchema | undefined> {
-    return await ServiceManager.getObjectById(this.detailSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.AUTHOR_DETAIL, id);
   }
 
   async getAuthorDetailsById(
     authorIds: number[],
   ): Promise<AuthorDetailSchema[]> {
-    return await ServiceManager.getObjectsById(this.detailSchema, authorIds);
+    return await DaoManager.getObjectsById(
+      SCHEMA_NAME.AUTHOR_DETAIL,
+      authorIds,
+    );
   }
 
   async createAuthorDetail(author: AuthorDetail) {
     const workIds = author.works.map(item => item.id);
-    const works: CoverMangaSchema[] = await MangaService.getCoverMangasById(
+    const works: CoverMangaSchema[] = await MangaDao.getCoverMangasById(
       workIds,
     );
     const obj: AuthorDetailSchema = {
@@ -44,19 +45,26 @@ class AuthorService {
         website: author.socialMediaAccounts.website,
       },
     };
-    ServiceManager.createObject(this.detailSchema, obj);
+    DaoManager.createObject(SCHEMA_NAME.AUTHOR_DETAIL, obj);
   }
 
   async setFavouriteAuthor(isFavourite: boolean, authorId: number) {
-    ServiceManager.setFavouriteField(this.detailSchema, authorId, isFavourite);
+    DaoManager.setFavouriteField(
+      SCHEMA_NAME.AUTHOR_DETAIL,
+      authorId,
+      isFavourite,
+    );
   }
 
   async getAuthorById(id: number): Promise<AuthorSchema | undefined> {
-    return await ServiceManager.getObjectById(this.simpleSchema, id);
+    return await DaoManager.getObjectById(SCHEMA_NAME.AUTHOR_SIMPLE, id);
   }
 
   async getAuthorsById(authorIds: number[]): Promise<AuthorSchema[]> {
-    return await ServiceManager.getObjectsById(this.simpleSchema, authorIds);
+    return await DaoManager.getObjectsById(
+      SCHEMA_NAME.AUTHOR_SIMPLE,
+      authorIds,
+    );
   }
 
   async createAuthor(author: Author) {
@@ -65,7 +73,7 @@ class AuthorService {
       modify_date: Date.now(),
       name: author.name,
     };
-    ServiceManager.createObject(this.simpleSchema, obj);
+    DaoManager.createObject(SCHEMA_NAME.AUTHOR_SIMPLE, obj);
   }
 }
 

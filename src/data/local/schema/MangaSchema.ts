@@ -1,9 +1,10 @@
 import {GenreSchema} from './GenreSchema';
 import {AuthorSchema} from './AuthorSchema';
 import {CharacterSchema} from './CharacterSchema';
+import {SCHEMA_NAME} from '../SchemaName';
 
 export const MangaSchema = {
-  name: 'Manga',
+  name: SCHEMA_NAME.MANGA_DETAIL,
   primaryKey: 'id',
   properties: {
     id: 'int',
@@ -25,7 +26,7 @@ export const MangaSchema = {
 };
 
 export const CoverMangaSchema = {
-  name: 'CoverManga',
+  name: SCHEMA_NAME.COVER_MANGA,
   primaryKey: 'id',
   properties: {
     id: 'int',
@@ -37,7 +38,7 @@ export const CoverMangaSchema = {
 };
 
 export const ReadingStatusSchema = {
-  name: 'ReadingStatus',
+  name: SCHEMA_NAME.READING_STATUS,
   embedded: true,
   properties: {
     is_reading: 'bool',
