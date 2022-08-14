@@ -1,7 +1,7 @@
 export const UserSchema = {
   name: 'User',
   properties: {
-    creation_date: 'int',
+    modify_date: 'int',
     theme: 'string',
     language: 'string',
     is_first_install: 'bool',
@@ -10,3 +10,13 @@ export const UserSchema = {
     fav_manga_count: {type: 'int', default: 0},
   },
 };
+
+export interface UserSchema {
+  modify_date: number;
+  theme: string;
+  language: string;
+  is_first_install: boolean;
+  reading_count: number;
+  finished_count: number;
+  fav_manga_count: number;
+}

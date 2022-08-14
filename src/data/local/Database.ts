@@ -7,8 +7,12 @@ import {
   ReadingStatusSchema,
 } from './schema/MangaSchema';
 import {GenreSchema} from './schema/GenreSchema';
-import {CharacterDetaiSchema, CharacterSchema} from './schema/CharacterSchema';
-import {AuthorSchema, SocialMediaSchema} from './schema/AuthorSchema';
+import {CharacterDetailSchema, CharacterSchema} from './schema/CharacterSchema';
+import {
+  AuthorDetailSchema,
+  AuthorSchema,
+  SocialMediaSchema,
+} from './schema/AuthorSchema';
 
 const DB_PATH = '/db/realm';
 
@@ -26,7 +30,8 @@ class Database {
           GenreSchema,
           CoverMangaSchema,
           CharacterSchema,
-          CharacterDetaiSchema,
+          CharacterDetailSchema,
+          AuthorDetailSchema,
           AuthorSchema,
           SocialMediaSchema,
         ],

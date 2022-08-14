@@ -1,9 +1,13 @@
+import {GenreSchema} from './GenreSchema';
+import {AuthorSchema} from './AuthorSchema';
+import {CharacterSchema} from './CharacterSchema';
+
 export const MangaSchema = {
   name: 'Manga',
   primaryKey: 'id',
   properties: {
     id: 'int',
-    creation_date: 'int',
+    modify_date: 'int',
     is_favourite: 'bool',
     img: 'string',
     title: 'string',
@@ -25,7 +29,7 @@ export const CoverMangaSchema = {
   primaryKey: 'id',
   properties: {
     id: 'int',
-    creation_date: 'int',
+    modify_date: 'int',
     img: 'string',
     title: 'string',
     author: 'Author',
@@ -36,9 +40,42 @@ export const ReadingStatusSchema = {
   name: 'ReadingStatus',
   embedded: true,
   properties: {
+    is_reading: 'bool',
     is_finished: 'bool',
     finish_date: 'int?',
     last_read_page: 'int',
     last_read_time: 'int',
   },
 };
+
+export interface MangaSchema {
+  id: number;
+  modify_date: number;
+  is_favourite: boolean;
+  img: string;
+  title: string;
+  author: AuthorSchema;
+  genres: Array<GenreSchema>;
+  rank: number;
+  popularity: number;
+  members: number;
+  characters: Array<CharacterSchema>;
+  score: number;
+  scoredBy: number;
+  synopsis: string;
+  reading_status: {
+    is_reading: boolean;
+    is_finished: boolean;
+    finish_date?: number;
+    last_read_page: number;
+    last_read_time: number;
+  };
+}
+
+export interface CoverMangaSchema {
+  id: number;
+  modify_date: number;
+  img: string;
+  title: string;
+  author: AuthorSchema;
+}
