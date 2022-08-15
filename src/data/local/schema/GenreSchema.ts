@@ -9,7 +9,7 @@ export const GenreSchema = {
     modify_date: 'int',
     name: 'string',
     count: 'int',
-    manga_list: 'Manga[]',
+    manga_list: `${SCHEMA_NAME.MANGA_DETAIL}[]`,
   },
 };
 

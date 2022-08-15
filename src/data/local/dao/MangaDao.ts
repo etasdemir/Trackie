@@ -45,13 +45,17 @@ class MangaService {
   }
 
   async createManga(manga: MangaDetail) {
-    const author = await AuthorDao.getAuthorById(manga.author.id);
+    let author = await AuthorDao.getAuthorById(manga.author.id);
     const characterIds = manga.characters.map(item => item.id);
     const characters = await CharacterDao.getCharactersById(characterIds);
     const genreIds = manga.genres.map(item => item.id);
     const genres = await GenreDao.getGenresById(genreIds);
     if (!author) {
-      return;
+      await AuthorDao.createAuthor(manga.author);
+      author = await AuthorDao.getAuthorById(manga.author.id);
+      if (!author) {
+        return;
+      }
     }
 
     const obj: MangaSchema = {

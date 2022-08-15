@@ -23,8 +23,8 @@ export const AuthorDetailSchema = {
     bio: 'string',
     birthPlace: 'string?',
     birthDate: 'string',
-    works: 'CoverManga[]',
-    socialMediaAccounts: 'SocialMedia',
+    works: `${SCHEMA_NAME.COVER_MANGA}[]`,
+    socialMediaAccounts: `${SCHEMA_NAME.SOCIAL_MEDIA}`,
   },
 };
 

@@ -27,7 +27,8 @@ export const store = configureStore({
     mangas: mangaReducer,
     people: peopleReducer,
   },
-  middleware: defaultMiddleware => defaultMiddleware().concat(logger),
+  middleware: defaultMiddleware =>
+    defaultMiddleware({serializableCheck: false}).concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -2,6 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 import CategoryService from 'src/data/remote/service/CategoryService';
 import {AppDispatch} from '../AppStore';
 import {CategoryState} from '../ReduxTypes';
+import Repository from 'src/data/Repository';
 
 function withPayloadType<T>() {
   return (t: T) => ({payload: t});
@@ -14,7 +15,7 @@ export const getGenresAction = createAction(
 
 export const getGenresThunk = () => {
   return async (dispatch: AppDispatch) => {
-    const result = await CategoryService.getGenres();
+    const result = await Repository.getGenres();
     dispatch(getGenresAction(result));
   };
 };
@@ -54,10 +55,7 @@ export const categoryMangasAction = createAction(
 
 export const categoryMangasThunk = (categoryId: number, page: number) => {
   return async (dispatch: AppDispatch) => {
-    const result = await CategoryService.getMangaListByCategoryId(
-      categoryId,
-      page,
-    );
+    const result = await Repository.getMangaListByCategoryId(categoryId, page);
     dispatch(categoryMangasAction({id: categoryId, value: result}));
   };
 };

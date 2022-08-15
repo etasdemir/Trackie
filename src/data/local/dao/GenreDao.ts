@@ -5,8 +5,10 @@ import MangaDao from './MangaDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
 class GenreService {
-  async getGenres(): Promise<GenreSchema[]> {
-    return await BaseDao.getAllObjects<GenreSchema>(SCHEMA_NAME.GENRE);
+  async getGenres(): Promise<Genre[]> {
+    return await BaseDao.getAllObjectsWithFilter<Genre>(SCHEMA_NAME.GENRE, [
+      'manga_list',
+    ]);
   }
 
   async getGenresById(genreIds: number[]): Promise<GenreSchema[]> {
@@ -47,7 +49,7 @@ class GenreService {
       SCHEMA_NAME.GENRE,
       genreId,
       ['manga_list'],
-      values,
+      [values],
     );
   }
 }

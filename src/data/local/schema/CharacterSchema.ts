@@ -22,7 +22,7 @@ export const CharacterDetailSchema = {
     img: 'string',
     name: 'string',
     about: 'string',
-    mangaAppearances: 'CoverManga[]',
+    mangaAppearances: `${SCHEMA_NAME.COVER_MANGA}[]`,
   },
 };
 

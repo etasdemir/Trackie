@@ -18,7 +18,7 @@ class ServiceManager {
     const realm = await db.getConnection();
     const objs = realm.objects<T>(schema);
     const result: T[] = [];
-    for (let obj of objs) {
+    for (const obj of objs) {
       if (ids.includes(obj.id)) {
         result.push(obj);
       }
@@ -30,8 +30,27 @@ class ServiceManager {
     const realm = await db.getConnection();
     const objects = realm.objects<T>(schema);
     const result: T[] = [];
-    for (let obj of objects) {
+    for (const obj of objects) {
       result.push(obj);
+    }
+    return result;
+  }
+
+  async getAllObjectsWithFilter<T>(
+    schema: string,
+    filters: string[],
+  ): Promise<T[]> {
+    const realm = await db.getConnection();
+    const objects = realm.objects<T>(schema);
+    const result: T[] = [];
+    for (const obj of objects) {
+      let newObj = {};
+      for (const key in obj) {
+        if (!filters.includes(key)) {
+          (newObj as any)[key] = (obj as any)[key];
+        }
+      }
+      result.push(newObj as T);
     }
     return result;
   }
@@ -46,7 +65,7 @@ class ServiceManager {
   async createObjects<T>(schema: string, objects: T[]) {
     const realm = await db.getConnection();
     realm.write(() => {
-      for (let obj of objects) {
+      for (const obj of objects) {
         realm.create(schema, obj, Realm.UpdateMode.Modified);
       }
     });
@@ -62,9 +81,9 @@ class ServiceManager {
     const obj = realm.objectForPrimaryKey<T>(schema, id);
     realm.write(() => {
       if (obj) {
-        for (let i = 0; i < fields.length; i++) {
-          (obj as any)[fields[i]] = values[i];
-        }
+        fields.forEach((field, index) => {
+          (obj as any)[field] = values[index];
+        });
       }
     });
   }

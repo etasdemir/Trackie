@@ -14,15 +14,12 @@ import {
   SocialMediaSchema,
 } from './schema/AuthorSchema';
 
-const DB_PATH = '/db/realm';
-
 class Database {
   private connection: Realm | undefined;
 
   async getConnection(): Promise<Realm> {
     if (!this.connection) {
       this.connection = await Realm.open({
-        path: DB_PATH,
         schema: [
           UserSchema,
           MangaSchema,
