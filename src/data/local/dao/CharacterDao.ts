@@ -4,7 +4,7 @@ import {
 } from '../schema/CharacterSchema';
 import {Character, CharacterDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
-import DaoManager from './DaoManager';
+import BaseDao from './BaseDao';
 import MangaDao from './MangaDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
@@ -12,13 +12,13 @@ class CharacterService {
   async getCharacterDetailById(
     id: number,
   ): Promise<CharacterDetailSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.CHARACTER_DETAIL, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.CHARACTER_DETAIL, id);
   }
 
   async getCharacterDetailsById(
     characterIds: number[],
   ): Promise<CharacterDetailSchema[]> {
-    return await DaoManager.getObjectsById(
+    return await BaseDao.getObjectsById(
       SCHEMA_NAME.CHARACTER_DETAIL,
       characterIds,
     );
@@ -37,11 +37,11 @@ class CharacterService {
       about: character.about,
       mangaAppearances,
     };
-    DaoManager.createObject(SCHEMA_NAME.CHARACTER_DETAIL, obj);
+    BaseDao.createObject(SCHEMA_NAME.CHARACTER_DETAIL, obj);
   }
 
   async setFavouriteCharacter(isFavourite: boolean, characterId: number) {
-    DaoManager.setFavouriteField(
+    BaseDao.setFavouriteField(
       SCHEMA_NAME.CHARACTER_DETAIL,
       characterId,
       isFavourite,
@@ -72,11 +72,11 @@ class CharacterService {
   // }
 
   async getCharacterById(id: number): Promise<CharacterSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.CHARACTER_SIMPLE, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.CHARACTER_SIMPLE, id);
   }
 
   async getCharactersById(characterIds: number[]): Promise<CharacterSchema[]> {
-    return await DaoManager.getObjectsById(
+    return await BaseDao.getObjectsById(
       SCHEMA_NAME.CHARACTER_SIMPLE,
       characterIds,
     );
@@ -89,7 +89,7 @@ class CharacterService {
       img: character.img,
       name: character.name,
     };
-    DaoManager.createObject(SCHEMA_NAME.CHARACTER_SIMPLE, obj);
+    BaseDao.createObject(SCHEMA_NAME.CHARACTER_SIMPLE, obj);
   }
 }
 

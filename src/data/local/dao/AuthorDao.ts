@@ -2,23 +2,20 @@ import {AuthorDetailSchema, AuthorSchema} from '../schema/AuthorSchema';
 import {Author, AuthorDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
 import MangaDao from './MangaDao';
-import DaoManager from './DaoManager';
+import BaseDao from './BaseDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
 class AuthorService {
   async getAuthorDetailById(
     id: number,
   ): Promise<AuthorDetailSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.AUTHOR_DETAIL, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.AUTHOR_DETAIL, id);
   }
 
   async getAuthorDetailsById(
     authorIds: number[],
   ): Promise<AuthorDetailSchema[]> {
-    return await DaoManager.getObjectsById(
-      SCHEMA_NAME.AUTHOR_DETAIL,
-      authorIds,
-    );
+    return await BaseDao.getObjectsById(SCHEMA_NAME.AUTHOR_DETAIL, authorIds);
   }
 
   async createAuthorDetail(author: AuthorDetail) {
@@ -45,26 +42,19 @@ class AuthorService {
         website: author.socialMediaAccounts.website,
       },
     };
-    DaoManager.createObject(SCHEMA_NAME.AUTHOR_DETAIL, obj);
+    BaseDao.createObject(SCHEMA_NAME.AUTHOR_DETAIL, obj);
   }
 
   async setFavouriteAuthor(isFavourite: boolean, authorId: number) {
-    DaoManager.setFavouriteField(
-      SCHEMA_NAME.AUTHOR_DETAIL,
-      authorId,
-      isFavourite,
-    );
+    BaseDao.setFavouriteField(SCHEMA_NAME.AUTHOR_DETAIL, authorId, isFavourite);
   }
 
   async getAuthorById(id: number): Promise<AuthorSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.AUTHOR_SIMPLE, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.AUTHOR_SIMPLE, id);
   }
 
   async getAuthorsById(authorIds: number[]): Promise<AuthorSchema[]> {
-    return await DaoManager.getObjectsById(
-      SCHEMA_NAME.AUTHOR_SIMPLE,
-      authorIds,
-    );
+    return await BaseDao.getObjectsById(SCHEMA_NAME.AUTHOR_SIMPLE, authorIds);
   }
 
   async createAuthor(author: Author) {
@@ -73,7 +63,7 @@ class AuthorService {
       modify_date: Date.now(),
       name: author.name,
     };
-    DaoManager.createObject(SCHEMA_NAME.AUTHOR_SIMPLE, obj);
+    BaseDao.createObject(SCHEMA_NAME.AUTHOR_SIMPLE, obj);
   }
 }
 

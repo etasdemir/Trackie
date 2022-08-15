@@ -2,18 +2,18 @@ import {CoverMangaSchema, MangaSchema} from '../schema/MangaSchema';
 import {CoverManga, MangaDetail} from 'src/shared/Types';
 import CharacterDao from './CharacterDao';
 import AuthorDao from './AuthorDao';
-import DaoManager from './DaoManager';
+import BaseDao from './BaseDao';
 import {CharacterSchema} from '../schema/CharacterSchema';
 import GenreDao from './GenreDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
 class MangaService {
   async getCoverMangaById(id: number): Promise<CoverMangaSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.COVER_MANGA, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.COVER_MANGA, id);
   }
 
   async getCoverMangasById(mangaIds: number[]): Promise<CoverMangaSchema[]> {
-    return await DaoManager.getObjectsById<CoverMangaSchema>(
+    return await BaseDao.getObjectsById<CoverMangaSchema>(
       SCHEMA_NAME.COVER_MANGA,
       mangaIds,
     );
@@ -31,17 +31,17 @@ class MangaService {
       title: manga.title,
       author,
     };
-    DaoManager.createObject(SCHEMA_NAME.COVER_MANGA, coverManga);
+    BaseDao.createObject(SCHEMA_NAME.COVER_MANGA, coverManga);
   }
 
   // async updateCoverManga() {}
 
   async getMangaById(id: number): Promise<MangaSchema | undefined> {
-    return await DaoManager.getObjectById(SCHEMA_NAME.MANGA_DETAIL, id);
+    return await BaseDao.getObjectById(SCHEMA_NAME.MANGA_DETAIL, id);
   }
 
   async getMangasById(ids: number[]): Promise<MangaSchema[]> {
-    return await DaoManager.getObjectsById(SCHEMA_NAME.MANGA_DETAIL, ids);
+    return await BaseDao.getObjectsById(SCHEMA_NAME.MANGA_DETAIL, ids);
   }
 
   async createManga(manga: MangaDetail) {
@@ -77,19 +77,15 @@ class MangaService {
         last_read_time: 0,
       },
     };
-    DaoManager.createObject(SCHEMA_NAME.MANGA_DETAIL, obj);
+    BaseDao.createObject(SCHEMA_NAME.MANGA_DETAIL, obj);
   }
 
   async setFavouriteManga(isFavourite: boolean, mangaId: number) {
-    DaoManager.setFavouriteField(
-      SCHEMA_NAME.MANGA_DETAIL,
-      mangaId,
-      isFavourite,
-    );
+    BaseDao.setFavouriteField(SCHEMA_NAME.MANGA_DETAIL, mangaId, isFavourite);
   }
 
   async getMangaCharacters(mangaId: number): Promise<CharacterSchema[]> {
-    const manga = await DaoManager.getObjectById<MangaSchema>(
+    const manga = await BaseDao.getObjectById<MangaSchema>(
       SCHEMA_NAME.MANGA_DETAIL,
       mangaId,
     );
