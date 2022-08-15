@@ -6,6 +6,7 @@ import {
   MangaDetail,
 } from 'src/shared/Types';
 import CategoryService from './remote/service/CategoryService';
+import {FAVOURITE_TYPE} from 'src/shared/Constant';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -36,9 +37,29 @@ class Repository {
     }
   }
 
-  async getTopMangaList(page: number): Promise<MangaDetail[]> {}
+  async getTopMangaList(page: number): Promise<MangaDetail[]> {
+    const localTopMangas = await GenreDao.getTopMangaList();
+    if (localTopMangas && localTopMangas.length > 0) {
+      return localTopMangas;
+    } else {
+      const remoteTopMangas = await CategoryService.getTopMangaList(page);
+      GenreDao.createTopMangaList(remoteTopMangas);
+      return remoteTopMangas;
+    }
+  }
 
-  async getMostPopularMangaList(page: number): Promise<MangaDetail[]> {}
+  async getMostPopularMangaList(page: number): Promise<MangaDetail[]> {
+    const localMostPopulars = await GenreDao.getMostPopulars();
+    if (localMostPopulars && localMostPopulars.length > 0) {
+      return localMostPopulars;
+    } else {
+      const remoteMostPopulars = await CategoryService.getMostPopularMangaList(
+        page,
+      );
+      GenreDao.createMostPopulars(remoteMostPopulars);
+      return remoteMostPopulars;
+    }
+  }
 
   async getMangaById(id: number): Promise<MangaDetail | undefined> {}
 
@@ -49,6 +70,24 @@ class Repository {
   async getCharacterById(id: number): Promise<CharacterDetail | undefined> {}
 
   async getAuthorById(id: number): Promise<AuthorDetail | undefined> {}
+
+  async setFavourite(type: string, isFavourite: boolean) {
+    switch (type) {
+      case FAVOURITE_TYPE.MANGA: {
+        break;
+      }
+      case FAVOURITE_TYPE.AUTHOR: {
+        break;
+      }
+      case FAVOURITE_TYPE.CHARACTER: {
+        break;
+      }
+      default:
+        return;
+    }
+  }
+
+  // User actions getFav manga, chars, authors, currently readings, setTheme, setLanguage, clear data.
 }
 
 export default new Repository();

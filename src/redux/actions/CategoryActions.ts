@@ -1,5 +1,4 @@
 import {createAction} from '@reduxjs/toolkit';
-import CategoryService from 'src/data/remote/service/CategoryService';
 import {AppDispatch} from '../AppStore';
 import {CategoryState} from '../ReduxTypes';
 import Repository from 'src/data/Repository';
@@ -27,7 +26,7 @@ export const topMangasAction = createAction(
 
 export const topMangasThunk = (page: number) => {
   return async (dispatch: AppDispatch) => {
-    const result = await CategoryService.getTopMangaList(page);
+    const result = await Repository.getTopMangaList(page);
     dispatch(topMangasAction(result));
   };
 };
@@ -39,7 +38,7 @@ export const mostPopularMangasAction = createAction(
 
 export const mostPopularMangasThunk = (page: number) => {
   return async (dispatch: AppDispatch) => {
-    const result = await CategoryService.getMostPopularMangaList(page);
+    const result = await Repository.getMostPopularMangaList(page);
     dispatch(mostPopularMangasAction(result));
   };
 };

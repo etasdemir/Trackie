@@ -6,7 +6,7 @@ import {
   MangaSchema,
   ReadingStatusSchema,
 } from './schema/MangaSchema';
-import {GenreSchema} from './schema/GenreSchema';
+import {GenreSchema, SpecialGenreSchema} from './schema/GenreSchema';
 import {CharacterDetailSchema, CharacterSchema} from './schema/CharacterSchema';
 import {
   AuthorDetailSchema,
@@ -25,6 +25,7 @@ class Database {
           MangaSchema,
           ReadingStatusSchema,
           GenreSchema,
+          SpecialGenreSchema,
           CoverMangaSchema,
           CharacterSchema,
           CharacterDetailSchema,
