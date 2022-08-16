@@ -142,7 +142,34 @@ class Repository {
     }
   }
 
-  // User actions getFav manga, chars, authors, currently readings, setTheme, setLanguage, clear data.
+  async getFavourites(type: string) {
+    switch (type) {
+      case FAVOURITE_TYPE.MANGA: {
+        break;
+      }
+      case FAVOURITE_TYPE.AUTHOR: {
+        break;
+      }
+      case FAVOURITE_TYPE.CHARACTER: {
+        break;
+      }
+      default:
+        return;
+    }
+  }
+
+  async addToReadings() {}
+  async updateReadingStatus() {}
+  async removeFromReadings(isFinished: boolean) {}
+  async getRecentlyReads() {}
+
+  async getUserStatistics() {}
+
+  async getTheme() {}
+  async setTheme() {}
+  async getLanguage() {}
+  async setLanguage() {}
+  async clearData() {}
 }
 
 export default new Repository();
