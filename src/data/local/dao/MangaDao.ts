@@ -1,5 +1,5 @@
 import {CoverMangaSchema, MangaSchema} from '../schema/MangaSchema';
-import {CoverManga, MangaDetail} from 'src/shared/Types';
+import {Character, CoverManga, MangaDetail} from 'src/shared/Types';
 import CharacterDao from './CharacterDao';
 import AuthorDao from './AuthorDao';
 import BaseDao from './BaseDao';
@@ -94,6 +94,20 @@ class MangaService {
       mangaId,
     );
     return manga?.characters ?? [];
+  }
+
+  async createMangaCharacters(mangaId: number, characters: Character[]) {
+    for (let character of characters) {
+      await CharacterDao.createCharacter(character);
+    }
+    const ids = characters.map(item => item.id);
+    const values = await CharacterDao.getCharactersById(ids);
+    await BaseDao.updateFields(
+      SCHEMA_NAME.MANGA_DETAIL,
+      mangaId,
+      ['characters'],
+      [values],
+    );
   }
 }
 

@@ -1,12 +1,18 @@
 import GenreDao from './local/dao/GenreDao';
+import MangaDao from './local/dao/MangaDao';
 import {
   AuthorDetail,
+  Character,
   CharacterDetail,
   Genre,
   MangaDetail,
 } from 'src/shared/Types';
 import CategoryService from './remote/service/CategoryService';
+import MangaService from './remote/service/MangaService';
+import PeopleService from './remote/service/PeopleService';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
+import CharacterDao from './local/dao/CharacterDao';
+import AuthorDao from './local/dao/AuthorDao';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -61,15 +67,62 @@ class Repository {
     }
   }
 
-  async getMangaById(id: number): Promise<MangaDetail | undefined> {}
+  async getMangaById(id: number): Promise<MangaDetail | undefined> {
+    const manga = await MangaDao.getMangaById(id);
+    if (manga) {
+      return manga;
+    } else {
+      const remoteManga = await MangaService.getMangaById(id);
+      if (!remoteManga) {
+        return undefined;
+      }
+      MangaDao.createManga(remoteManga);
+      return remoteManga;
+    }
+  }
 
-  async searchManga(query: string, page: number): Promise<MangaDetail[]> {}
+  async searchManga(query: string, page: number): Promise<MangaDetail[]> {
+    return await MangaService.searchManga(query, page);
+  }
 
-  async getMangaCharacters(mangaId: number): Promise<Character[]> {}
+  async getMangaCharacters(mangaId: number): Promise<Character[]> {
+    const chars = await MangaDao.getMangaCharacters(mangaId);
+    if (chars && chars.length > 0) {
+      return chars;
+    } else {
+      const remoteChars = await MangaService.getMangaCharacters(mangaId);
+      MangaDao.createMangaCharacters(mangaId, remoteChars);
+      return remoteChars;
+    }
+  }
 
-  async getCharacterById(id: number): Promise<CharacterDetail | undefined> {}
+  async getCharacterById(id: number): Promise<CharacterDetail | undefined> {
+    const character = await CharacterDao.getCharacterDetailById(id);
+    if (character) {
+      return character;
+    } else {
+      const remoteChar = await PeopleService.getCharacterById(id);
+      if (!remoteChar) {
+        return undefined;
+      }
+      CharacterDao.createCharacterDetail(remoteChar);
+      return remoteChar;
+    }
+  }
 
-  async getAuthorById(id: number): Promise<AuthorDetail | undefined> {}
+  async getAuthorById(id: number): Promise<AuthorDetail | undefined> {
+    const author = await AuthorDao.getAuthorDetailById(id);
+    if (author) {
+      return author;
+    } else {
+      const remoteAuthor = await PeopleService.getAuthorById(id);
+      if (!remoteAuthor) {
+        return undefined;
+      }
+      AuthorDao.createAuthorDetail(remoteAuthor);
+      return remoteAuthor;
+    }
+  }
 
   async setFavourite(type: string, isFavourite: boolean) {
     switch (type) {
