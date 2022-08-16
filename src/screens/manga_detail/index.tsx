@@ -38,8 +38,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
 
   const onFavouriteClick = useCallback(() => {
     const id = manga.id;
-    const isFav = manga.is_favourite ?? false;
-    dispatch(setFavouriteMangaAction({id, isFavourite: !isFav}));
+    dispatch(setFavouriteMangaAction({id, isFavourite: !manga.is_favourite}));
   }, [dispatch, manga]);
 
   const onAuthorClick = useCallback(() => {

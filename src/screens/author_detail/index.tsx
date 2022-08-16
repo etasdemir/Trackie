@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -12,7 +12,10 @@ import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import {AuthorScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import {getAuthorThunk} from 'src/redux/actions/PeopleActions';
+import {
+  getAuthorThunk,
+  setFavouriteAuthorAction,
+} from 'src/redux/actions/PeopleActions';
 
 function AuthorDetailScreen(props: AuthorScreenProp) {
   const {
@@ -25,16 +28,21 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
     (state: RootState) => state.people.authors[authorId],
   );
   const dispatcher = useAppDispatch();
-  // TODO
-  const [isFavourite, setIsFavourite] = useState(false);
 
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
   const onFavouriteClick = useCallback(() => {
-    setIsFavourite(prev => !prev);
-  }, [setIsFavourite]);
+    if (author) {
+      dispatcher(
+        setFavouriteAuthorAction({
+          id: author.id,
+          value: !author.is_favourite,
+        }),
+      );
+    }
+  }, [dispatcher, author]);
 
   if (!author) {
     dispatcher(getAuthorThunk(authorId));
@@ -59,7 +67,7 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
               <FavouriteIcon
                 onPress={onFavouriteClick}
                 color={theme.primary}
-                isEnabled={isFavourite}
+                isEnabled={author.is_favourite ?? false}
               />
             }
           />

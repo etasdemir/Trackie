@@ -29,6 +29,11 @@ export const getCharacterThunk = (characterId: number) => {
   };
 };
 
+export const setFavouriteCharacterAction = createAction(
+  'SET_FAVOURITE_CHARACTER_ACTION',
+  withPayloadType<ActionMap<boolean>>(),
+);
+
 export const getAuthorAction = createAction(
   'GET_AUTHOR_ACTION',
   withPayloadType<ActionMap<PeopleState['authors'][0]>>(),
@@ -49,3 +54,8 @@ export const getAuthorThunk = (authorId: number) => {
     }
   };
 };
+
+export const setFavouriteAuthorAction = createAction(
+  'SET_FAVOURITE_AUTHOR_ACTION',
+  withPayloadType<ActionMap<boolean>>(),
+);

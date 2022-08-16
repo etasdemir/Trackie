@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -11,7 +11,10 @@ import FavouriteIcon from 'src/components/FavouriteIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {CharacterScreenProp} from 'src/navigation/types';
-import {getCharacterThunk} from 'src/redux/actions/PeopleActions';
+import {
+  getCharacterThunk,
+  setFavouriteCharacterAction,
+} from 'src/redux/actions/PeopleActions';
 
 function CharacterDetailScreen(props: CharacterScreenProp) {
   const {
@@ -24,7 +27,6 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
   const character = useSelector(
     (state: RootState) => state.people.characters[characterId],
   );
-  const [isFavourite, setIsFavourite] = useState(false);
 
   const onBackPress = useCallback(() => {
     navigation.pop();
@@ -32,13 +34,14 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
 
   const onFavouriteClick = useCallback(() => {
     if (character) {
-      setIsFavourite(prev => !prev);
-      console.log(
-        'add or remove character from favourites with id:',
-        character.id,
+      dispatcher(
+        setFavouriteCharacterAction({
+          id: character.id,
+          value: !character.is_favourite,
+        }),
       );
     }
-  }, [character]);
+  }, [character, dispatcher]);
 
   if (!character) {
     dispatcher(getCharacterThunk(characterId));
@@ -60,7 +63,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
           <FavouriteIcon
             onPress={onFavouriteClick}
             color={theme.primary}
-            isEnabled={isFavourite}
+            isEnabled={character.is_favourite ?? false}
           />
         }
       />
