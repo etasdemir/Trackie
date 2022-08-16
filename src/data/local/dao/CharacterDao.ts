@@ -28,6 +28,19 @@ class CharacterService {
     const mangaIds = character.mangaAppearances.map(item => item.id);
     const mangaAppearances: CoverMangaSchema[] =
       await MangaDao.getCoverMangasById(mangaIds);
+    if (mangaIds.length !== mangaAppearances.length) {
+      mangaIds.forEach(async (id, index) => {
+        let isAvailable = false;
+        for (const manga of mangaAppearances) {
+          if (id === manga.id) {
+            isAvailable = true;
+          }
+        }
+        if (!isAvailable) {
+          await MangaDao.createCoverManga(character.mangaAppearances[index]);
+        }
+      });
+    }
     const obj: CharacterDetailSchema = {
       id: character.id,
       modify_date: Date.now(),

@@ -1,8 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 
-import MangaService from 'src/data/remote/service/MangaService';
 import {AppDispatch} from 'src/redux/AppStore';
 import {ActionMap, MangaState} from '../ReduxTypes';
+import Repository from 'src/data/Repository';
 
 function withPayloadType<T>() {
   return (t: T) => ({payload: t});
@@ -15,7 +15,7 @@ export const getMangaAction = createAction(
 
 export const getMangaThunk = (mangaId: number) => {
   return async (dispatch: AppDispatch) => {
-    const manga = await MangaService.getMangaById(mangaId);
+    const manga = await Repository.getMangaById(mangaId);
     if (manga === undefined) {
       console.error(`manga with id: ${mangaId} return undefined.`);
     } else {
@@ -36,7 +36,7 @@ export const getMangaCharactersAction = createAction(
 
 export const getMangaCharactersThunk = (mangaId: number) => {
   return async (dispatch: AppDispatch) => {
-    const characters = await MangaService.getMangaCharacters(mangaId);
+    const characters = await Repository.getMangaCharacters(mangaId);
     dispatch(
       getMangaCharactersAction({
         id: mangaId,
@@ -53,7 +53,7 @@ export const searchMangaAction = createAction(
 
 export const searchMangaThunk = (query: string, page: number) => {
   return async (dispatch: AppDispatch) => {
-    const searchResult = await MangaService.searchManga(query, page);
+    const searchResult = await Repository.searchManga(query, page);
     dispatch(searchMangaAction(searchResult));
   };
 };

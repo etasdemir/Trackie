@@ -1,8 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 
-import PeopleService from 'src/data/remote/service/PeopleService';
 import {AppDispatch} from '../AppStore';
 import {ActionMap, PeopleState} from '../ReduxTypes';
+import Repository from 'src/data/Repository';
 
 function withPayloadType<T>() {
   return (t: T) => ({payload: t});
@@ -15,7 +15,7 @@ export const getCharacterAction = createAction(
 
 export const getCharacterThunk = (characterId: number) => {
   return async (dispatch: AppDispatch) => {
-    const character = await PeopleService.getCharacterById(characterId);
+    const character = await Repository.getCharacterDetailById(characterId);
     if (!character) {
       console.error(`character with id ${characterId} returned undefined.`);
     } else {
@@ -36,7 +36,7 @@ export const getAuthorAction = createAction(
 
 export const getAuthorThunk = (authorId: number) => {
   return async (dispatch: AppDispatch) => {
-    const author = await PeopleService.getAuthorById(authorId);
+    const author = await Repository.getAuthorDetailById(authorId);
     if (!author) {
       console.error(`author with id ${authorId} returned undefined.`);
     } else {

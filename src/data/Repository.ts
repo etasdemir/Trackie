@@ -96,7 +96,9 @@ class Repository {
     }
   }
 
-  async getCharacterById(id: number): Promise<CharacterDetail | undefined> {
+  async getCharacterDetailById(
+    id: number,
+  ): Promise<CharacterDetail | undefined> {
     const character = await CharacterDao.getCharacterDetailById(id);
     if (character) {
       return character;
@@ -110,7 +112,7 @@ class Repository {
     }
   }
 
-  async getAuthorById(id: number): Promise<AuthorDetail | undefined> {
+  async getAuthorDetailById(id: number): Promise<AuthorDetail | undefined> {
     const author = await AuthorDao.getAuthorDetailById(id);
     if (author) {
       return author;

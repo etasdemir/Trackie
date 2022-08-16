@@ -23,6 +23,19 @@ class AuthorService {
     const works: CoverMangaSchema[] = await MangaDao.getCoverMangasById(
       workIds,
     );
+    if (workIds.length !== works.length) {
+      workIds.forEach(async (id, index) => {
+        let isAvailable = false;
+        for (const work of works) {
+          if (id === work.id) {
+            isAvailable = true;
+          }
+        }
+        if (!isAvailable) {
+          await MangaDao.createCoverManga(author.works[index]);
+        }
+      });
+    }
     const obj: AuthorDetailSchema = {
       id: author.id,
       modify_date: Date.now(),
