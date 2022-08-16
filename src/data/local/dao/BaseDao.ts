@@ -1,11 +1,27 @@
+import {NAME_TO_SCHEMA} from '../SchemaMap';
 import db from '../Database';
 
-class ServiceManager {
+class BaseDao {
+  // Workaround for realm's auto update objects. When updating state in a reducer, it tries update value in db. But, transaction required to update db.
+  private convertToItem<T extends {[key: string]: any}>(
+    item: T & Realm.Object,
+    schema: string,
+  ): T {
+    const object: any = {};
+    const properties = Object.getOwnPropertyNames(
+      NAME_TO_SCHEMA[schema].properties,
+    );
+    for (const property of properties) {
+      object[property] = item[property];
+    }
+    return object;
+  }
+
   async getObjectById<T>(schema: string, id: number): Promise<T | undefined> {
     const realm = await db.getConnection();
     const result = realm.objectForPrimaryKey<T>(schema, id);
     if (result) {
-      return result;
+      return this.convertToItem(result, schema);
     } else {
       return undefined;
     }
@@ -16,11 +32,11 @@ class ServiceManager {
     ids: number[],
   ): Promise<T[]> {
     const realm = await db.getConnection();
-    const objs = realm.objects<T>(schema);
+    const objs = realm.objects<T>(schema).snapshot();
     const result: T[] = [];
     for (const obj of objs) {
       if (ids.includes(obj.id)) {
-        result.push(obj);
+        result.push(this.convertToItem(obj, schema));
       }
     }
     return result;
@@ -28,31 +44,33 @@ class ServiceManager {
 
   async getAllObjects<T>(schema: string): Promise<T[]> {
     const realm = await db.getConnection();
-    const objects = realm.objects<T>(schema);
-    const result: T[] = [];
-    for (const obj of objects) {
-      result.push(obj);
-    }
-    return result;
+    const objects = realm.objects<T>(schema).snapshot();
+    return Array.from(objects);
   }
 
-  async getAllObjectsWithFilter<T>(
+  async getAllObjectsWithOmit<T>(
     schema: string,
-    filters: string[],
+    omits: string[],
   ): Promise<T[]> {
     const realm = await db.getConnection();
-    const objects = realm.objects<T>(schema);
+    const objects = realm.objects<T>(schema).snapshot();
     const result: T[] = [];
     for (const obj of objects) {
       let newObj = {};
       for (const key in obj) {
-        if (!filters.includes(key)) {
+        if (!omits.includes(key)) {
           (newObj as any)[key] = (obj as any)[key];
         }
       }
-      result.push(newObj as T);
+      result.push(this.convertToItem(newObj as any, schema));
     }
     return result;
+  }
+
+  async getAllObjectsWithQuery<T>(schema: string, query: string): Promise<T[]> {
+    const realm = await db.getConnection();
+    const objects = realm.objects<T>(schema).filtered(query).snapshot();
+    return Array.from(objects);
   }
 
   async createObject<T>(schema: string, obj: T) {
@@ -101,6 +119,11 @@ class ServiceManager {
       }
     });
   }
+
+  async getFavourites<T>(schema: string) {
+    const query = 'is_favourite == true';
+    return await this.getAllObjectsWithQuery<T>(schema, query);
+  }
 }
 
-export default new ServiceManager();
+export default new BaseDao();

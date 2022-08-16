@@ -34,14 +34,18 @@ class MangaService {
     BaseDao.createObject(SCHEMA_NAME.COVER_MANGA, coverManga);
   }
 
-  // async updateCoverManga() {}
-
   async getMangaById(id: number): Promise<MangaSchema | undefined> {
-    return await BaseDao.getObjectById(SCHEMA_NAME.MANGA_DETAIL, id);
+    return await BaseDao.getObjectById<MangaSchema>(
+      SCHEMA_NAME.MANGA_DETAIL,
+      id,
+    );
   }
 
   async getMangasById(ids: number[]): Promise<MangaSchema[]> {
-    return await BaseDao.getObjectsById(SCHEMA_NAME.MANGA_DETAIL, ids);
+    return await BaseDao.getObjectsById<MangaSchema>(
+      SCHEMA_NAME.MANGA_DETAIL,
+      ids,
+    );
   }
 
   async createManga(manga: MangaDetail) {
@@ -86,6 +90,10 @@ class MangaService {
 
   async setFavouriteManga(isFavourite: boolean, mangaId: number) {
     BaseDao.setFavouriteField(SCHEMA_NAME.MANGA_DETAIL, mangaId, isFavourite);
+  }
+
+  async getFavouriteMangas(): Promise<MangaSchema[]> {
+    return BaseDao.getFavourites<MangaSchema>(SCHEMA_NAME.MANGA_DETAIL);
   }
 
   async getMangaCharacters(mangaId: number): Promise<CharacterSchema[]> {

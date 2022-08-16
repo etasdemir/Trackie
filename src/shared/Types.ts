@@ -31,6 +31,7 @@ export interface MangaDetail extends CategoryManga {
   popularity: number;
   members: number;
   characters: Array<Character>;
+  is_favourite?: boolean;
 }
 
 export interface Genre {
@@ -48,6 +49,7 @@ export interface Character {
 export interface CharacterDetail extends Character {
   about: string;
   mangaAppearances: Array<CoverManga>;
+  is_favourite?: boolean;
 }
 
 export interface Author {
@@ -61,6 +63,7 @@ export interface AuthorDetail extends Author {
   birthPlace?: string;
   birthDate: string;
   works: Array<CoverManga>;
+  is_favourite?: boolean;
   socialMediaAccounts: {
     facebook?: string;
     twitter?: string;

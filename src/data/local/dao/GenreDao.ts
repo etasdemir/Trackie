@@ -10,7 +10,7 @@ import {
 
 class GenreService {
   async getGenres(): Promise<Genre[]> {
-    return await BaseDao.getAllObjectsWithFilter<Genre>(SCHEMA_NAME.GENRE, [
+    return await BaseDao.getAllObjectsWithOmit<Genre>(SCHEMA_NAME.GENRE, [
       'manga_list',
     ]);
   }

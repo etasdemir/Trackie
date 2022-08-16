@@ -62,6 +62,10 @@ class AuthorService {
     BaseDao.setFavouriteField(SCHEMA_NAME.AUTHOR_DETAIL, authorId, isFavourite);
   }
 
+  async getFavouriteAuthors() {
+    return BaseDao.getFavourites(SCHEMA_NAME.AUTHOR_DETAIL);
+  }
+
   async getAuthorById(id: number): Promise<AuthorSchema | undefined> {
     return await BaseDao.getObjectById(SCHEMA_NAME.AUTHOR_SIMPLE, id);
   }

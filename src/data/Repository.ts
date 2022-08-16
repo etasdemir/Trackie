@@ -126,18 +126,22 @@ class Repository {
     }
   }
 
-  async setFavourite(type: string, isFavourite: boolean) {
+  async setFavourite(type: string, id: number, isFavourite: boolean) {
     switch (type) {
       case FAVOURITE_TYPE.MANGA: {
+        await MangaDao.setFavouriteManga(isFavourite, id);
         break;
       }
       case FAVOURITE_TYPE.AUTHOR: {
+        await AuthorDao.setFavouriteAuthor(isFavourite, id);
         break;
       }
       case FAVOURITE_TYPE.CHARACTER: {
+        await CharacterDao.setFavouriteCharacter(isFavourite, id);
         break;
       }
       default:
+        console.error('Repository::setFavourite Invalid favourite type.');
         return;
     }
   }
@@ -145,15 +149,16 @@ class Repository {
   async getFavourites(type: string) {
     switch (type) {
       case FAVOURITE_TYPE.MANGA: {
-        break;
+        return await MangaDao.getFavouriteMangas();
       }
       case FAVOURITE_TYPE.AUTHOR: {
-        break;
+        return await AuthorDao.getFavouriteAuthors();
       }
       case FAVOURITE_TYPE.CHARACTER: {
-        break;
+        return await CharacterDao.getFavouriteCharacters();
       }
       default:
+        console.error('Repository::getFavourites Invalid favourite type.');
         return;
     }
   }

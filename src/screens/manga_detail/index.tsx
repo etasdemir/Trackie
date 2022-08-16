@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {FlatList, ImageSourcePropType, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
@@ -15,6 +15,7 @@ import CharacterItem from './components/CharacterItem';
 import {
   getMangaCharactersThunk,
   getMangaThunk,
+  setFavouriteMangaAction,
 } from 'src/redux/actions/MangaActions';
 import {MangaScreenProp} from 'src/navigation/types';
 
@@ -30,15 +31,16 @@ function MangaDetailScreen(props: MangaScreenProp) {
     manga: state.mangas.mangas[mangaId],
     characters: state.mangas.mangaCharacters[mangaId],
   }));
-  const [isFavourite, setIsFavourite] = useState(false);
 
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
 
   const onFavouriteClick = useCallback(() => {
-    setIsFavourite(prev => !prev);
-  }, [setIsFavourite]);
+    const id = manga.id;
+    const isFav = manga.is_favourite ?? false;
+    dispatch(setFavouriteMangaAction({id, isFavourite: !isFav}));
+  }, [dispatch, manga]);
 
   const onAuthorClick = useCallback(() => {
     navigation.navigate('author_detail', {authorId: manga.author.id});
@@ -75,7 +77,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
             <FavouriteIcon
               onPress={onFavouriteClick}
               color={theme.primary}
-              isEnabled={isFavourite}
+              isEnabled={manga.is_favourite ?? false}
             />
           }
         />

@@ -61,6 +61,10 @@ class CharacterService {
     );
   }
 
+  async getFavouriteCharacters() {
+    return BaseDao.getFavourites(SCHEMA_NAME.CHARACTER_DETAIL);
+  }
+
   // async updateCharacterDetail(character: CharacterDetail) {
   //   const realm = await db.getConnection();
   //   realm.write(() => {
