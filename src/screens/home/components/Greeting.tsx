@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
 import {ColorProps, UnfinishedManga} from 'src/shared/Types';
 import language from 'src/shared/language';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import ProgressBar from 'src/components/ProgressBar';
 
@@ -22,6 +23,7 @@ function Greeting(props: Props) {
       img,
     },
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const progress = parseInt(
     ((currentChapter / totalChapter) * 100).toFixed(0),
     10,

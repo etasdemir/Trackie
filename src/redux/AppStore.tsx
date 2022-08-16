@@ -6,6 +6,7 @@ import {createLogger} from 'redux-logger';
 import {categoryReducer} from './reducers/CategoryReducers';
 import {mangaReducer} from './reducers/MangaReducers';
 import {peopleReducer} from './reducers/PeopleReducers';
+import {userReducer} from './reducers/UserReducer';
 
 const logger = createLogger({
   level: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     category: categoryReducer,
     mangas: mangaReducer,
     people: peopleReducer,
+    user: userReducer,
   },
   middleware: defaultMiddleware =>
     defaultMiddleware({serializableCheck: false}).concat(logger),

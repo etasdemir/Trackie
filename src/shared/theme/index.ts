@@ -1,4 +1,9 @@
-const themeJson: ITheme = require('./theme.json');
+import {Appearance} from 'react-native';
+
+import Repository from 'src/data/Repository';
+import {THEME} from 'src/shared/Constant';
+
+export const themeJson: ITheme = require('./theme.json');
 
 interface ITheme {
   [theme: string]: ThemeInterface;
@@ -15,15 +20,21 @@ export interface ThemeInterface {
 }
 
 class ThemeStore {
-  theme: string = 'light';
+  defaultTheme = THEME.LIGHT;
 
-  constructor() {
-    // TODO
-    // if saved set
-    // else if not saved get system and set
+  async getInitialTheme() {
+    const persistedValue = await Repository.getTheme();
+    if (persistedValue) {
+      return persistedValue;
+    }
+    const deviceTheme = Appearance.getColorScheme();
+    if (deviceTheme) {
+      return deviceTheme;
+    }
+    return this.defaultTheme;
   }
 }
 
 export const themeStore = new ThemeStore();
-const theme = themeJson[themeStore.theme];
+const theme = themeJson[themeStore.defaultTheme];
 export default theme;

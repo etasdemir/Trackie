@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIIcon from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
 
 import language from 'src/shared/language';
 import Home from 'src/screens/home';
@@ -15,12 +16,14 @@ import MangaDetailScreen from 'src/screens/manga_detail';
 import CharacterDetailScreen from 'src/screens/character_detail';
 import Onboarding from 'src/screens/onboarding';
 import {BottomBarParamList, RootStackParamList} from './types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
 
 function BottomBarTab() {
+  const {theme} = useSelector((state: RootState) => state.user);
+
   return (
     <BottomBar.Navigator
       initialRouteName="bottom_bar_home"

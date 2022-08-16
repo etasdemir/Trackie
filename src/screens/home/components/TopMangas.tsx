@@ -4,7 +4,6 @@ import {FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {ColorProps, MangaDetail} from 'src/shared/Types';
-import theme from 'src/shared/theme';
 import ViewAllButton from 'src/components/ViewAllButton';
 import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
@@ -20,8 +19,9 @@ interface Props {
 function TopMangas(props: Props) {
   const {navigation} = props;
   const dispatch = useAppDispatch();
-
+  const {theme} = useSelector((state: RootState) => state.user);
   const topMangas = useSelector((state: RootState) => state.category.topMangas);
+
   const genre = useMemo(
     () => ({
       id: TOP_MANGA_GENRE_ID,

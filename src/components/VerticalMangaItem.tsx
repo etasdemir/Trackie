@@ -1,7 +1,8 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import StarRating from 'src/components/StarRating';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
@@ -30,6 +31,7 @@ function VerticalMangaItem(props: VerticalMangaItemProps) {
       scoredBy,
     },
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   const onMangaClick = useCallback(() => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});

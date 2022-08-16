@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {RootState} from 'src/redux/AppStore';
 
 import {ColorProps, UnfinishedManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
-import theme from 'src/shared/theme';
+import {useSelector} from 'react-redux';
 import ProgressBar from 'src/components/ProgressBar';
 
 export interface UnfinishedMangaItemProps {
@@ -14,6 +15,7 @@ function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
   const {
     manga: {id, img, title, currentChapter, totalChapter},
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const progress = parseInt(
     ((currentChapter / totalChapter) * 100).toFixed(0),
     10,

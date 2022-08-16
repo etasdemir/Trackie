@@ -1,14 +1,60 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 
 import {OnboardingScreenProp} from 'src/navigation/types';
+import {themeStore} from 'src/shared/theme';
+import {
+  setIsFirstInstallAction,
+  setThemeAction,
+} from 'src/redux/actions/UserActions';
+import {useAppDispatch} from 'src/redux/AppStore';
+import Repository from 'src/data/Repository';
 
 function Onboarding({navigation}: OnboardingScreenProp) {
-  const onOnboardImageClick = () => {
+  const dispatcher = useAppDispatch();
+  const [readyState, setReadyState] = useState({
+    isFirstInstall: false,
+    isAppLoaded: false,
+  });
+
+  const navigateNextScreen = useCallback(() => {
+    dispatcher(setIsFirstInstallAction(false));
     navigation.navigate('bottom_bar', {
       screen: 'bottom_bar_home',
     });
-  };
+  }, [dispatcher, navigation]);
+
+  const onOnboardImageClick = useCallback(() => {
+    if (readyState.isAppLoaded) {
+      navigateNextScreen();
+    }
+  }, [navigateNextScreen, readyState.isAppLoaded]);
+
+  const loadApp = useCallback(async () => {
+    const dbIsFirstInstall = await Repository.getIsFirstInstall();
+
+    const persistedTheme = await themeStore.getInitialTheme();
+    if (persistedTheme !== themeStore.defaultTheme) {
+      dispatcher(setThemeAction({theme: persistedTheme}));
+    }
+
+    // Load language
+
+    setReadyState({
+      isFirstInstall: dbIsFirstInstall,
+      isAppLoaded: true,
+    });
+  }, [dispatcher]);
+
+  if (!readyState.isFirstInstall && readyState.isAppLoaded) {
+    setTimeout(() => {
+      navigateNextScreen();
+    }, 250);
+  }
+
+  if (!readyState.isAppLoaded) {
+    loadApp();
+  }
 
   return (
     <Container onPress={onOnboardImageClick}>

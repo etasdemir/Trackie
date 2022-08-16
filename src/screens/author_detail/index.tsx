@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
 import {ColorProps, CoverManga} from 'src/shared/Types';
-import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import SocialMediaIcon, {SocialMedia} from './components/SocialMediaIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
@@ -24,6 +23,7 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
     },
     navigation,
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const author = useSelector(
     (state: RootState) => state.people.authors[authorId],
   );

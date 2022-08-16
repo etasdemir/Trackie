@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {ImageSourcePropType} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import {AuthorDetail, ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 
 interface AuthorItemProps {
   author: AuthorDetail;
@@ -11,6 +12,7 @@ interface AuthorItemProps {
 
 function AuthorItem(props: AuthorItemProps) {
   const {author} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const imageSource: ImageSourcePropType = {
     uri: author.img,
     height: 150,

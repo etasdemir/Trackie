@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useSelector} from 'react-redux';
 
 import Stat from './components/Stat';
 import {ColorProps} from 'src/shared/Types';
 import language from 'src/shared/language';
-import theme, {themeStore} from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import SettingsButton from 'src/components/SettingsButton';
 
 export interface ProfileProps {
@@ -23,6 +24,7 @@ enum MODAL_KEY {
 
 function Profile(props: ProfileProps) {
   const {stats} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const tabBarHeight = useBottomTabBarHeight();
 
   const onSettingsPress = (key: MODAL_KEY) => {
@@ -57,7 +59,7 @@ function Profile(props: ProfileProps) {
       </StatContainer>
       <SettingsButton
         name={language.getText('theme')}
-        value={language.getText(themeStore.theme + '_theme')}
+        value={language.getText(theme.theme + '_theme')}
         onSettingPress={() => onSettingsPress(MODAL_KEY.THEME)}
       />
       <SettingsButton

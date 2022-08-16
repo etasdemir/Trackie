@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default withAppStore(App);
+export default withAppStore<typeof App>(App);

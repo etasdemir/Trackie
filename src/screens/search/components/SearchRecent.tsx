@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 import {LayoutAnimation} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import ViewAllButton from 'src/components/ViewAllButton';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import language from 'src/shared/language';
 import {ColorProps} from 'src/shared/Types';
 import RecentChip from './RecentChip';
@@ -15,6 +16,7 @@ export interface SearchRecentProps {
 
 function SearchRecent(props: SearchRecentProps) {
   const {recents, callback} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const [isVisible, setIsVisible] = useState(true);
   const visibilityCallback = useCallback((isViewVisible: boolean) => {
     LayoutAnimation.configureNext({

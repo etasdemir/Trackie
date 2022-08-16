@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 
 import {ColorProps, Genre, MangaDetail} from 'src/shared/Types';
-import theme from 'src/shared/theme';
 import ViewAllButton from 'src/components/ViewAllButton';
 import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
@@ -23,6 +22,7 @@ function CategoryHorizontalList(props: Props) {
   console.log('CategoryHorizontalList rendered', props.genre.id);
   const {genre, navigation} = props;
 
+  const {theme} = useSelector((state: RootState) => state.user);
   const {categoryToMangaList} = useSelector(
     (state: RootState) => state.category,
   );

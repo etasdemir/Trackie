@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 
 export enum SocialMedia {
@@ -19,6 +20,7 @@ interface SocialMediaIconProps {
 
 function SocialMediaIcon(props: SocialMediaIconProps) {
   const {type, url} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   const onIconClick = () => {
     console.log('social media:', type, 'url:', url);

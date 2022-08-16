@@ -13,6 +13,7 @@ import PeopleService from './remote/service/PeopleService';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import CharacterDao from './local/dao/CharacterDao';
 import AuthorDao from './local/dao/AuthorDao';
+import UserDao from './local/dao/UserDao';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -163,6 +164,8 @@ class Repository {
     }
   }
 
+  async addSearchRecent(recent: string) {}
+
   async addToReadings() {}
   async updateReadingStatus() {}
   async removeFromReadings(isFinished: boolean) {}
@@ -170,10 +173,24 @@ class Repository {
 
   async getUserStatistics() {}
 
-  async getTheme() {}
-  async setTheme() {}
+  async setIsFirstInstall(value: boolean) {
+    return await UserDao.setIsFirstInstall(value);
+  }
+
+  async getIsFirstInstall() {
+    return await UserDao.getIsFirstInstall();
+  }
+
+  async getTheme() {
+    return await UserDao.getTheme();
+  }
+
+  async setTheme(theme: string) {
+    await UserDao.setTheme(theme);
+  }
+
   async getLanguage() {}
-  async setLanguage() {}
+  async setLanguage(language: string) {}
   async clearData() {}
 }
 

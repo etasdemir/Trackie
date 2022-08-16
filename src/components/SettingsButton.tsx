@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
 import {ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 
 export interface SettingsButtonProps {
   name: string;
@@ -12,6 +13,7 @@ export interface SettingsButtonProps {
 
 function SettingsButton(props: SettingsButtonProps) {
   const {name, value, onSettingPress} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   return (
     <Container onPress={onSettingPress}>

@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 
 export interface ViewAllBtnProps {
@@ -11,6 +12,7 @@ export interface ViewAllBtnProps {
 
 function ViewAllButton(props: ViewAllBtnProps) {
   const {text, onPress} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   return (
     <Button onPress={onPress} color={theme.onViewFaint}>

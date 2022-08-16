@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
 import {ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
@@ -23,6 +22,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
       params: {characterId},
     },
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const dispatcher = useAppDispatch();
   const character = useSelector(
     (state: RootState) => state.people.characters[characterId],

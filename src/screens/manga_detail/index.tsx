@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux';
 import TopBar from 'src/components/TopBar';
 import {ColorProps, Genre} from 'src/shared/Types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import StarRating from 'src/components/StarRating';
@@ -27,6 +26,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
     },
   } = props;
   const dispatch = useAppDispatch();
+  const {theme} = useSelector((state: RootState) => state.user);
   const {characters, manga} = useSelector((state: RootState) => ({
     manga: state.mangas.mangas[mangaId],
     characters: state.mangas.mangaCharacters[mangaId],

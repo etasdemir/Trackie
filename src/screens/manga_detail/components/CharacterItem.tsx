@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {ImageSourcePropType} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import {Character, ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import {RootChildScreenProp} from 'src/navigation/types';
 
 interface CharacterItemProps {
@@ -13,6 +14,7 @@ interface CharacterItemProps {
 
 function CharacterItem(props: CharacterItemProps) {
   const {character, navigation} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const imageSource: ImageSourcePropType = {
     uri: character.img,
     height: 130,

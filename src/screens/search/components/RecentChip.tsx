@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 
 import {ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 
 export interface RecentChipProps {
   name: string;
@@ -13,6 +14,7 @@ export interface RecentChipProps {
 
 function RecentChip(props: RecentChipProps) {
   const {name, onSelect, onClear} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   return (
     <Container color={theme.primaryLight} onPress={() => onSelect(name)}>

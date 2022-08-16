@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
 import {ColorProps, Genre} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import {RootChildScreenProp} from 'src/navigation/types';
 
 export interface CategoryChipProps {
@@ -12,6 +13,7 @@ export interface CategoryChipProps {
 
 function CategoryChip(props: CategoryChipProps) {
   const {navigation, genre} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   const onCategoryChipClick = () => {
     navigation.navigate('category', {genre});

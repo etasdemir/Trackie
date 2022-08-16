@@ -2,10 +2,11 @@ import React from 'react';
 import {ViewProps} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
-import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import {ColorProps} from 'src/shared/Types';
+import {RootState} from 'src/redux/AppStore';
 
 export interface StarRatingProps extends ViewProps {
   score: number;
@@ -16,6 +17,7 @@ export interface StarRatingProps extends ViewProps {
 
 function StarRating(props: StarRatingProps) {
   const {score, scoredBy} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   return (
     <RatingContainer>

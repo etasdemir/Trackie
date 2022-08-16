@@ -8,7 +8,6 @@ import SearchInput from './components/SearchInput';
 import SearchRecent, {SearchRecentProps} from './components/SearchRecent';
 import VerticalMangaList from 'src/components/VerticalMangaList';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
 import language from 'src/shared/language';
 import {SearchScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
@@ -35,6 +34,7 @@ const recents: SearchRecentProps['recents'] = [
 
 function Search(props: SearchScreenProp) {
   const {navigation} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const mostPopulars = useSelector(
     (state: RootState) => state.category.mostPopulars,
   );

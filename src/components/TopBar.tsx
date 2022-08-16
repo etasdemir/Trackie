@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 
 import {ColorProps} from 'src/shared/Types';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 
 export interface TopBarProps {
   title?: string;
@@ -14,6 +15,7 @@ export interface TopBarProps {
 
 function TopBar(props: TopBarProps) {
   const {title, onBackPress, RightElement, backgroundColor} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   return (
     <Container color={backgroundColor ?? 'transparent'}>

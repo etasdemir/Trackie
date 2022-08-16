@@ -3,9 +3,10 @@ import {Keyboard, TextInput} from 'react-native';
 import styled from 'styled-components/native';
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIcon from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
 
 import language from 'src/shared/language';
-import theme from 'src/shared/theme';
+import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 
 interface Props {
@@ -30,6 +31,7 @@ let lastSearch: LastTextSearch = {timestamp: getSec(), text: ''};
 
 function SearchInput(props: Props) {
   const {searchText, onTextClear, inputRef} = props;
+  const {theme} = useSelector((state: RootState) => state.user);
   const [input, setInput] = useState<string>('');
   const isTextTyped = input.length > 0;
 
@@ -120,7 +122,7 @@ const SearchContainer = styled.View<ColorProps>`
   flex-direction: row;
   align-items: center;
   border-radius: 20px;
-  background-color: ${theme.primaryLight};
+  background-color: ${({color}) => color};
 `;
 
 const LeftIconContainer = styled.View`

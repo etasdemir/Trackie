@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {useSelector} from 'react-redux';
 
 import {ColorProps, CoverManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
-import theme from 'src/shared/theme';
 import {
   BottomBarChildScreenProp,
   RootChildScreenProp,
 } from 'src/navigation/types';
+import {RootState} from 'src/redux/AppStore';
 
 export interface HorizontalMangaItemProps {
   manga: CoverManga;
@@ -26,6 +27,7 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
     navigation,
     onPress,
   } = props;
+  const {theme} = useSelector((state: RootState) => state.user);
 
   const onMangaPress = () => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
