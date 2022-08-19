@@ -5,6 +5,7 @@ import {OnboardingScreenProp} from 'src/navigation/types';
 import {themeStore} from 'src/shared/theme';
 import {
   setIsFirstInstallAction,
+  setLanguageAction,
   setThemeAction,
 } from 'src/redux/actions/UserActions';
 import {useAppDispatch} from 'src/redux/AppStore';
@@ -38,7 +39,10 @@ function Onboarding({navigation}: OnboardingScreenProp) {
       dispatcher(setThemeAction({theme: persistedTheme}));
     }
 
-    // Load language
+    const persistedLanguage = await Repository.getLanguage();
+    if (persistedLanguage) {
+      dispatcher(setLanguageAction({language: persistedLanguage}));
+    }
 
     setReadyState({
       isFirstInstall: dbIsFirstInstall,

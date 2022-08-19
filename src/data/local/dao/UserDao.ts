@@ -18,6 +18,19 @@ class UserDao {
     return user?.theme;
   }
 
+  async setLanguage(language: string) {
+    const obj = {id: USER_ID, language};
+    await BaseDao.createObject(SCHEMA_NAME.USER, obj);
+  }
+
+  async getLanguage(): Promise<string | undefined> {
+    const user = await BaseDao.getObjectById<UserSchema>(
+      SCHEMA_NAME.USER,
+      USER_ID,
+    );
+    return user?.language;
+  }
+
   async getIsFirstInstall(): Promise<boolean> {
     const user = await BaseDao.getObjectById<UserSchema>(
       SCHEMA_NAME.USER,

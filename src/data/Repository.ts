@@ -189,8 +189,14 @@ class Repository {
     await UserDao.setTheme(theme);
   }
 
-  async getLanguage() {}
-  async setLanguage(language: string) {}
+  async getLanguage() {
+    return await UserDao.getLanguage();
+  }
+
+  async setLanguage(language: string) {
+    await UserDao.setLanguage(language);
+  }
+
   async clearData() {}
 }
 

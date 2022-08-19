@@ -1,3 +1,4 @@
+import {LANGUAGE} from 'src/shared/Constant';
 import {StringToLang} from 'src/shared/Types';
 import {en} from './en';
 import {tr} from './tr';
@@ -7,8 +8,8 @@ interface StringToObject {
 }
 
 const abbrToObj: StringToObject = {
-  en: en,
-  tr: tr,
+  [LANGUAGE.ENGLISH]: en,
+  [LANGUAGE.TURKISH]: tr,
 };
 
 export const resolveLanguage = (abbr: string, key: string) => {

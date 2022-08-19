@@ -11,3 +11,8 @@ export const THEME = {
   LIGHT: 'light',
   DARK: 'dark',
 };
+
+export const LANGUAGE = {
+  ENGLISH: 'en',
+  TURKISH: 'tr',
+};

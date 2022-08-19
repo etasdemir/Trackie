@@ -9,8 +9,12 @@ export const setThemeAction = createAction(
   withPayloadType<{theme: string}>(),
 );
 
+export const setLanguageAction = createAction(
+  'SET_LANGUAGE_ACTION',
+  withPayloadType<{language: string}>(),
+);
+
 export const setIsFirstInstallAction = createAction(
   'SET_USER_IS_FIRST_INSTALL',
   withPayloadType<boolean>(),
 );
-""
