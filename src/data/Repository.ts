@@ -14,6 +14,7 @@ import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import CharacterDao from './local/dao/CharacterDao';
 import AuthorDao from './local/dao/AuthorDao';
 import UserDao from './local/dao/UserDao';
+import BaseDao from './local/dao/BaseDao';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -197,7 +198,9 @@ class Repository {
     await UserDao.setLanguage(language);
   }
 
-  async clearData() {}
+  async clearData() {
+    await BaseDao.deleteAll();
+  }
 }
 
 export default new Repository();

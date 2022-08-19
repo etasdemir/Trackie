@@ -124,6 +124,11 @@ class BaseDao {
     const query = 'is_favourite == true';
     return await this.getAllObjectsWithQuery<T>(schema, query);
   }
+
+  async deleteAll() {
+    const realm = await db.getConnection();
+    realm.deleteAll();
+  }
 }
 
 export default new BaseDao();
