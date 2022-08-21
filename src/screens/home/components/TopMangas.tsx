@@ -16,7 +16,10 @@ interface Props {
   navigation: BottomBarChildScreenProp;
 }
 
+let isTopMangaFetched = false;
+
 function TopMangas(props: Props) {
+  console.log('TopMangas rendered');
   const {navigation} = props;
   const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.user.theme);
@@ -31,14 +34,15 @@ function TopMangas(props: Props) {
     [topMangas.length],
   );
 
-  if (!topMangas || topMangas.length === 0) {
-    const page = 1;
-    dispatch(topMangasThunk(page));
-  }
-
   const onCategoryViewAllPress = useCallback(() => {
     navigation.navigate('category', {genre});
   }, [genre, navigation]);
+
+  if ((!topMangas || topMangas.length === 0) && !isTopMangaFetched) {
+    const page = 1;
+    dispatch(topMangasThunk(page));
+    isTopMangaFetched = true;
+  }
 
   return (
     <Container>
@@ -84,4 +88,4 @@ const MangaFlatList = styled(FlatList<MangaDetail>)`
   margin-top: 5px;
 `;
 
-export default TopMangas;
+export default React.memo(TopMangas);

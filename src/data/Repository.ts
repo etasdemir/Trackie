@@ -14,6 +14,7 @@ import CharacterDao from './local/dao/CharacterDao';
 import AuthorDao from './local/dao/AuthorDao';
 import UserDao from './local/dao/UserDao';
 import BaseDao from './local/dao/BaseDao';
+import {SearchRecentSchema} from './local/schema/UserSchema';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -143,13 +144,22 @@ class Repository {
     return await UserDao.getUser();
   }
 
-  async addSearchRecent(recent: string) {}
+  async addSearchRecent(recent: SearchRecentSchema) {
+    await UserDao.addSearchRecent(recent);
+  }
+
+  async removeSearchRecent(recent: SearchRecentSchema) {
+    await UserDao.removeSearchRecent(recent);
+  }
+
+  async deleteAllSearchRecent() {
+    await UserDao.deleteAllSearchRecent();
+  }
 
   async addToReadings() {}
   async updateReadingStatus() {}
   async removeFromReadings(isFinished: boolean) {}
   async getRecentlyReads() {}
-
 
   async setIsFirstInstall(value: boolean) {
     return await UserDao.setIsFirstInstall(value);

@@ -1,6 +1,6 @@
 import {CharacterDetailSchema} from '../schema/CharacterSchema';
 import {AuthorDetailSchema} from '../schema/AuthorSchema';
-import {UserSchema} from '../schema/UserSchema';
+import {SearchRecentSchema, UserSchema} from '../schema/UserSchema';
 import {SCHEMA_NAME} from '../SchemaName';
 import BaseDao from './BaseDao';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
@@ -26,9 +26,13 @@ class UserDao {
         favourite_mangas: [],
         favourite_authors: [],
         favourite_characters: [],
+        search_recent: [],
       };
       await BaseDao.createObject(SCHEMA_NAME.USER, newUser);
-      return await BaseDao.getObjectById<UserSchema>(SCHEMA_NAME.USER, USER_ID);
+      return await BaseDao.getCopyObjectById<UserSchema>(
+        SCHEMA_NAME.USER,
+        USER_ID,
+      );
     }
     return user;
   }
@@ -169,6 +173,28 @@ class UserDao {
         console.error('Repository::getFavourites Invalid favourite type.');
         return [];
     }
+  }
+
+  async addSearchRecent(recent: SearchRecentSchema) {
+    BaseDao.addElementToFields<MangaSchema>(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['search_recent'],
+      [recent],
+    );
+  }
+
+  async removeSearchRecent(recent: SearchRecentSchema) {
+    BaseDao.removeElementFromFields(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['search_recent'],
+      [recent],
+    );
+  }
+
+  async deleteAllSearchRecent() {
+    BaseDao.updateFields(SCHEMA_NAME.USER, USER_ID, ['search_recent'], [[]]);
   }
 }
 

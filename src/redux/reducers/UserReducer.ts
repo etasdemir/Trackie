@@ -6,6 +6,9 @@ import {
   setLanguageAction,
   setThemeAction,
   setUserAction,
+  addSearchRecentAction,
+  removeSearchRecentAction,
+  deleteAllSearchRecentAction,
 } from '../actions/UserActions';
 import Repository from 'src/data/Repository';
 import {UserState} from '../ReduxTypes';
@@ -23,6 +26,7 @@ const initialState: UserState = {
     favourite_mangas: [],
     favourite_authors: [],
     favourite_characters: [],
+    search_recent: [],
   },
 };
 
@@ -69,5 +73,21 @@ export const userReducer = createReducer(initialState.user, builder => {
         break;
       }
     }
+  });
+  builder.addCase(addSearchRecentAction, (state, action) => {
+    const payload = action.payload;
+    Repository.addSearchRecent(payload);
+    state.search_recent.push(payload);
+  });
+  builder.addCase(removeSearchRecentAction, (state, action) => {
+    const payload = action.payload;
+    Repository.removeSearchRecent(payload);
+    state.search_recent = state.search_recent.filter(
+      element => element !== payload,
+    );
+  });
+  builder.addCase(deleteAllSearchRecentAction, (state, _) => {
+    Repository.deleteAllSearchRecent();
+    state.search_recent = [];
   });
 });

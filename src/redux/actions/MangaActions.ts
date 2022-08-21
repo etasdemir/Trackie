@@ -57,4 +57,3 @@ export const searchMangaThunk = (query: string, page: number) => {
     dispatch(searchMangaAction(searchResult));
   };
 };
-

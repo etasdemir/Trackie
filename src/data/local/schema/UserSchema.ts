@@ -15,6 +15,7 @@ export const UserSchema = {
     favourite_mangas: `${SCHEMA_NAME.MANGA_DETAIL}[]`,
     favourite_authors: `${SCHEMA_NAME.AUTHOR_DETAIL}[]`,
     favourite_characters: `${SCHEMA_NAME.CHARACTER_DETAIL}[]`,
+    search_recent: `${SCHEMA_NAME.SEARCH_RECENT}[]`,
   },
 };
 
@@ -31,6 +32,16 @@ export const ReadingStatusSchema = {
   },
 };
 
+export const SearchRecentSchema = {
+  name: SCHEMA_NAME.SEARCH_RECENT,
+  embedded: true,
+  properties: {
+    searched_item_id: 'int',
+    type: 'string',
+    name: 'string',
+  },
+};
+
 export interface UserSchema {
   id?: number;
   modify_date: number;
@@ -41,6 +52,7 @@ export interface UserSchema {
   favourite_mangas: MangaSchema[];
   favourite_authors: AuthorDetailSchema[];
   favourite_characters: CharacterDetailSchema[];
+  search_recent: SearchRecentSchema[];
 }
 
 export interface ReadingStatus {
@@ -50,4 +62,10 @@ export interface ReadingStatus {
   finish_date: number | undefined;
   last_read_page: number | undefined;
   last_read_time: number | undefined;
+}
+
+export interface SearchRecentSchema {
+  searched_item_id: number;
+  type: string;
+  name: string;
 }

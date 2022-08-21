@@ -14,7 +14,7 @@ import {
 export interface VerticalMangaItemProps {
   categoryManga: CategoryManga;
   navigation: BottomBarChildScreenProp | RootChildScreenProp;
-  onPress?: () => void;
+  onPress?: (name: string, id: number) => void;
 }
 
 function VerticalMangaItem(props: VerticalMangaItemProps) {
@@ -35,8 +35,8 @@ function VerticalMangaItem(props: VerticalMangaItemProps) {
 
   const onMangaClick = useCallback(() => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});
-    onPress && onPress();
-  }, [id, navigation, onPress]);
+    onPress && onPress(title, id);
+  }, [id, navigation, onPress, title]);
 
   return (
     <MangaButton onPress={onMangaClick}>

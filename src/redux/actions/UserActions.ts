@@ -62,3 +62,23 @@ export const removeFavouriteThunk = (type: string, id: number) => {
     dispatch(updateFavouritesAction({type, values: favourites}));
   };
 };
+
+export interface SearchRecentPayload {
+  searched_item_id: number;
+  type: string;
+  name: string;
+}
+
+export const addSearchRecentAction = createAction(
+  'USER_ADD_SEARCH_RECENT_ACTION',
+  withPayloadType<SearchRecentPayload>(),
+);
+
+export const removeSearchRecentAction = createAction(
+  'USER_REMOVE_SEARCH_RECENT_ACTION',
+  withPayloadType<SearchRecentPayload>(),
+);
+
+export const deleteAllSearchRecentAction = createAction(
+  'USER_DELETE_ALL_SEARCH_RECENT_ACTION',
+);

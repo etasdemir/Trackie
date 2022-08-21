@@ -23,7 +23,9 @@ class MangaService {
     if (isError(response)) {
       return [];
     } else {
-      return response.result.data.map(item => mangaModelToMangaDetail(item));
+      return response.result.data
+        .filter(item => item.authors.length > 0)
+        .map(item => mangaModelToMangaDetail(item));
     }
   }
 

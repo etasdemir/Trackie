@@ -5,23 +5,24 @@ import {useSelector} from 'react-redux';
 
 import {ColorProps} from 'src/shared/Types';
 import {RootState} from 'src/redux/AppStore';
+import {SearchRecentPayload} from 'src/redux/actions/UserActions';
 
 export interface RecentChipProps {
-  name: string;
-  onSelect: (name: string) => void;
-  onClear: (name: string) => void;
+  recent: SearchRecentPayload;
+  onSelect: (recent: SearchRecentPayload) => void;
+  onClear: (recent: SearchRecentPayload) => void;
 }
 
 function RecentChip(props: RecentChipProps) {
-  const {name, onSelect, onClear} = props;
+  const {recent, onSelect, onClear} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
-    <Container color={theme.primaryLight} onPress={() => onSelect(name)}>
+    <Container color={theme.primaryLight} onPress={() => onSelect(recent)}>
       <ChipName numberOfLines={1} color={theme.onView}>
-        {name}
+        {recent.name}
       </ChipName>
-      <DeleteIconButton onPress={() => onClear(name)}>
+      <DeleteIconButton onPress={() => onClear(recent)}>
         <Icon name="close" color={theme.primaryDark} size={22} />
       </DeleteIconButton>
     </Container>

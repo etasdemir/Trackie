@@ -1,6 +1,10 @@
 import Realm from 'realm';
 
-import {ReadingStatusSchema, UserSchema} from './schema/UserSchema';
+import {
+  ReadingStatusSchema,
+  SearchRecentSchema,
+  UserSchema,
+} from './schema/UserSchema';
 import {CoverMangaSchema, MangaSchema} from './schema/MangaSchema';
 import {GenreSchema, SpecialGenreSchema} from './schema/GenreSchema';
 import {CharacterDetailSchema, CharacterSchema} from './schema/CharacterSchema';
@@ -28,6 +32,7 @@ class Database {
           AuthorDetailSchema,
           AuthorSchema,
           SocialMediaSchema,
+          SearchRecentSchema,
         ],
       });
     }

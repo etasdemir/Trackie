@@ -16,3 +16,11 @@ export const LANGUAGE = {
   ENGLISH: 'en',
   TURKISH: 'tr',
 };
+
+export const MAX_SEARCH_RECENT_COUNT = 5;
+
+export const SEARCH_RECENT = {
+  MANGA: 'SEARCH_RECENT_MANGA',
+  AUTHOR: 'SEARCH_RECENT_AUTHOR',
+  CHARACTER: 'SEARCH_RECENT_CHARACTER',
+};

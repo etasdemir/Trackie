@@ -19,7 +19,7 @@ function Category(props: CategoryScreenProp) {
     },
     navigation,
   } = props;
-  const dispach = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const categoryToMangaList = useSelector(
     (state: RootState) => state.category.categoryToMangaList[genre.id],
@@ -38,13 +38,13 @@ function Category(props: CategoryScreenProp) {
   if (genre.id === TOP_MANGA_GENRE_ID) {
     if (!topMangas) {
       const page = 1;
-      dispach(topMangasThunk(page));
+      dispatch(topMangasThunk(page));
       return null;
     }
   } else {
     if (!categoryToMangaList) {
       const page = 1;
-      dispach(categoryMangasThunk(genre.id, page));
+      dispatch(categoryMangasThunk(genre.id, page));
       return null;
     }
   }

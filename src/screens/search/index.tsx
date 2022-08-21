@@ -5,7 +5,7 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {TextInput} from 'react-native';
 
 import SearchInput from './components/SearchInput';
-import SearchRecent, {SearchRecentProps} from './components/SearchRecent';
+import SearchRecent from './components/SearchRecent';
 import VerticalMangaList from 'src/components/VerticalMangaList';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
 import language from 'src/shared/language';
@@ -14,19 +14,11 @@ import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {mostPopularMangasThunk} from 'src/redux/actions/CategoryActions';
 import SearchResult from './components/SearchResult';
 import {searchMangaThunk} from 'src/redux/actions/MangaActions';
+import {addSearchRecentAction} from 'src/redux/actions/UserActions';
 
 export interface SearchProps extends SearchScreenProp {
   mostPopularMangaList: CategoryManga[];
-  recents: SearchRecentProps['recents'];
 }
-
-// TODO
-const recents: SearchRecentProps['recents'] = [
-  'search 1',
-  'random search 2',
-  'Lorem ipsum dolor sit amet, consectetur',
-  'Sed ut perspiciatis unde omnis iste natus error sit voluptatem',
-];
 
 // TODO
 // 1. ekran değişince search text sıfırlanmıyor. SearchResultItem tıklanırsa sil;
@@ -62,16 +54,18 @@ function Search(props: SearchScreenProp) {
     }
   }, [isSearchActive]);
 
-  const onSearchItemPress = useCallback(() => {
-    if (isSearchActive) {
-      setIsSearchActive(false);
-    }
-    if (inputRef.current) {
-      inputRef.current.clear();
-    }
-    // TODO
-    // Add to recents if not already added
-  }, [isSearchActive]);
+  const onSearchItemPress = useCallback(
+    (searched_item_id: number, type: string, name: string) => {
+      if (isSearchActive) {
+        setIsSearchActive(false);
+      }
+      if (inputRef.current) {
+        inputRef.current.clear();
+      }
+      dispatcher(addSearchRecentAction({searched_item_id, type, name}));
+    },
+    [dispatcher, isSearchActive],
+  );
 
   const onScrollTop = () => {
     if (setSearchRecentVisibility) {
@@ -102,7 +96,7 @@ function Search(props: SearchScreenProp) {
       )}
       {!isSearchActive && (
         <SearchRecent
-          recents={recents}
+          navigation={navigation}
           callback={(setter: (isVisible: boolean) => void) =>
             (setSearchRecentVisibility = setter)
           }

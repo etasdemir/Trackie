@@ -8,15 +8,20 @@ import {
   RootChildScreenProp,
 } from 'src/navigation/types';
 import {RootState} from 'src/redux/AppStore';
+import {SEARCH_RECENT} from 'src/shared/Constant';
 
 interface Props {
   navigation: BottomBarChildScreenProp | RootChildScreenProp;
-  onPress: () => void;
+  onPress: (searched_item_id: number, type: string, name: string) => void;
 }
 
 function SearchResult(props: Props) {
   const mangaList = useSelector((state: RootState) => state.mangas.searchManga);
   const {navigation, onPress} = props;
+
+  const onItemClick = (name: string, id: number) => {
+    onPress(id, SEARCH_RECENT.MANGA, name);
+  };
 
   return (
     <FlatList
@@ -26,7 +31,7 @@ function SearchResult(props: Props) {
         <VerticalMangaItem
           key={item.id}
           categoryManga={item}
-          onPress={onPress}
+          onPress={onItemClick}
           navigation={navigation}
         />
       )}
