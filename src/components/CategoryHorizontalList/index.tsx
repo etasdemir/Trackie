@@ -19,12 +19,12 @@ interface Props {
 const isFetched: {[key: number]: boolean} = {};
 
 function CategoryHorizontalList(props: Props) {
-  console.log('CategoryHorizontalList rendered', props.genre.id);
+  console.log('CategoryHorizontalList rendered', props.genre);
   const {genre, navigation} = props;
 
-  const {theme} = useSelector((state: RootState) => state.user);
-  const {categoryToMangaList} = useSelector(
-    (state: RootState) => state.category,
+  const theme = useSelector((state: RootState) => state.user.theme);
+  const categoryToMangaList = useSelector(
+    (state: RootState) => state.category.categoryToMangaList[genre.id],
   );
   const dispatch = useAppDispatch();
 
@@ -32,17 +32,14 @@ function CategoryHorizontalList(props: Props) {
     navigation.navigate('category', {genre});
   }, [genre, navigation]);
 
-  if (!categoryToMangaList[genre.id] && !isFetched[genre.id]) {
+  if (!categoryToMangaList && !isFetched[genre.id]) {
     isFetched[genre.id] = true;
     const page = 1;
     dispatch(categoryMangasThunk(genre.id, page));
     return null;
   }
 
-  if (
-    !categoryToMangaList[genre.id] ||
-    categoryToMangaList[genre.id].length === 0
-  ) {
+  if (!categoryToMangaList || categoryToMangaList.length === 0) {
     return null;
   } else {
     return (
@@ -56,7 +53,7 @@ function CategoryHorizontalList(props: Props) {
         </CategoryHeader>
         <MangaFlatList
           showsHorizontalScrollIndicator={false}
-          data={categoryToMangaList[genre.id]}
+          data={categoryToMangaList}
           renderItem={({item}) => (
             <HorizontalMangaItem
               key={item.id.toString()}

@@ -17,7 +17,7 @@ export interface StarRatingProps extends ViewProps {
 
 function StarRating(props: StarRatingProps) {
   const {score, scoredBy} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <RatingContainer>

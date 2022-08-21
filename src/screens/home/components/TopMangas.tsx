@@ -19,7 +19,7 @@ interface Props {
 function TopMangas(props: Props) {
   const {navigation} = props;
   const dispatch = useAppDispatch();
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const topMangas = useSelector((state: RootState) => state.category.topMangas);
 
   const genre = useMemo(

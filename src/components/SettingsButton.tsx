@@ -13,7 +13,7 @@ export interface SettingsButtonProps {
 
 function SettingsButton(props: SettingsButtonProps) {
   const {name, value, onSettingPress} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <Container onPress={onSettingPress}>

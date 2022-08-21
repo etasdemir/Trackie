@@ -13,7 +13,7 @@ export interface CategoryChipProps {
 
 function CategoryChip(props: CategoryChipProps) {
   const {navigation, genre} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   const onCategoryChipClick = () => {
     navigation.navigate('category', {genre});

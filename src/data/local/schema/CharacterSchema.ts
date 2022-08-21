@@ -18,7 +18,6 @@ export const CharacterDetailSchema = {
   properties: {
     id: 'int',
     modify_date: 'int',
-    is_favourite: 'bool',
     img: 'string',
     name: 'string',
     about: 'string',
@@ -36,7 +35,6 @@ export interface CharacterSchema {
 export interface CharacterDetailSchema {
   id: number;
   modify_date: number;
-  is_favourite: boolean;
   img: string;
   name: string;
   about: string;

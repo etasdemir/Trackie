@@ -10,7 +10,6 @@ import {
 import CategoryService from './remote/service/CategoryService';
 import MangaService from './remote/service/MangaService';
 import PeopleService from './remote/service/PeopleService';
-import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import CharacterDao from './local/dao/CharacterDao';
 import AuthorDao from './local/dao/AuthorDao';
 import UserDao from './local/dao/UserDao';
@@ -128,41 +127,20 @@ class Repository {
     }
   }
 
-  async setFavourite(type: string, id: number, isFavourite: boolean) {
-    switch (type) {
-      case FAVOURITE_TYPE.MANGA: {
-        await MangaDao.setFavouriteManga(isFavourite, id);
-        break;
-      }
-      case FAVOURITE_TYPE.AUTHOR: {
-        await AuthorDao.setFavouriteAuthor(isFavourite, id);
-        break;
-      }
-      case FAVOURITE_TYPE.CHARACTER: {
-        await CharacterDao.setFavouriteCharacter(isFavourite, id);
-        break;
-      }
-      default:
-        console.error('Repository::setFavourite Invalid favourite type.');
-        return;
-    }
+  async addFavourite(type: string, id: number) {
+    await UserDao.addFavourite(type, id);
+  }
+
+  async removeFavourite(type: string, id: number) {
+    await UserDao.removeFavourite(type, id);
   }
 
   async getFavourites(type: string) {
-    switch (type) {
-      case FAVOURITE_TYPE.MANGA: {
-        return await MangaDao.getFavouriteMangas();
-      }
-      case FAVOURITE_TYPE.AUTHOR: {
-        return await AuthorDao.getFavouriteAuthors();
-      }
-      case FAVOURITE_TYPE.CHARACTER: {
-        return await CharacterDao.getFavouriteCharacters();
-      }
-      default:
-        console.error('Repository::getFavourites Invalid favourite type.');
-        return;
-    }
+    return await UserDao.getFavourites(type);
+  }
+
+  async getUser() {
+    return await UserDao.getUser();
   }
 
   async addSearchRecent(recent: string) {}
@@ -172,7 +150,6 @@ class Repository {
   async removeFromReadings(isFinished: boolean) {}
   async getRecentlyReads() {}
 
-  async getUserStatistics() {}
 
   async setIsFirstInstall(value: boolean) {
     return await UserDao.setIsFirstInstall(value);

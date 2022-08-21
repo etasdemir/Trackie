@@ -17,7 +17,6 @@ export const AuthorDetailSchema = {
   properties: {
     id: 'int',
     modify_date: 'int',
-    is_favourite: 'bool',
     name: 'string',
     img: 'string',
     bio: 'string',
@@ -50,7 +49,6 @@ export interface AuthorSchema {
 export interface AuthorDetailSchema {
   id: number;
   modify_date: number;
-  is_favourite: boolean;
   name: string;
   img: string;
   bio: string;

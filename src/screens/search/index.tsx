@@ -34,7 +34,7 @@ const recents: SearchRecentProps['recents'] = [
 
 function Search(props: SearchScreenProp) {
   const {navigation} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const mostPopulars = useSelector(
     (state: RootState) => state.category.mostPopulars,
   );

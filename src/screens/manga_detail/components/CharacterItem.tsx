@@ -14,7 +14,7 @@ interface CharacterItemProps {
 
 function CharacterItem(props: CharacterItemProps) {
   const {character, navigation} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const imageSource: ImageSourcePropType = {
     uri: character.img,
     height: 130,

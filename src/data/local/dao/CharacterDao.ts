@@ -8,7 +8,7 @@ import BaseDao from './BaseDao';
 import MangaDao from './MangaDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
-class CharacterService {
+class CharacterDao {
   async getCharacterDetailById(
     id: number,
   ): Promise<CharacterDetailSchema | undefined> {
@@ -44,25 +44,12 @@ class CharacterService {
     const obj: CharacterDetailSchema = {
       id: character.id,
       modify_date: Date.now(),
-      is_favourite: false,
       img: character.img,
       name: character.name,
       about: character.about,
       mangaAppearances,
     };
     BaseDao.createObject(SCHEMA_NAME.CHARACTER_DETAIL, obj);
-  }
-
-  async setFavouriteCharacter(isFavourite: boolean, characterId: number) {
-    BaseDao.setFavouriteField(
-      SCHEMA_NAME.CHARACTER_DETAIL,
-      characterId,
-      isFavourite,
-    );
-  }
-
-  async getFavouriteCharacters() {
-    return BaseDao.getFavourites(SCHEMA_NAME.CHARACTER_DETAIL);
   }
 
   // async updateCharacterDetail(character: CharacterDetail) {
@@ -110,4 +97,4 @@ class CharacterService {
   }
 }
 
-export default new CharacterService();
+export default new CharacterDao();

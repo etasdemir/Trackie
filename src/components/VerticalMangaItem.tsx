@@ -31,7 +31,7 @@ function VerticalMangaItem(props: VerticalMangaItemProps) {
       scoredBy,
     },
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   const onMangaClick = useCallback(() => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});

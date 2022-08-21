@@ -17,14 +17,22 @@ class BaseDao {
     return object;
   }
 
+  async getCopyObjectById<T>(
+    schema: string,
+    id: number,
+  ): Promise<T | undefined> {
+    const realm = await db.getConnection();
+    const result = realm.objectForPrimaryKey<T>(schema, id);
+    if (!result) {
+      return undefined;
+    }
+    return this.convertToItem<T>(result, schema);
+  }
+
   async getObjectById<T>(schema: string, id: number): Promise<T | undefined> {
     const realm = await db.getConnection();
     const result = realm.objectForPrimaryKey<T>(schema, id);
-    if (result) {
-      return this.convertToItem(result, schema);
-    } else {
-      return undefined;
-    }
+    return result;
   }
 
   async getObjectsById<T extends {id: number}>(
@@ -36,7 +44,7 @@ class BaseDao {
     const result: T[] = [];
     for (const obj of objs) {
       if (ids.includes(obj.id)) {
-        result.push(this.convertToItem(obj, schema));
+        result.push(obj);
       }
     }
     return result;
@@ -62,7 +70,7 @@ class BaseDao {
           (newObj as any)[key] = (obj as any)[key];
         }
       }
-      result.push(this.convertToItem(newObj as any, schema));
+      result.push(newObj as T);
     }
     return result;
   }
@@ -106,23 +114,70 @@ class BaseDao {
     });
   }
 
-  async setFavouriteField<T extends {is_favourite: boolean}>(
+  async addElementToFields<T extends {id: number}>(
     schema: string,
     id: number,
-    isFavourite: boolean,
+    fields: string[],
+    values: any[],
   ) {
     const realm = await db.getConnection();
+    const obj = realm.objectForPrimaryKey<T>(schema, id);
+    if (!obj) {
+      return;
+    }
+    const item = obj;
     realm.write(() => {
-      const obj = realm.objectForPrimaryKey<T>(schema, id);
-      if (obj) {
-        obj.is_favourite = isFavourite;
+      if (item) {
+        fields.forEach((fieldName, index) => {
+          let value = values[index];
+          let field = (item as any)[fieldName];
+          const findIndex = field.findIndex(
+            (el: T) =>
+              el === value ||
+              (el.id !== undefined &&
+                value.id !== undefined &&
+                el.id === value.id),
+          );
+          if (findIndex === -1) {
+            field.push(value);
+          } else {
+            field[findIndex] = value;
+          }
+        });
       }
     });
   }
 
-  async getFavourites<T>(schema: string) {
-    const query = 'is_favourite == true';
-    return await this.getAllObjectsWithQuery<T>(schema, query);
+  async removeElementFromFields<T extends {id: number}>(
+    schema: string,
+    id: number,
+    fields: string[],
+    values: any[],
+  ) {
+    const realm = await db.getConnection();
+    const obj = realm.objectForPrimaryKey<T>(schema, id);
+    if (!obj) {
+      return;
+    }
+    const item = obj;
+    realm.write(() => {
+      if (item) {
+        fields.forEach((fieldName, index) => {
+          const value = values[index];
+          let field = (item as any)[fieldName];
+          const findIndex = field.findIndex(
+            (el: T) =>
+              el === value ||
+              (el.id !== undefined &&
+                value.id !== undefined &&
+                el.id === value.id),
+          );
+          if (findIndex !== -1) {
+            field.splice(findIndex, 1);
+          }
+        });
+      }
+    });
   }
 
   async deleteAll() {

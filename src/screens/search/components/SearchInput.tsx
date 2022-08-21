@@ -31,7 +31,7 @@ let lastSearch: LastTextSearch = {timestamp: getSec(), text: ''};
 
 function SearchInput(props: Props) {
   const {searchText, onTextClear, inputRef} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const [input, setInput] = useState<string>('');
   const isTextTyped = input.length > 0;
 

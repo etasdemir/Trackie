@@ -15,7 +15,7 @@ function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
   const {
     manga: {id, img, title, currentChapter, totalChapter},
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const progress = parseInt(
     ((currentChapter / totalChapter) * 100).toFixed(0),
     10,

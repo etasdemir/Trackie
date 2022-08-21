@@ -7,7 +7,7 @@ import {CharacterSchema} from '../schema/CharacterSchema';
 import GenreDao from './GenreDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
-class MangaService {
+class MangaDao {
   async getCoverMangaById(id: number): Promise<CoverMangaSchema | undefined> {
     return await BaseDao.getObjectById(SCHEMA_NAME.COVER_MANGA, id);
   }
@@ -65,7 +65,6 @@ class MangaService {
     const obj: MangaSchema = {
       id: manga.id,
       modify_date: Date.now(),
-      is_favourite: false,
       img: manga.img,
       title: manga.title,
       author,
@@ -77,23 +76,8 @@ class MangaService {
       score: manga.score,
       scoredBy: manga.scoredBy,
       synopsis: manga.synopsis,
-      reading_status: {
-        is_reading: false,
-        is_finished: false,
-        finish_date: undefined,
-        last_read_page: 0,
-        last_read_time: 0,
-      },
     };
     BaseDao.createObject(SCHEMA_NAME.MANGA_DETAIL, obj);
-  }
-
-  async setFavouriteManga(isFavourite: boolean, mangaId: number) {
-    BaseDao.setFavouriteField(SCHEMA_NAME.MANGA_DETAIL, mangaId, isFavourite);
-  }
-
-  async getFavouriteMangas(): Promise<MangaSchema[]> {
-    return BaseDao.getFavourites<MangaSchema>(SCHEMA_NAME.MANGA_DETAIL);
   }
 
   async getMangaCharacters(mangaId: number): Promise<CharacterSchema[]> {
@@ -119,4 +103,4 @@ class MangaService {
   }
 }
 
-export default new MangaService();
+export default new MangaDao();

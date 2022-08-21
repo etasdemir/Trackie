@@ -11,10 +11,8 @@ import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import {AuthorScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import {
-  getAuthorThunk,
-  setFavouriteAuthorAction,
-} from 'src/redux/actions/PeopleActions';
+import {getAuthorThunk} from 'src/redux/actions/PeopleActions';
+import {FAVOURITE_TYPE} from 'src/shared/Constant';
 
 function AuthorDetailScreen(props: AuthorScreenProp) {
   const {
@@ -23,7 +21,7 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
     },
     navigation,
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const author = useSelector(
     (state: RootState) => state.people.authors[authorId],
   );
@@ -32,17 +30,6 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
-
-  const onFavouriteClick = useCallback(() => {
-    if (author) {
-      dispatcher(
-        setFavouriteAuthorAction({
-          id: author.id,
-          value: !author.is_favourite,
-        }),
-      );
-    }
-  }, [dispatcher, author]);
 
   if (!author) {
     dispatcher(getAuthorThunk(authorId));
@@ -65,9 +52,9 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
             onBackPress={onBackPress}
             RightElement={
               <FavouriteIcon
-                onPress={onFavouriteClick}
                 color={theme.primary}
-                isEnabled={author.is_favourite ?? false}
+                itemId={authorId}
+                type={FAVOURITE_TYPE.AUTHOR}
               />
             }
           />

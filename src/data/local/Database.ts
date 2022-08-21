@@ -1,11 +1,7 @@
 import Realm from 'realm';
 
-import {UserSchema} from './schema/UserSchema';
-import {
-  CoverMangaSchema,
-  MangaSchema,
-  ReadingStatusSchema,
-} from './schema/MangaSchema';
+import {ReadingStatusSchema, UserSchema} from './schema/UserSchema';
+import {CoverMangaSchema, MangaSchema} from './schema/MangaSchema';
 import {GenreSchema, SpecialGenreSchema} from './schema/GenreSchema';
 import {CharacterDetailSchema, CharacterSchema} from './schema/CharacterSchema';
 import {

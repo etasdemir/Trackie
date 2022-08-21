@@ -24,7 +24,7 @@ enum MODAL_KEY {
 
 function Profile(props: ProfileProps) {
   const {stats} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const tabBarHeight = useBottomTabBarHeight();
 
   const onSettingsPress = (key: MODAL_KEY) => {

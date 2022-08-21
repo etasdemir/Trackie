@@ -12,7 +12,7 @@ interface StatProps {
 
 function Stat(props: StatProps) {
   const {name, count} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <Container>

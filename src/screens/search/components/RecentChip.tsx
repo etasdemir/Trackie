@@ -14,7 +14,7 @@ export interface RecentChipProps {
 
 function RecentChip(props: RecentChipProps) {
   const {name, onSelect, onClear} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <Container color={theme.primaryLight} onPress={() => onSelect(name)}>

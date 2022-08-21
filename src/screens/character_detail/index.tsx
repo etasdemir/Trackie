@@ -10,10 +10,8 @@ import FavouriteIcon from 'src/components/FavouriteIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {CharacterScreenProp} from 'src/navigation/types';
-import {
-  getCharacterThunk,
-  setFavouriteCharacterAction,
-} from 'src/redux/actions/PeopleActions';
+import {getCharacterThunk} from 'src/redux/actions/PeopleActions';
+import {FAVOURITE_TYPE} from 'src/shared/Constant';
 
 function CharacterDetailScreen(props: CharacterScreenProp) {
   const {
@@ -22,7 +20,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
       params: {characterId},
     },
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const dispatcher = useAppDispatch();
   const character = useSelector(
     (state: RootState) => state.people.characters[characterId],
@@ -31,17 +29,6 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
   const onBackPress = useCallback(() => {
     navigation.pop();
   }, [navigation]);
-
-  const onFavouriteClick = useCallback(() => {
-    if (character) {
-      dispatcher(
-        setFavouriteCharacterAction({
-          id: character.id,
-          value: !character.is_favourite,
-        }),
-      );
-    }
-  }, [character, dispatcher]);
 
   if (!character) {
     dispatcher(getCharacterThunk(characterId));
@@ -61,9 +48,9 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
         title={character.name}
         RightElement={
           <FavouriteIcon
-            onPress={onFavouriteClick}
             color={theme.primary}
-            isEnabled={character.is_favourite ?? false}
+            itemId={characterId}
+            type={FAVOURITE_TYPE.CHARACTER}
           />
         }
       />

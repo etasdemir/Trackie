@@ -12,7 +12,7 @@ export interface ViewAllBtnProps {
 
 function ViewAllButton(props: ViewAllBtnProps) {
   const {text, onPress} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <Button onPress={onPress} color={theme.onViewFaint}>

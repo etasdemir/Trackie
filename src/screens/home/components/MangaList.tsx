@@ -21,7 +21,7 @@ const HOME_MANGA_PER_SCROLL = 1;
 function MangaList(props: Props) {
   console.log('home mangalist rendered');
   const {allGenres, unfinishedManga, navigation} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const [genres, setGenres] = useState(
     allGenres.slice(0, HOME_MANGA_PER_SCROLL),
   );

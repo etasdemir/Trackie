@@ -10,6 +10,7 @@ interface ITheme {
 }
 
 export interface ThemeInterface {
+  theme: string;
   background: string;
   surface: string;
   primary: string;

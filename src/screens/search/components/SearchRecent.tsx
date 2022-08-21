@@ -16,8 +16,9 @@ export interface SearchRecentProps {
 
 function SearchRecent(props: SearchRecentProps) {
   const {recents, callback} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const [isVisible, setIsVisible] = useState(true);
+
   const visibilityCallback = useCallback((isViewVisible: boolean) => {
     LayoutAnimation.configureNext({
       ...LayoutAnimation.Presets.linear,

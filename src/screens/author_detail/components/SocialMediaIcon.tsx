@@ -20,7 +20,7 @@ interface SocialMediaIconProps {
 
 function SocialMediaIcon(props: SocialMediaIconProps) {
   const {type, url} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   const onIconClick = () => {
     console.log('social media:', type, 'url:', url);

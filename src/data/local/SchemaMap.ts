@@ -1,16 +1,12 @@
 import {CharacterDetailSchema, CharacterSchema} from './schema/CharacterSchema';
-import {
-  CoverMangaSchema,
-  MangaSchema,
-  ReadingStatusSchema,
-} from './schema/MangaSchema';
+import {CoverMangaSchema, MangaSchema} from './schema/MangaSchema';
 import {GenreSchema, SpecialGenreSchema} from './schema/GenreSchema';
 import {
   AuthorDetailSchema,
   AuthorSchema,
   SocialMediaSchema,
 } from './schema/AuthorSchema';
-import {UserSchema} from './schema/UserSchema';
+import {ReadingStatusSchema, UserSchema} from './schema/UserSchema';
 import {SCHEMA_NAME} from './SchemaName';
 
 export const NAME_TO_SCHEMA = {

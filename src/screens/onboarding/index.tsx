@@ -4,8 +4,8 @@ import styled from 'styled-components/native';
 import {OnboardingScreenProp} from 'src/navigation/types';
 import {themeStore} from 'src/shared/theme';
 import {
+  getUserThunk,
   setIsFirstInstallAction,
-  setLanguageAction,
   setThemeAction,
 } from 'src/redux/actions/UserActions';
 import {useAppDispatch} from 'src/redux/AppStore';
@@ -32,16 +32,13 @@ function Onboarding({navigation}: OnboardingScreenProp) {
   }, [navigateNextScreen, readyState.isAppLoaded]);
 
   const loadApp = useCallback(async () => {
+    dispatcher(getUserThunk());
+
     const dbIsFirstInstall = await Repository.getIsFirstInstall();
 
     const persistedTheme = await themeStore.getInitialTheme();
     if (persistedTheme !== themeStore.defaultTheme) {
       dispatcher(setThemeAction({theme: persistedTheme}));
-    }
-
-    const persistedLanguage = await Repository.getLanguage();
-    if (persistedLanguage) {
-      dispatcher(setLanguageAction({language: persistedLanguage}));
     }
 
     setReadyState({

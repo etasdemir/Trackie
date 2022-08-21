@@ -5,7 +5,7 @@ import MangaDao from './MangaDao';
 import BaseDao from './BaseDao';
 import {SCHEMA_NAME} from '../SchemaName';
 
-class AuthorService {
+class AuthorDao {
   async getAuthorDetailById(
     id: number,
   ): Promise<AuthorDetailSchema | undefined> {
@@ -39,7 +39,6 @@ class AuthorService {
     const obj: AuthorDetailSchema = {
       id: author.id,
       modify_date: Date.now(),
-      is_favourite: false,
       name: author.name,
       img: author.img,
       bio: author.bio,
@@ -56,14 +55,6 @@ class AuthorService {
       },
     };
     BaseDao.createObject(SCHEMA_NAME.AUTHOR_DETAIL, obj);
-  }
-
-  async setFavouriteAuthor(isFavourite: boolean, authorId: number) {
-    BaseDao.setFavouriteField(SCHEMA_NAME.AUTHOR_DETAIL, authorId, isFavourite);
-  }
-
-  async getFavouriteAuthors() {
-    return BaseDao.getFavourites(SCHEMA_NAME.AUTHOR_DETAIL);
   }
 
   async getAuthorById(id: number): Promise<AuthorSchema | undefined> {
@@ -84,4 +75,4 @@ class AuthorService {
   }
 }
 
-export default new AuthorService();
+export default new AuthorDao();

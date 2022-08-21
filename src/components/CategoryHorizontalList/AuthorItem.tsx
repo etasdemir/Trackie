@@ -12,7 +12,7 @@ interface AuthorItemProps {
 
 function AuthorItem(props: AuthorItemProps) {
   const {author} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const imageSource: ImageSourcePropType = {
     uri: author.img,
     height: 150,

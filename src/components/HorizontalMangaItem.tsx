@@ -27,7 +27,7 @@ function HorizontalMangaItem(props: HorizontalMangaItemProps) {
     navigation,
     onPress,
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   const onMangaPress = () => {
     (navigation as RootChildScreenProp).navigate('manga_detail', {mangaId: id});

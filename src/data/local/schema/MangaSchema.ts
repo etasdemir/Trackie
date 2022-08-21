@@ -9,7 +9,6 @@ export const MangaSchema = {
   properties: {
     id: 'int',
     modify_date: 'int',
-    is_favourite: 'bool',
     img: 'string',
     title: 'string',
     author: `${SCHEMA_NAME.AUTHOR_SIMPLE}`,
@@ -21,7 +20,6 @@ export const MangaSchema = {
     score: 'int?',
     scoredBy: 'int?',
     synopsis: 'string',
-    reading_status: `${SCHEMA_NAME.READING_STATUS}?`,
   },
 };
 
@@ -37,22 +35,9 @@ export const CoverMangaSchema = {
   },
 };
 
-export const ReadingStatusSchema = {
-  name: SCHEMA_NAME.READING_STATUS,
-  embedded: true,
-  properties: {
-    is_reading: 'bool',
-    is_finished: 'bool',
-    finish_date: 'int?',
-    last_read_page: 'int',
-    last_read_time: 'int',
-  },
-};
-
 export interface MangaSchema {
   id: number;
   modify_date: number;
-  is_favourite: boolean;
   img: string;
   title: string;
   author: AuthorSchema;
@@ -64,13 +49,6 @@ export interface MangaSchema {
   score: number;
   scoredBy: number;
   synopsis: string;
-  reading_status: {
-    is_reading: boolean;
-    is_finished: boolean;
-    finish_date?: number;
-    last_read_page: number;
-    last_read_time: number;
-  };
 }
 
 export interface CoverMangaSchema {

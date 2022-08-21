@@ -1,3 +1,4 @@
+import {UserSchema} from 'src/data/local/schema/UserSchema';
 import {ThemeInterface} from 'src/shared/theme';
 import {
   AuthorDetail,
@@ -30,11 +31,9 @@ export interface PeopleState {
   authors: {[key: number]: AuthorDetail};
 }
 
+interface ModifiedUserProperties {
+  theme: ThemeInterface;
+}
 export interface UserState {
-  language: string;
-  theme: ThemeInterface & {theme: string};
-  is_first_install: boolean;
-  reading_count: number;
-  finished_count: number;
-  fav_manga_count: number;
+  user: Omit<UserSchema, 'theme'> & ModifiedUserProperties;
 }

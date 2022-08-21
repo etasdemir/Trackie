@@ -23,7 +23,7 @@ function Greeting(props: Props) {
       img,
     },
   } = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const progress = parseInt(
     ((currentChapter / totalChapter) * 100).toFixed(0),
     10,

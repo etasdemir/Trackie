@@ -15,7 +15,7 @@ export interface TopBarProps {
 
 function TopBar(props: TopBarProps) {
   const {title, onBackPress, RightElement, backgroundColor} = props;
-  const {theme} = useSelector((state: RootState) => state.user);
+  const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
     <Container color={backgroundColor ?? 'transparent'}>

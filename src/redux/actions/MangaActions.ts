@@ -58,7 +58,3 @@ export const searchMangaThunk = (query: string, page: number) => {
   };
 };
 
-export const setFavouriteMangaAction = createAction(
-  'SET_FAVOURITE_MANGA',
-  withPayloadType<{id: number; isFavourite: boolean}>(),
-);
