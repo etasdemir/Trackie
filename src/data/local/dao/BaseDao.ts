@@ -148,12 +148,9 @@ class BaseDao {
     });
   }
 
-  async removeElementFromFields<T extends {id: number}>(
-    schema: string,
-    id: number,
-    fields: string[],
-    values: any[],
-  ) {
+  async removeElementFromFields<
+    T extends {id: number; searched_item_id: number},
+  >(schema: string, id: number, fields: string[], values: any[]) {
     const realm = await db.getConnection();
     const obj = realm.objectForPrimaryKey<T>(schema, id);
     if (!obj) {
@@ -170,7 +167,10 @@ class BaseDao {
               el === value ||
               (el.id !== undefined &&
                 value.id !== undefined &&
-                el.id === value.id),
+                el.id === value.id) ||
+              (el.searched_item_id !== undefined &&
+                value.searched_item_id !== undefined &&
+                el.searched_item_id === value.searched_item_id),
           );
           if (findIndex !== -1) {
             field.splice(findIndex, 1);

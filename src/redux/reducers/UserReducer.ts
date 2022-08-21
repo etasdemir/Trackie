@@ -36,6 +36,7 @@ export const userReducer = createReducer(initialState.user, builder => {
     state = Object.assign(user, {
       theme: state.theme,
       language: user.language ?? state.language,
+      search_recent: user.search_recent.slice(),
     });
     return state;
   });
@@ -83,7 +84,9 @@ export const userReducer = createReducer(initialState.user, builder => {
     const payload = action.payload;
     Repository.removeSearchRecent(payload);
     state.search_recent = state.search_recent.filter(
-      element => element !== payload,
+      element =>
+        element !== payload &&
+        element.searched_item_id !== payload.searched_item_id,
     );
   });
   builder.addCase(deleteAllSearchRecentAction, (state, _) => {
