@@ -1,9 +1,9 @@
 import {AuthorDetailSchema, AuthorSchema} from '../schema/AuthorSchema';
 import {Author, AuthorDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
-import MangaDao from './MangaDao';
 import BaseDao from './BaseDao';
 import {SCHEMA_NAME} from '../SchemaName';
+import CoverMangaDao from './CoverMangaDao';
 
 class AuthorDao {
   async getAuthorDetailById(
@@ -20,7 +20,7 @@ class AuthorDao {
 
   async createAuthorDetail(author: AuthorDetail) {
     const workIds = author.works.map(item => item.id);
-    const works: CoverMangaSchema[] = await MangaDao.getCoverMangasById(
+    const works: CoverMangaSchema[] = await CoverMangaDao.getCoverMangasById(
       workIds,
     );
     if (workIds.length !== works.length) {
@@ -32,7 +32,7 @@ class AuthorDao {
           }
         }
         if (!isAvailable) {
-          await MangaDao.createCoverManga(author.works[index]);
+          await CoverMangaDao.createCoverManga(author.works[index]);
         }
       });
     }
