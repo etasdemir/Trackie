@@ -234,27 +234,31 @@ class UserDao {
       USER_ID,
     );
     if (user) {
-      return user.reading_statuses.sort((a, b) => {
-        if (a.last_read_time !== undefined && b.last_read_time !== undefined) {
-          return b.last_read_time - a.last_read_time;
-        } else if (
-          a.last_read_time !== undefined &&
-          b.last_read_time === undefined
-        ) {
-          return -1;
-        } else if (
-          a.last_read_time === undefined &&
-          b.last_read_time !== undefined
-        ) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
+      return readingStatusesSort(user.reading_statuses);
     } else {
       return undefined;
     }
   }
 }
+
+export const readingStatusesSort = (statuses: ReadingStatusSchema[]) => {
+  return statuses.sort((a, b) => {
+    if (a.last_read_time !== undefined && b.last_read_time !== undefined) {
+      return b.last_read_time - a.last_read_time;
+    } else if (
+      a.last_read_time !== undefined &&
+      b.last_read_time === undefined
+    ) {
+      return -1;
+    } else if (
+      a.last_read_time === undefined &&
+      b.last_read_time !== undefined
+    ) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+};
 
 export default new UserDao();

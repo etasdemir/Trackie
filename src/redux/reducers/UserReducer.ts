@@ -18,6 +18,7 @@ import {UserState} from '../ReduxTypes';
 import defaultTheme, {themeJson} from 'src/shared/theme';
 import {default as Language} from 'src/shared/language';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
+import {readingStatusesSort} from 'src/data/local/dao/UserDao';
 
 const initialState: UserState = {
   user: {
@@ -40,7 +41,7 @@ export const userReducer = createReducer(initialState.user, builder => {
       theme: state.theme,
       language: user.language ?? state.language,
       search_recent: user.search_recent.slice(),
-      reading_statuses: user.search_recent.slice(),
+      reading_statuses: readingStatusesSort(user.reading_statuses.slice()),
     });
     return state;
   });
@@ -105,17 +106,22 @@ export const userReducer = createReducer(initialState.user, builder => {
   builder.addCase(updateReadingStatusAction, (state, action) => {
     const updatedReadingStatus = action.payload;
     Repository.updateReadingStatus(updatedReadingStatus);
+    let isExists = false;
     state.reading_statuses.forEach((element, index) => {
-      if (element.manga.id === updatedReadingStatus.manga.id) {
+      if (element.mangaId === updatedReadingStatus.mangaId) {
         state.reading_statuses[index] = updatedReadingStatus;
+        isExists = true;
       }
     });
+    if (!isExists) {
+      state.reading_statuses.push(updatedReadingStatus);
+    }
   });
   builder.addCase(removeReadingStatusAction, (state, action) => {
     const readingStatus = action.payload;
     Repository.removeFromReadings(readingStatus);
     state.reading_statuses = state.reading_statuses.filter(element => {
-      element.manga.id !== readingStatus.manga.id;
+      element.mangaId !== readingStatus.mangaId;
     });
   });
 });

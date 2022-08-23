@@ -179,9 +179,7 @@ class BaseDao {
 interface ComparedFields {
   id?: number;
   searched_item_id?: number;
-  manga?: {
-    id: number;
-  };
+  mangaId?: number;
 }
 
 function compareFields(first: ComparedFields, second: ComparedFields) {
@@ -196,8 +194,8 @@ function compareFields(first: ComparedFields, second: ComparedFields) {
       ? first.searched_item_id === second.searched_item_id
       : false;
   const isReadingStatusEq =
-    first.manga !== undefined && second.manga !== undefined
-      ? first.manga.id === second.manga.id
+    first.mangaId !== undefined && second.mangaId !== undefined
+      ? first.mangaId === second.mangaId
       : false;
 
   return isRefEq || isIdEq || isSearchRecentIdEq || isReadingStatusEq;
