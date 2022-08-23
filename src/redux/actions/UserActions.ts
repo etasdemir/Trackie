@@ -4,7 +4,10 @@ import Repository from 'src/data/Repository';
 import {MangaSchema} from 'src/data/local/schema/MangaSchema';
 import {AuthorDetailSchema} from 'src/data/local/schema/AuthorSchema';
 import {CharacterDetailSchema} from 'src/data/local/schema/CharacterSchema';
-import {UserSchema} from 'src/data/local/schema/UserSchema';
+import {
+  ReadingStatusSchema,
+  UserSchema,
+} from 'src/data/local/schema/UserSchema';
 
 function withPayloadType<T>() {
   return (t: T) => ({payload: t});
@@ -81,4 +84,19 @@ export const removeSearchRecentAction = createAction(
 
 export const deleteAllSearchRecentAction = createAction(
   'USER_DELETE_ALL_SEARCH_RECENT_ACTION',
+);
+
+export const addReadingStatusAction = createAction(
+  'USER_ADD_READING_STATUS_ACTION',
+  withPayloadType<ReadingStatusSchema>(),
+);
+
+export const updateReadingStatusAction = createAction(
+  'USER_UPDATE_READING_STATUS_ACTION',
+  withPayloadType<ReadingStatusSchema>(),
+);
+
+export const removeReadingStatusAction = createAction(
+  'USER_DELETE_READING_STATUS_ACTION',
+  withPayloadType<ReadingStatusSchema>(),
 );
