@@ -24,8 +24,8 @@ export const ReadingStatusSchema = {
   embedded: true,
   properties: {
     manga: `${SCHEMA_NAME.MANGA_DETAIL}`,
-    is_reading: 'bool',
-    is_finished: 'bool',
+    is_reading: {type: 'bool', default: false},
+    is_finished: {type: 'bool', default: false},
     finish_date: 'int?',
     last_read_page: 'int?',
     last_read_time: 'int?',
@@ -48,14 +48,14 @@ export interface UserSchema {
   theme?: string;
   language?: string;
   is_first_install: boolean;
-  reading_statuses: ReadingStatus[];
+  reading_statuses: ReadingStatusSchema[];
   favourite_mangas: MangaSchema[];
   favourite_authors: AuthorDetailSchema[];
   favourite_characters: CharacterDetailSchema[];
   search_recent: SearchRecentSchema[];
 }
 
-export interface ReadingStatus {
+export interface ReadingStatusSchema {
   manga: MangaSchema;
   is_reading: boolean;
   is_finished: boolean;

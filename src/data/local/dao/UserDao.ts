@@ -1,6 +1,10 @@
 import {CharacterDetailSchema} from '../schema/CharacterSchema';
 import {AuthorDetailSchema} from '../schema/AuthorSchema';
-import {SearchRecentSchema, UserSchema} from '../schema/UserSchema';
+import {
+  ReadingStatusSchema,
+  SearchRecentSchema,
+  UserSchema,
+} from '../schema/UserSchema';
 import {SCHEMA_NAME} from '../SchemaName';
 import BaseDao from './BaseDao';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
@@ -176,7 +180,7 @@ class UserDao {
   }
 
   async addSearchRecent(recent: SearchRecentSchema) {
-    BaseDao.addElementToFields<MangaSchema>(
+    await BaseDao.addElementToFields<MangaSchema>(
       SCHEMA_NAME.USER,
       USER_ID,
       ['search_recent'],
@@ -185,7 +189,7 @@ class UserDao {
   }
 
   async removeSearchRecent(recent: SearchRecentSchema) {
-    BaseDao.removeElementFromFields(
+    await BaseDao.removeElementFromFields(
       SCHEMA_NAME.USER,
       USER_ID,
       ['search_recent'],
@@ -194,7 +198,62 @@ class UserDao {
   }
 
   async deleteAllSearchRecent() {
-    BaseDao.updateFields(SCHEMA_NAME.USER, USER_ID, ['search_recent'], [[]]);
+    await BaseDao.updateFields(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['search_recent'],
+      [[]],
+    );
+  }
+
+  async addReadingStatus(readingStatus: ReadingStatusSchema) {
+    await BaseDao.addElementToFields(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['reading_statuses'],
+      [readingStatus],
+    );
+  }
+
+  async updateReadingStatus(updatedReadingStatus: ReadingStatusSchema) {
+    await this.addReadingStatus(updatedReadingStatus);
+  }
+
+  async removeFromReadings(readingStatus: ReadingStatusSchema) {
+    await BaseDao.removeElementFromFields(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['reading_statuses'],
+      [readingStatus],
+    );
+  }
+
+  async getReadingStatuses() {
+    const user = await BaseDao.getObjectById<UserSchema>(
+      SCHEMA_NAME.USER,
+      USER_ID,
+    );
+    if (user) {
+      return user.reading_statuses.sort((a, b) => {
+        if (a.last_read_time !== undefined && b.last_read_time !== undefined) {
+          return b.last_read_time - a.last_read_time;
+        } else if (
+          a.last_read_time !== undefined &&
+          b.last_read_time === undefined
+        ) {
+          return -1;
+        } else if (
+          a.last_read_time === undefined &&
+          b.last_read_time !== undefined
+        ) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    } else {
+      return undefined;
+    }
   }
 }
 

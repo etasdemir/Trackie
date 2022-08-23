@@ -114,7 +114,7 @@ class BaseDao {
     });
   }
 
-  async addElementToFields<T extends {id: number}>(
+  async addElementToFields<T extends ComparedFields>(
     schema: string,
     id: number,
     fields: string[],
@@ -125,18 +125,13 @@ class BaseDao {
     if (!obj) {
       return;
     }
-    const item = obj;
     realm.write(() => {
-      if (item) {
+      if (obj) {
         fields.forEach((fieldName, index) => {
           let value = values[index];
-          let field = (item as any)[fieldName];
-          const findIndex = field.findIndex(
-            (el: T) =>
-              el === value ||
-              (el.id !== undefined &&
-                value.id !== undefined &&
-                el.id === value.id),
+          let field = (obj as any)[fieldName];
+          const findIndex = field.findIndex((el: T) =>
+            compareFields(el, value),
           );
           if (findIndex === -1) {
             field.push(value);
@@ -148,29 +143,24 @@ class BaseDao {
     });
   }
 
-  async removeElementFromFields<
-    T extends {id: number; searched_item_id: number},
-  >(schema: string, id: number, fields: string[], values: any[]) {
+  async removeElementFromFields<T extends ComparedFields>(
+    schema: string,
+    id: number,
+    fields: string[],
+    values: any[],
+  ) {
     const realm = await db.getConnection();
     const obj = realm.objectForPrimaryKey<T>(schema, id);
     if (!obj) {
       return;
     }
-    const item = obj;
     realm.write(() => {
-      if (item) {
+      if (obj) {
         fields.forEach((fieldName, index) => {
           const value = values[index];
-          let field = (item as any)[fieldName];
-          const findIndex = field.findIndex(
-            (el: T) =>
-              el === value ||
-              (el.id !== undefined &&
-                value.id !== undefined &&
-                el.id === value.id) ||
-              (el.searched_item_id !== undefined &&
-                value.searched_item_id !== undefined &&
-                el.searched_item_id === value.searched_item_id),
+          let field = (obj as any)[fieldName];
+          const findIndex = field.findIndex((el: T) =>
+            compareFields(el, value),
           );
           if (findIndex !== -1) {
             field.splice(findIndex, 1);
@@ -184,6 +174,33 @@ class BaseDao {
     const realm = await db.getConnection();
     realm.deleteAll();
   }
+}
+
+interface ComparedFields {
+  id?: number;
+  searched_item_id?: number;
+  manga?: {
+    id: number;
+  };
+}
+
+function compareFields(first: ComparedFields, second: ComparedFields) {
+  const isRefEq = first === second;
+  const isIdEq =
+    first.id !== undefined && second.id !== undefined
+      ? first.id === second.id
+      : false;
+  const isSearchRecentIdEq =
+    first.searched_item_id !== undefined &&
+    second.searched_item_id !== undefined
+      ? first.searched_item_id === second.searched_item_id
+      : false;
+  const isReadingStatusEq =
+    first.manga !== undefined && second.manga !== undefined
+      ? first.manga.id === second.manga.id
+      : false;
+
+  return isRefEq || isIdEq || isSearchRecentIdEq || isReadingStatusEq;
 }
 
 export default new BaseDao();
