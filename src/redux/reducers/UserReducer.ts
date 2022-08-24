@@ -9,7 +9,6 @@ import {
   addSearchRecentAction,
   removeSearchRecentAction,
   deleteAllSearchRecentAction,
-  addReadingStatusAction,
   updateReadingStatusAction,
   removeReadingStatusAction,
 } from '../actions/UserActions';
@@ -98,24 +97,21 @@ export const userReducer = createReducer(initialState.user, builder => {
     Repository.deleteAllSearchRecent();
     state.search_recent = [];
   });
-  builder.addCase(addReadingStatusAction, (state, action) => {
-    const readingStatus = action.payload;
-    Repository.addReadingStatus(readingStatus);
-    state.reading_statuses.push(readingStatus);
-  });
   builder.addCase(updateReadingStatusAction, (state, action) => {
-    const updatedReadingStatus = action.payload;
-    Repository.updateReadingStatus(updatedReadingStatus);
+    const readingStatus = action.payload;
+    Repository.updateReadingStatus(readingStatus);
     let isExists = false;
     state.reading_statuses.forEach((element, index) => {
-      if (element.mangaId === updatedReadingStatus.mangaId) {
-        state.reading_statuses[index] = updatedReadingStatus;
+      if (element.mangaId === readingStatus.mangaId) {
+        state.reading_statuses[index] = readingStatus;
         isExists = true;
+        return;
       }
     });
     if (!isExists) {
-      state.reading_statuses.push(updatedReadingStatus);
+      state.reading_statuses.push(readingStatus);
     }
+    state.reading_statuses = readingStatusesSort(state.reading_statuses);
   });
   builder.addCase(removeReadingStatusAction, (state, action) => {
     const readingStatus = action.payload;

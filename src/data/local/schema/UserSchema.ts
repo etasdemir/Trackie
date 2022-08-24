@@ -26,9 +26,9 @@ export const ReadingStatusSchema = {
     mangaId: 'int',
     is_reading: {type: 'bool', default: false},
     is_finished: {type: 'bool', default: false},
-    finish_date: 'int?',
-    last_read_page: 'int?',
-    last_read_time: 'int?',
+    finish_date: {type: 'int', default: 0},
+    last_read_page: {type: 'int', default: 0},
+    last_read_time: {type: 'int', default: 0},
   },
 };
 
@@ -59,9 +59,9 @@ export interface ReadingStatusSchema {
   mangaId: number;
   is_reading: boolean;
   is_finished: boolean;
-  finish_date?: number | undefined;
-  last_read_page?: number | undefined;
-  last_read_time?: number | undefined;
+  finish_date: number;
+  last_read_page: number;
+  last_read_time: number;
 }
 
 export interface SearchRecentSchema {

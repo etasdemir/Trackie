@@ -159,12 +159,8 @@ class Repository {
     await UserDao.deleteAllSearchRecent();
   }
 
-  async addReadingStatus(readingStatus: ReadingStatusSchema) {
-    await UserDao.addReadingStatus(readingStatus);
-  }
-
-  async updateReadingStatus(updatedReadingStatus: ReadingStatusSchema) {
-    await UserDao.updateReadingStatus(updatedReadingStatus);
+  async updateReadingStatus(readingStatus: ReadingStatusSchema) {
+    await UserDao.updateReadingStatus(readingStatus);
   }
 
   async removeFromReadings(readingStatus: ReadingStatusSchema) {

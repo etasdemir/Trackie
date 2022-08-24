@@ -86,13 +86,8 @@ export const deleteAllSearchRecentAction = createAction(
   'USER_DELETE_ALL_SEARCH_RECENT_ACTION',
 );
 
-export const addReadingStatusAction = createAction(
-  'USER_ADD_READING_STATUS_ACTION',
-  withPayloadType<ReadingStatusSchema>(),
-);
-
 export const updateReadingStatusAction = createAction(
-  'USER_UPDATE_READING_STATUS_ACTION',
+  'USER_ADD_READING_STATUS_ACTION',
   withPayloadType<ReadingStatusSchema>(),
 );
 

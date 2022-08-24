@@ -206,17 +206,13 @@ class UserDao {
     );
   }
 
-  async addReadingStatus(readingStatus: ReadingStatusSchema) {
+  async updateReadingStatus(readingStatus: ReadingStatusSchema) {
     await BaseDao.addElementToFields(
       SCHEMA_NAME.USER,
       USER_ID,
       ['reading_statuses'],
       [readingStatus],
     );
-  }
-
-  async updateReadingStatus(updatedReadingStatus: ReadingStatusSchema) {
-    await this.addReadingStatus(updatedReadingStatus);
   }
 
   async removeFromReadings(readingStatus: ReadingStatusSchema) {
@@ -229,14 +225,12 @@ class UserDao {
   }
 
   async getReadingStatuses() {
-    const user = await BaseDao.getObjectById<UserSchema>(
-      SCHEMA_NAME.USER,
-      USER_ID,
-    );
+    const user = await this.getUser();
     if (user) {
-      return readingStatusesSort(user.reading_statuses);
+      const statuses = Array.from(user.reading_statuses);
+      return readingStatusesSort(statuses);
     } else {
-      return undefined;
+      return [];
     }
   }
 }

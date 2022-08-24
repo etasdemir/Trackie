@@ -14,7 +14,7 @@ import {getMangaThunk} from 'src/redux/actions/MangaActions';
 import {MangaScreenProp} from 'src/navigation/types';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import MangaCharacterList from './components/MangaCharacterList';
-import {addReadingStatusAction} from 'src/redux/actions/UserActions';
+import {updateReadingStatusAction} from 'src/redux/actions/UserActions';
 import {ReadingStatusSchema} from 'src/data/local/schema/UserSchema';
 
 function MangaDetailScreen(props: MangaScreenProp) {
@@ -30,11 +30,12 @@ function MangaDetailScreen(props: MangaScreenProp) {
   const manga = useSelector((state: RootState) => state.mangas.mangas[mangaId]);
   const readingStatus = useSelector((state: RootState) => {
     let status: ReadingStatusSchema | undefined;
-    state.user.reading_statuses.forEach(element => {
+    for (const element of state.user.reading_statuses) {
       if (element.mangaId === mangaId) {
         status = element;
+        break;
       }
-    });
+    }
     return status;
   });
 
@@ -52,9 +53,11 @@ function MangaDetailScreen(props: MangaScreenProp) {
       is_reading: false,
       is_finished: true,
       finish_date: Date.now(),
+      last_read_page: readingStatus?.last_read_page ?? 0,
+      last_read_time: readingStatus?.last_read_time ?? 0,
     };
-    dispatch(addReadingStatusAction(status));
-  }, [dispatch, mangaId]);
+    dispatch(updateReadingStatusAction(status));
+  }, [dispatch, mangaId, readingStatus]);
 
   const onReadingNow = useCallback(() => {
     const currentPage = 5;
@@ -62,11 +65,12 @@ function MangaDetailScreen(props: MangaScreenProp) {
       mangaId,
       is_reading: true,
       is_finished: false,
+      finish_date: readingStatus?.finish_date ?? 0,
       last_read_page: currentPage,
       last_read_time: Date.now(),
     };
-    dispatch(addReadingStatusAction(status));
-  }, [dispatch, mangaId]);
+    dispatch(updateReadingStatusAction(status));
+  }, [dispatch, mangaId, readingStatus]);
 
   if (!manga) {
     dispatch(getMangaThunk(mangaId));
