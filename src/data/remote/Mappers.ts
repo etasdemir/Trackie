@@ -42,6 +42,7 @@ export const mangaModelToMangaDetail = (
     id: mangaModel.mal_id,
     img: mangaModel.images.jpg.large_image_url,
     title: mangaModel.title,
+    chapters: mangaModel.chapters,
     author: authorModelToAuthor(mangaModel.authors[0]),
   });
 };

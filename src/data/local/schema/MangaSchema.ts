@@ -20,6 +20,7 @@ export const MangaSchema = {
     score: 'int?',
     scoredBy: 'int?',
     synopsis: 'string',
+    chapters: 'int?',
   },
 };
 
@@ -49,6 +50,7 @@ export interface MangaSchema {
   score: number;
   scoredBy: number;
   synopsis: string;
+  chapters?: number;
 }
 
 export interface CoverMangaSchema {

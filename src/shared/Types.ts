@@ -30,6 +30,7 @@ export interface MangaDetail extends CategoryManga {
   rank: number;
   popularity: number;
   members: number;
+  chapters?: number;
   characters: Array<Character>;
 }
 

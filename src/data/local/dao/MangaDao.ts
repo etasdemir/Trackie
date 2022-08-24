@@ -50,6 +50,7 @@ class MangaDao {
       score: manga.score,
       scoredBy: manga.scoredBy,
       synopsis: manga.synopsis,
+      chapters: manga.chapters,
     };
     BaseDao.createObject(SCHEMA_NAME.MANGA_DETAIL, obj);
   }
