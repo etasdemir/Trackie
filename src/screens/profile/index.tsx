@@ -9,23 +9,46 @@ import language from 'src/shared/language';
 import {RootState} from 'src/redux/AppStore';
 import SettingsButton from 'src/components/SettingsButton';
 
-export interface ProfileProps {
-  stats: {
-    name: string;
-    count: number;
-  }[];
-}
-
 enum MODAL_KEY {
   'THEME',
   'LANGUAGE',
   'CLEAR_DATA',
 }
 
-function Profile(props: ProfileProps) {
-  const {stats} = props;
+function Profile() {
   const theme = useSelector((state: RootState) => state.user.theme);
+  const langState = useSelector((state: RootState) => state.user.language);
   const tabBarHeight = useBottomTabBarHeight();
+  const readingStatuses = useSelector(
+    (state: RootState) => state.user.reading_statuses,
+  );
+  const favouriteMangas = useSelector(
+    (state: RootState) => state.user.favourite_mangas,
+  );
+  let readingCount = 0;
+  let finishedCount = 0;
+  readingStatuses.forEach(reading => {
+    if (reading.is_finished && !reading.is_reading) {
+      finishedCount += 1;
+    } else if (!reading.is_finished && reading.is_reading) {
+      readingCount += 1;
+    }
+  });
+
+  const stats = [
+    {
+      name: language.getText('currently_reading'),
+      count: readingCount,
+    },
+    {
+      name: language.getText('reading_finished'),
+      count: finishedCount,
+    },
+    {
+      name: language.getText('favourite_list'),
+      count: favouriteMangas.length,
+    },
+  ];
 
   const onSettingsPress = (key: MODAL_KEY) => {
     switch (key) {
@@ -64,7 +87,7 @@ function Profile(props: ProfileProps) {
       />
       <SettingsButton
         name={language.getText('language')}
-        value={language.getText(language.getLanguage())}
+        value={language.getText(langState ?? 'en')}
         onSettingPress={() => onSettingsPress(MODAL_KEY.LANGUAGE)}
       />
       <SettingsButton

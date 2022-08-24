@@ -7,6 +7,10 @@ import {LANGUAGE} from 'src/shared/Constant';
 class Language {
   getText(key: string, ...params: String[]): string {
     const lang = store.getState().user.language;
+    if (!lang) {
+      console.error('Language::getText language state is null');
+      return '';
+    }
     const text = resolveLanguage(lang, key);
     if (text instanceof Function) {
       if (params && params.length > 0) {
