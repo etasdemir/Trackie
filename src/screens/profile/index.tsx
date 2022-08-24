@@ -82,16 +82,19 @@ function Profile() {
       </StatContainer>
       <SettingsButton
         name={language.getText('theme')}
+        iconName="theme-light-dark"
         value={language.getText(theme.theme + '_theme')}
         onSettingPress={() => onSettingsPress(MODAL_KEY.THEME)}
       />
       <SettingsButton
         name={language.getText('language')}
+        iconName="earth"
         value={language.getText(langState ?? 'en')}
         onSettingPress={() => onSettingsPress(MODAL_KEY.LANGUAGE)}
       />
       <SettingsButton
         name={language.getText('clear_all_data')}
+        iconName="delete-forever"
         value={'>'}
         onSettingPress={() => onSettingsPress(MODAL_KEY.CLEAR_DATA)}
       />
