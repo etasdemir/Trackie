@@ -79,8 +79,8 @@ function MangaDetailScreen(props: MangaScreenProp) {
 
   const imageSource: ImageSourcePropType = {
     uri: manga.img,
-    height: 400,
-    width: 250,
+    height: 350,
+    width: 210,
   };
 
   return (
@@ -102,21 +102,6 @@ function MangaDetailScreen(props: MangaScreenProp) {
           <AuthorName color={theme.onViewFaint}>{manga.author.name}</AuthorName>
         </TouchableOpacity>
         <StarRating score={manga.score / 2} scoredBy={manga.scoredBy} />
-        <CategoryChipContainer>
-          {manga.genres.map((genre: Genre) => (
-            <CategoryChip
-              key={genre.id}
-              genre={genre}
-              navigation={navigation}
-            />
-          ))}
-        </CategoryChipContainer>
-        <IconContainer>
-          <IconButton onPress={onReadingNow} color={theme.primary} />
-          <IconButton onPress={onFinishedReading} color={theme.primary} />
-        </IconContainer>
-      </Header>
-      <SubContainer>
         <RankingContainer>
           {manga.rank && (
             <RankingText color={theme.onViewFaint}>
@@ -137,6 +122,23 @@ function MangaDetailScreen(props: MangaScreenProp) {
             </RankingText>
           )}
         </RankingContainer>
+        <CategoryChipContainer>
+          {manga.genres.map((genre: Genre) => (
+            <CategoryChip
+              key={genre.id}
+              genre={genre}
+              navigation={navigation}
+            />
+          ))}
+        </CategoryChipContainer>
+        {manga.chapters && (
+          <IconContainer>
+            <IconButton onPress={onReadingNow} color={theme.primary} />
+            <IconButton onPress={onFinishedReading} color={theme.primary} />
+          </IconContainer>
+        )}
+      </Header>
+      <SubContainer>
         <CategoryTitle color={theme.onView}>
           {language.getText('manga_synopsis')}
         </CategoryTitle>
@@ -171,7 +173,8 @@ const MangaName = styled.Text<ColorProps>`
   color: ${({color}) => color};
   font-size: 24px;
   font-weight: bold;
-  margin: 15px 20px 20px 0;
+  margin-top: 15px;
+  margin-bottom: 10px;
   text-align: center;
 `;
 
@@ -206,12 +209,13 @@ const SubContainer = styled.View`
 const RankingContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin: 10px 0;
+  margin-top: 10px;
 `;
 
 const RankingText = styled.Text<ColorProps>`
   color: ${({color}) => color};
   font-size: 14px;
+  margin: 0 10px;
 `;
 
 const CategoryTitle = styled.Text<ColorProps>`
