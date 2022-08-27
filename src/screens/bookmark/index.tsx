@@ -2,42 +2,44 @@ import React from 'react';
 import styled from 'styled-components/native';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 
-import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
-import {AuthorDetail, CoverManga, UnfinishedManga} from 'src/shared/Types';
 import language from 'src/shared/language';
+import {BookmarkScreenProp} from 'src/navigation/types';
+import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
+import {
+  CATEGORY_HORIZONTAL_TYPE,
+  CUSTOM_CATEGORY_IDS,
+} from 'src/shared/Constant';
 
-export interface BookmarkProps {
-  currentlyReadings: UnfinishedManga[];
-  favourites: CoverManga[];
-  recentlyRead: CoverManga[];
-  favoriteAuthors: AuthorDetail[];
-}
-
-function Bookmark(props: BookmarkProps) {
-  const {currentlyReadings, favourites, recentlyRead, favoriteAuthors} = props;
+function Bookmark(props: BookmarkScreenProp) {
+  const {navigation} = props;
+  const tabBarHeight = useBottomTabBarHeight();
   const genres = [
+    // {
+    //   id: CUSTOM_CATEGORY_IDS.READING,
+    //   name: language.getText('currently_reading'),
+    //   type: CATEGORY_HORIZONTAL_TYPE.READING,
+    // },
+    // {
+    //   id: CUSTOM_CATEGORY_IDS.FINISHED,
+    //   name: language.getText('recently_read'),
+    //   type: CATEGORY_HORIZONTAL_TYPE.FINISHED,
+    // },
     {
-      id: 1,
-      name: language.getText('currently_reading'),
-      data: currentlyReadings,
-    },
-    {
-      id: 2,
+      id: CUSTOM_CATEGORY_IDS.FAVOURITE_MANGA,
       name: language.getText('favourite_list'),
-      data: favourites,
+      type: CATEGORY_HORIZONTAL_TYPE.FAVOURITE_MANGA,
     },
     {
-      id: 3,
-      name: language.getText('recently_read'),
-      data: recentlyRead,
-    },
-    {
-      id: 4,
+      id: CUSTOM_CATEGORY_IDS.FAVOURITE_AUTHOR,
       name: language.getText('favourite_authors'),
-      data: favoriteAuthors,
+      type: CATEGORY_HORIZONTAL_TYPE.FAVOURITE_AUTHOR,
+    },
+    {
+      id: CUSTOM_CATEGORY_IDS.FAVOURITE_CHARACTER,
+      name: language.getText('characters'),
+      type: CATEGORY_HORIZONTAL_TYPE.FAVOURITE_CHARACTER,
     },
   ];
-  const tabBarHeight = useBottomTabBarHeight();
 
   return (
     <ScrollContainer
@@ -47,7 +49,8 @@ function Bookmark(props: BookmarkProps) {
         <CategoryHorizontalList
           key={genre.id}
           genre={genre}
-          items={genre.data}
+          navigation={navigation}
+          type={genre.type}
         />
       ))}
     </ScrollContainer>

@@ -1,97 +1,95 @@
-import React, {useCallback} from 'react';
-import {FlatList} from 'react-native';
-import styled from 'styled-components/native';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import {
+  AuthorDetail,
+  CharacterDetail,
+  CoverManga,
+  Genre,
+  UnfinishedManga,
+} from 'src/shared/Types';
 
-import {ColorProps, Genre, MangaDetail} from 'src/shared/Types';
-import ViewAllButton from 'src/components/ViewAllButton';
-import language from 'src/shared/language';
-import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
-import {categoryMangasThunk} from 'src/redux/actions/CategoryActions';
-import {BottomBarChildScreenProp} from 'src/navigation/types';
+import {CATEGORY_HORIZONTAL_TYPE} from 'src/shared/Constant';
+import {
+  BottomBarChildScreenProp,
+  RootChildScreenProp,
+} from 'src/navigation/types';
+import GenericCategoryHorizontal from './GenericCategoryHorizontal';
+import UnfinishedMangaItem from './UnfinishedMangaItem';
+import {ListRenderItemInfo} from 'react-native';
+import HorizontalMangaItem from '../HorizontalMangaItem';
+import AvatarItem from './AvatarItem';
 
 interface Props {
-  genre: Genre;
-  navigation: BottomBarChildScreenProp;
+  genre: Genre | Omit<Genre, 'count'>;
+  type: string;
+  navigation: RootChildScreenProp | BottomBarChildScreenProp;
 }
-
-const isFetched: {[key: number]: boolean} = {};
 
 function CategoryHorizontalList(props: Props) {
-  console.log('CategoryHorizontalList rendered', props.genre);
-  const {genre, navigation} = props;
+  const {type, genre, navigation} = props;
+  let renderItem:
+    | ((itemInfo: ListRenderItemInfo<unknown>) => JSX.Element)
+    | null;
 
-  const theme = useSelector((state: RootState) => state.user.theme);
-  const categoryToMangaList = useSelector(
-    (state: RootState) => state.category.categoryToMangaList[genre.id],
-  );
-  const dispatch = useAppDispatch();
-
-  const onCategoryViewAllPress = useCallback(() => {
-    navigation.navigate('category', {genre});
-  }, [genre, navigation]);
-
-  if (!categoryToMangaList && !isFetched[genre.id]) {
-    isFetched[genre.id] = true;
-    const page = 1;
-    dispatch(categoryMangasThunk(genre.id, page));
-    return null;
-  }
-
-  if (!categoryToMangaList || categoryToMangaList.length === 0) {
-    return null;
-  } else {
-    return (
-      <Container>
-        <CategoryHeader>
-          <CategoryTitle color={theme.onView}>{genre.name}</CategoryTitle>
-          <ViewAllButton
-            onPress={onCategoryViewAllPress}
-            text={language.getText('view_all') + ' >'}
-          />
-        </CategoryHeader>
-        <MangaFlatList
-          showsHorizontalScrollIndicator={false}
-          data={categoryToMangaList}
-          renderItem={({item}) => (
-            <HorizontalMangaItem
-              key={item.id.toString()}
-              manga={item}
-              navigation={navigation}
-            />
-          )}
-          horizontal={true}
+  switch (type) {
+    case CATEGORY_HORIZONTAL_TYPE.FINISHED:
+    case CATEGORY_HORIZONTAL_TYPE.FAVOURITE_MANGA:
+    case CATEGORY_HORIZONTAL_TYPE.MANGA:
+      renderItem = ({item}) => (
+        <HorizontalMangaItem
+          key={(item as CoverManga).id.toString()}
+          manga={item as CoverManga}
+          navigation={navigation}
         />
-      </Container>
-    );
+      );
+      break;
+    case CATEGORY_HORIZONTAL_TYPE.READING:
+      renderItem = ({item}) => (
+        <UnfinishedMangaItem
+          key={(item as UnfinishedManga).id.toString()}
+          manga={item as UnfinishedManga}
+          navigation={navigation as RootChildScreenProp}
+        />
+      );
+      break;
+    case CATEGORY_HORIZONTAL_TYPE.FAVOURITE_AUTHOR:
+      renderItem = ({item}) => (
+        <AvatarItem
+          key={(item as AuthorDetail).id.toString()}
+          item={item as AuthorDetail}
+          onItemClick={() =>
+            (navigation as RootChildScreenProp).navigate('author_detail', {
+              authorId: (item as AuthorDetail).id,
+            })
+          }
+        />
+      );
+      break;
+    case CATEGORY_HORIZONTAL_TYPE.FAVOURITE_CHARACTER:
+      renderItem = ({item}) => (
+        <AvatarItem
+          key={(item as CharacterDetail).id.toString()}
+          item={item as CharacterDetail}
+          onItemClick={() =>
+            (navigation as RootChildScreenProp).navigate('character_detail', {
+              characterId: (item as CharacterDetail).id,
+            })
+          }
+        />
+      );
+      break;
+    default: {
+      console.error('CategoryHorizontalList undefined type:', type);
+      return null;
+    }
   }
+  return (
+    <GenericCategoryHorizontal
+      genre={genre}
+      type={type}
+      navigation={navigation as RootChildScreenProp}
+      renderItem={renderItem}
+    />
+  );
 }
 
-const Container = styled.View`
-  margin: 20px 0;
-`;
-
-const CategoryHeader = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const CategoryTitle = styled.Text<ColorProps>`
-  font-size: 20px;
-  font-weight: bold;
-  color: ${({color}) => color};
-`;
-
-const MangaFlatList = styled(FlatList<MangaDetail>)`
-  margin-top: 5px;
-`;
-
-const areEqual = (prevProps: Props, nextProps: Props) => {
-  if (prevProps.genre.id === nextProps.genre.id) {
-    return true;
-  }
-  return false;
-};
-
-export default React.memo(CategoryHorizontalList, areEqual);
+export default CategoryHorizontalList;

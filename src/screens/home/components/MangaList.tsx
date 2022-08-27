@@ -9,6 +9,7 @@ import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import {RootState} from 'src/redux/AppStore';
 import {BottomBarChildScreenProp} from 'src/navigation/types';
 import TopMangas from './TopMangas';
+import {CATEGORY_HORIZONTAL_TYPE} from 'src/shared/Constant';
 
 interface Props {
   allGenres: Genre[];
@@ -68,6 +69,7 @@ function MangaList(props: Props) {
           key={item.id}
           genre={item}
           navigation={navigation}
+          type={CATEGORY_HORIZONTAL_TYPE.MANGA}
         />
       )}
       onEndReached={onEndReached}

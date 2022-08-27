@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {RootState} from 'src/redux/AppStore';
 
@@ -6,14 +6,17 @@ import {ColorProps, UnfinishedManga} from 'src/shared/Types';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import {useSelector} from 'react-redux';
 import ProgressBar from 'src/components/ProgressBar';
+import {RootChildScreenProp} from 'src/navigation/types';
 
 export interface UnfinishedMangaItemProps {
   manga: UnfinishedManga;
+  navigation: RootChildScreenProp;
 }
 
 function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
   const {
     manga: {id, img, title, currentChapter, totalChapter},
+    navigation,
   } = props;
   const theme = useSelector((state: RootState) => state.user.theme);
   const progress = parseInt(
@@ -21,9 +24,11 @@ function UnfinishedMangaItem(props: UnfinishedMangaItemProps) {
     10,
   );
 
-  const onMangaPress = () => {
-    console.log('navigate to manga detail with id:', id);
-  };
+  const onMangaPress = useCallback(() => {
+    navigation.navigate('manga_detail', {
+      mangaId: id,
+    });
+  }, [id, navigation]);
 
   return (
     <Container onPress={onMangaPress}>
