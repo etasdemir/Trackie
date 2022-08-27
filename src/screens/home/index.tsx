@@ -8,20 +8,6 @@ import {getGenresThunk} from 'src/redux/actions/CategoryActions';
 import MangaList from './components/MangaList';
 import {HomeScreenProp} from 'src/navigation/types';
 
-// Delete later
-const unfinishedManga = {
-  id: 15,
-  currentChapter: 191,
-  totalChapter: 355,
-  lastReadingDate: 'July 30, 2022',
-  img: 'https://cdn.myanimelist.net/images/manga/2/253146l.jpg',
-  title: 'Mahou Sensei Negima! Mahou Sensei Negima!',
-  author: {
-    id: 1883,
-    name: 'Akamatsu, Ken',
-  },
-};
-
 function Home(props: HomeScreenProp) {
   console.log('home rendered');
 
@@ -34,16 +20,11 @@ function Home(props: HomeScreenProp) {
 
   if (allGenres.length === 0) {
     appDispatcher(getGenresThunk());
-    // TODO Show loading skeleton
     return null;
   } else {
     return (
       <HomeContainer tabBarHeight={tabBarHeight}>
-        <MangaList
-          allGenres={allGenres}
-          unfinishedManga={unfinishedManga}
-          navigation={props.navigation}
-        />
+        <MangaList allGenres={allGenres} navigation={props.navigation} />
       </HomeContainer>
     );
   }

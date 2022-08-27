@@ -15,8 +15,6 @@ function GenericCategoryHorizontal(props: Props) {
   const {genre, type, renderItem} = props;
   const data = useCategoryListData({type, genre}) as unknown[] | null;
 
-  console.log('data', data);
-
   if (!data || data.length === 0) {
     return null;
   } else {

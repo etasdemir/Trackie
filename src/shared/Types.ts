@@ -19,12 +19,6 @@ export interface CategoryManga extends CoverManga {
   synopsis: string;
 }
 
-export interface UnfinishedManga extends CoverManga {
-  currentChapter: number;
-  totalChapter: number;
-  lastReadingDate: string;
-}
-
 export interface MangaDetail extends CategoryManga {
   genres: Array<Genre>;
   rank: number;

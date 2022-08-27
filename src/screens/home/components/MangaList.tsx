@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 
-import {ColorProps, Genre, UnfinishedManga} from 'src/shared/Types';
+import {ColorProps, Genre} from 'src/shared/Types';
 import Greeting from './Greeting';
 import CategoryHorizontalList from 'src/components/CategoryHorizontalList';
 import {RootState} from 'src/redux/AppStore';
@@ -13,7 +13,6 @@ import {CATEGORY_HORIZONTAL_TYPE} from 'src/shared/Constant';
 
 interface Props {
   allGenres: Genre[];
-  unfinishedManga: UnfinishedManga;
   navigation: BottomBarChildScreenProp;
 }
 
@@ -21,7 +20,7 @@ const HOME_MANGA_PER_SCROLL = 1;
 
 function MangaList(props: Props) {
   console.log('home mangalist rendered');
-  const {allGenres, unfinishedManga, navigation} = props;
+  const {allGenres, navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
   const [genres, setGenres] = useState(
     allGenres.slice(0, HOME_MANGA_PER_SCROLL),
@@ -52,7 +51,7 @@ function MangaList(props: Props) {
     <FlatList
       ListHeaderComponent={
         <>
-          <Greeting unfinishedManga={unfinishedManga} />
+          <Greeting navigation={navigation} />
           <TopMangas navigation={navigation} />
         </>
       }
