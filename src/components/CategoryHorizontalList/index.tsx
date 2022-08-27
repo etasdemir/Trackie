@@ -96,6 +96,7 @@ function CategoryHorizontalList(props: Props) {
       genre={genre}
       type={type}
       renderItem={renderItem}
+      navigation={navigation as RootChildScreenProp}
     />
   );
 }
