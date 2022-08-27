@@ -4,7 +4,6 @@ import {
   CharacterDetail,
   CoverManga,
   Genre,
-  UnfinishedManga,
 } from 'src/shared/Types';
 
 import {CATEGORY_HORIZONTAL_TYPE} from 'src/shared/Constant';
@@ -17,6 +16,8 @@ import UnfinishedMangaItem from './UnfinishedMangaItem';
 import {ListRenderItemInfo} from 'react-native';
 import HorizontalMangaItem from '../HorizontalMangaItem';
 import AvatarItem from './AvatarItem';
+import FinishedMangaItem from './FinishedMangaItem';
+import {ReadingStatusSchema} from 'src/data/local/schema/UserSchema';
 
 interface Props {
   genre: Genre | Omit<Genre, 'count'>;
@@ -32,6 +33,14 @@ function CategoryHorizontalList(props: Props) {
 
   switch (type) {
     case CATEGORY_HORIZONTAL_TYPE.FINISHED:
+      renderItem = ({item}) => (
+        <FinishedMangaItem
+          key={(item as ReadingStatusSchema).mangaId.toString()}
+          mangaId={(item as ReadingStatusSchema).mangaId}
+          navigation={navigation as RootChildScreenProp}
+        />
+      );
+      break;
     case CATEGORY_HORIZONTAL_TYPE.FAVOURITE_MANGA:
     case CATEGORY_HORIZONTAL_TYPE.MANGA:
       renderItem = ({item}) => (
@@ -45,8 +54,8 @@ function CategoryHorizontalList(props: Props) {
     case CATEGORY_HORIZONTAL_TYPE.READING:
       renderItem = ({item}) => (
         <UnfinishedMangaItem
-          key={(item as UnfinishedManga).id.toString()}
-          manga={item as UnfinishedManga}
+          key={(item as ReadingStatusSchema).mangaId.toString()}
+          mangaId={(item as ReadingStatusSchema).mangaId}
           navigation={navigation as RootChildScreenProp}
         />
       );

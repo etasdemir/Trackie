@@ -14,16 +14,16 @@ function Bookmark(props: BookmarkScreenProp) {
   const {navigation} = props;
   const tabBarHeight = useBottomTabBarHeight();
   const genres = [
-    // {
-    //   id: CUSTOM_CATEGORY_IDS.READING,
-    //   name: language.getText('currently_reading'),
-    //   type: CATEGORY_HORIZONTAL_TYPE.READING,
-    // },
-    // {
-    //   id: CUSTOM_CATEGORY_IDS.FINISHED,
-    //   name: language.getText('recently_read'),
-    //   type: CATEGORY_HORIZONTAL_TYPE.FINISHED,
-    // },
+    {
+      id: CUSTOM_CATEGORY_IDS.READING,
+      name: language.getText('currently_reading'),
+      type: CATEGORY_HORIZONTAL_TYPE.READING,
+    },
+    {
+      id: CUSTOM_CATEGORY_IDS.FINISHED,
+      name: language.getText('recently_read'),
+      type: CATEGORY_HORIZONTAL_TYPE.FINISHED,
+    },
     {
       id: CUSTOM_CATEGORY_IDS.FAVOURITE_MANGA,
       name: language.getText('favourite_list'),
