@@ -86,6 +86,9 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
         {links.website && (
           <SocialMediaIcon type={SocialMedia.Website} url={links.website} />
         )}
+        {links.tiktok && (
+          <SocialMediaIcon type={SocialMedia.Tiktok} url={links.tiktok} />
+        )}
       </SocialsContainer>
       <SubContainer>
         <CategoryTitle color={theme.onView}>

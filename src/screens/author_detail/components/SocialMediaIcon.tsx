@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
+import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import FontAwesome5Icon from 'react-native-vector-icons/Ionicons';
 
 import {RootState} from 'src/redux/AppStore';
-import {ColorProps} from 'src/shared/Types';
 
 export enum SocialMedia {
   Facebook,
@@ -11,6 +13,7 @@ export enum SocialMedia {
   Twitter,
   Website,
   Instagram,
+  Tiktok,
 }
 
 interface SocialMediaIconProps {
@@ -26,42 +29,41 @@ function SocialMediaIcon(props: SocialMediaIconProps) {
     console.log('social media:', type, 'url:', url);
   };
 
-  switch (type) {
-    case SocialMedia.Facebook: {
-      break;
-    }
-    case SocialMedia.Instagram: {
-      break;
-    }
-    case SocialMedia.Tumblr: {
-      break;
-    }
-    case SocialMedia.Website: {
-      break;
-    }
-    case SocialMedia.Twitter: {
-      break;
-    }
-    default:
-      return null;
-  }
+  const getIconByType = useCallback(() => {
+    const iconSize = 30;
+    const iconColor = theme.primaryDark;
 
-  return (
-    <Button onPress={onIconClick}>
-      <Icon color={theme.primaryLight} />
-    </Button>
-  );
+    switch (type) {
+      case SocialMedia.Facebook: {
+        return <MCIIcon name="facebook" size={iconSize} color={iconColor} />;
+      }
+      case SocialMedia.Instagram: {
+        return <MCIIcon name="instagram" size={iconSize} color={iconColor} />;
+      }
+      case SocialMedia.Tumblr: {
+        return <IonIcon name="logo-tumblr" size={iconSize} color={iconColor} />;
+      }
+      case SocialMedia.Website: {
+        return <MCIIcon name="web" size={iconSize} color={iconColor} />;
+      }
+      case SocialMedia.Twitter: {
+        return <MCIIcon name="twitter" size={iconSize} color={iconColor} />;
+      }
+      case SocialMedia.Tiktok: {
+        return (
+          <FontAwesome5Icon name="tiktok" size={iconSize} color={iconColor} />
+        );
+      }
+      default:
+        return null;
+    }
+  }, [theme, type]);
+
+  return <Button onPress={onIconClick}>{getIconByType()}</Button>;
 }
 
 const Button = styled.TouchableOpacity`
-  width: 32px;
-  height: 32px;
   margin: 0 16px;
-`;
-
-const Icon = styled.View<ColorProps>`
-  background-color: ${({color}) => color};
-  flex: 1;
 `;
 
 export default SocialMediaIcon;
