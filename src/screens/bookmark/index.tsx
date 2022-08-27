@@ -62,7 +62,8 @@ interface ContainerProps {
 }
 
 const ScrollContainer = styled.ScrollView<ContainerProps>`
-  padding: 16px 16px ${({tabBarHeight}) => tabBarHeight}px 16px;
+  padding: 16px 16px 0 16px;
+  margin-bottom: ${({tabBarHeight}) => tabBarHeight + 10}px;
   flex: 1;
 `;
 
