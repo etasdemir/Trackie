@@ -1,36 +1,24 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps, Genre} from 'src/shared/Types';
-import ViewAllButton from 'src/components/ViewAllButton';
-import language from 'src/shared/language';
-import {RootChildScreenProp} from 'src/navigation/types';
 
 interface Props {
   genre: Genre;
-  navigation: RootChildScreenProp;
   ListComponent: () => JSX.Element;
 }
 
 function HorizontalList(props: Props) {
-  const {genre, ListComponent, navigation} = props;
+  const {genre, ListComponent} = props;
   console.log('Inner horizontal list rendered', genre);
   const theme = useSelector((state: RootState) => state.user.theme);
-
-  const onCategoryViewAllPress = useCallback(() => {
-    navigation.navigate('category', {genre});
-  }, [genre, navigation]);
 
   return (
     <Container>
       <CategoryHeader>
         <CategoryTitle color={theme.onView}>{genre.name}</CategoryTitle>
-        <ViewAllButton
-          onPress={onCategoryViewAllPress}
-          text={language.getText('view_all') + ' >'}
-        />
       </CategoryHeader>
       <ListComponent />
     </Container>
