@@ -52,6 +52,10 @@ export const en: StringToLang = {
   manga_members: (rank: number) => `Members #${rank}`,
   manga_synopsis: 'Synopsis',
   characters: 'Characters',
+  manga_my_reading_status: 'My Reading Status:',
+  manga_start_reading: 'Start Reading',
+  manga_finish_reading: 'Finish',
+  manga_finished_reading: (date: string) => `Finished on ${date}`,
 
   // Character Detail
   character_appearances: 'Appearances',

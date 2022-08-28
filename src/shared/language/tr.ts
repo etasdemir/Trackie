@@ -52,6 +52,10 @@ export const tr: StringToLang = {
   manga_members: (rank: number) => `Üyeler #${rank}`,
   manga_synopsis: 'Özet',
   characters: 'Karakterler',
+  manga_my_reading_status: 'Okuma Durumum:',
+  manga_start_reading: 'Okumaya Başla',
+  manga_finish_reading: 'Bitir',
+  manga_finished_reading: (date: string) => `Bitirme tarihi ${date}`,
 
   // Character Detail
   character_appearances: 'Diğer Yapıtlar',
