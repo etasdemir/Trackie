@@ -14,8 +14,7 @@ import {getMangaThunk} from 'src/redux/actions/MangaActions';
 import {MangaScreenProp} from 'src/navigation/types';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import MangaCharacterList from './components/MangaCharacterList';
-import {updateReadingStatusAction} from 'src/redux/actions/UserActions';
-import {ReadingStatusSchema} from 'src/data/local/schema/UserSchema';
+import ReadingStatusComponent from './components/ReadingStatusComponent';
 
 function MangaDetailScreen(props: MangaScreenProp) {
   console.log('MangaDetailScreen rendered');
@@ -28,16 +27,6 @@ function MangaDetailScreen(props: MangaScreenProp) {
   const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.user.theme);
   const manga = useSelector((state: RootState) => state.mangas.mangas[mangaId]);
-  const readingStatus = useSelector((state: RootState) => {
-    let status: ReadingStatusSchema | undefined;
-    for (const element of state.user.reading_statuses) {
-      if (element.mangaId === mangaId) {
-        status = element;
-        break;
-      }
-    }
-    return status;
-  });
 
   const onBackPress = useCallback(() => {
     navigation.pop();
@@ -46,31 +35,6 @@ function MangaDetailScreen(props: MangaScreenProp) {
   const onAuthorClick = useCallback(() => {
     navigation.navigate('author_detail', {authorId: manga.author.id});
   }, [manga?.author.id, navigation]);
-
-  const onFinishedReading = useCallback(() => {
-    const status = {
-      mangaId,
-      is_reading: false,
-      is_finished: true,
-      finish_date: Date.now(),
-      last_read_page: readingStatus?.last_read_page ?? 0,
-      last_read_time: readingStatus?.last_read_time ?? 0,
-    };
-    dispatch(updateReadingStatusAction(status));
-  }, [dispatch, mangaId, readingStatus]);
-
-  const onReadingNow = useCallback(() => {
-    const currentPage = 5;
-    const status = {
-      mangaId,
-      is_reading: true,
-      is_finished: false,
-      finish_date: readingStatus?.finish_date ?? 0,
-      last_read_page: currentPage,
-      last_read_time: Date.now(),
-    };
-    dispatch(updateReadingStatusAction(status));
-  }, [dispatch, mangaId, readingStatus]);
 
   if (!manga) {
     dispatch(getMangaThunk(mangaId));
@@ -131,12 +95,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
             />
           ))}
         </CategoryChipContainer>
-        {manga.chapters && (
-          <IconContainer>
-            <IconButton onPress={onReadingNow} color={theme.primary} />
-            <IconButton onPress={onFinishedReading} color={theme.primary} />
-          </IconContainer>
-        )}
+        {manga.chapters && <ReadingStatusComponent mangaId={mangaId} />}
       </Header>
       <SubContainer>
         <CategoryTitle color={theme.onView}>
@@ -188,18 +147,7 @@ const CategoryChipContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0 20px;
-`;
-
-const IconContainer = styled.View`
-  flex-direction: row;
-  margin-top: 20px;
-`;
-
-const IconButton = styled.TouchableOpacity<ColorProps>`
-  background-color: ${({color}) => color};
-  width: 32px;
-  height: 32px;
-  margin: 0 60px;
+  justify-content: center;
 `;
 
 const SubContainer = styled.View`
