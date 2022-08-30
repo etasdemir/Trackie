@@ -17,6 +17,7 @@ import CharacterDetailScreen from 'src/screens/character_detail';
 import Onboarding from 'src/screens/onboarding';
 import {BottomBarParamList, RootStackParamList} from './types';
 import {RootState} from 'src/redux/AppStore';
+import ChapterSelectModal from 'src/modals/ChapterSelectModal';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
@@ -132,6 +133,16 @@ function AppNavigation() {
         component={CharacterDetailScreen}
       />
       <AppStack.Screen name="bottom_bar" component={BottomBarTab} />
+      <AppStack.Group
+        screenOptions={{
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
+        }}>
+        <AppStack.Screen
+          name="chapter_selection_modal"
+          component={ChapterSelectModal}
+        />
+      </AppStack.Group>
     </AppStack.Navigator>
   );
 }

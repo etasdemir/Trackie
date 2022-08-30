@@ -13,6 +13,7 @@ export type RootStackParamList = {
   manga_detail: {mangaId: number};
   character_detail: {characterId: number};
   bottom_bar: NavigatorScreenParams<BottomBarParamList>;
+  chapter_selection_modal: undefined;
 };
 
 export type BottomBarParamList = {
@@ -52,6 +53,11 @@ export type BottomBarProp = NativeStackScreenProps<
   'bottom_bar'
 >;
 
+export type ChapterSelectionModalProp = NativeStackScreenProps<
+  RootStackParamList,
+  'chapter_selection_modal'
+>;
+
 export type HomeScreenProp = CompositeScreenProps<
   BottomTabScreenProps<BottomBarParamList, 'bottom_bar_home'>,
   NativeStackScreenProps<RootStackParamList>
@@ -82,4 +88,5 @@ export type RootChildScreenProp =
   | MangaScreenProp['navigation']
   | CategoryScreenProp['navigation']
   | AuthorScreenProp['navigation']
-  | CharacterScreenProp['navigation'];
+  | CharacterScreenProp['navigation']
+  | ChapterSelectionModalProp['navigation'];

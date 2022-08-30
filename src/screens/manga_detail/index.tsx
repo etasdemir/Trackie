@@ -95,7 +95,9 @@ function MangaDetailScreen(props: MangaScreenProp) {
             />
           ))}
         </CategoryChipContainer>
-        {manga.chapters && <ReadingStatusComponent mangaId={mangaId} />}
+        {manga.chapters && (
+          <ReadingStatusComponent mangaId={mangaId} navigation={navigation} />
+        )}
       </Header>
       <SubContainer>
         <CategoryTitle color={theme.onView}>

@@ -11,9 +11,15 @@ import {
 } from 'src/redux/actions/UserActions';
 import {getMangaThunk} from 'src/redux/actions/MangaActions';
 import language from 'src/shared/language';
+import {RootChildScreenProp} from 'src/navigation/types';
 
-function ReadingStatusComponent(props: {mangaId: number}) {
-  const {mangaId} = props;
+interface Props {
+  navigation: RootChildScreenProp;
+  mangaId: number;
+}
+
+function ReadingStatusComponent(props: Props) {
+  const {mangaId, navigation} = props;
   const dispatch = useAppDispatch();
 
   const theme = useSelector((state: RootState) => state.user.theme);
@@ -39,9 +45,10 @@ function ReadingStatusComponent(props: {mangaId: number}) {
       );
     } else {
       // Show drop down list
+      navigation.navigate('chapter_selection_modal');
       // Item seçilince lastReadPage = item. if item === chapterCount => finished
     }
-  }, [dispatch, mangaId, status]);
+  }, [dispatch, mangaId, navigation, status?.is_reading]);
 
   const onFinishedPress = useCallback(() => {
     if (!status?.is_finished) {
