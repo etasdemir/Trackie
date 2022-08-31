@@ -82,6 +82,7 @@ function ChapterSelectModal(props: ChapterSelectionModalProp) {
         data={listData}
         renderItem={({item}) => (
           <ChapterListItem
+            key={item.item.name}
             item={item.item}
             selectedChapter={item.selectedChapter}
             onPress={onChapterItemClick}
@@ -93,6 +94,7 @@ function ChapterSelectModal(props: ChapterSelectionModalProp) {
           offset: ITEM_HEIGHT_PX * index,
           index,
         })}
+        initialNumToRender={50}
       />
     </BaseModal>
   );
@@ -117,6 +119,8 @@ const ChapterListItem = React.memo(
       </ItemButton>
     );
   },
+  (prevProps, nextProps) =>
+    prevProps.selectedChapter === nextProps.selectedChapter,
 );
 
 const ItemButton = styled.TouchableOpacity<ColorProps & {background: string}>`
