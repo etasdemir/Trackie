@@ -45,10 +45,14 @@ function ReadingStatusComponent(props: Props) {
       );
     } else {
       // Show drop down list
-      navigation.navigate('chapter_selection_modal');
+      navigation.navigate('chapter_selection_modal', {
+        mangaId,
+        currentChapter: status.last_read_page,
+        totalChapter: manga.chapters!!,
+      });
       // Item seçilince lastReadPage = item. if item === chapterCount => finished
     }
-  }, [dispatch, mangaId, navigation, status?.is_reading]);
+  }, [dispatch, manga.chapters, mangaId, navigation, status]);
 
   const onFinishedPress = useCallback(() => {
     if (!status?.is_finished) {

@@ -13,7 +13,11 @@ export type RootStackParamList = {
   manga_detail: {mangaId: number};
   character_detail: {characterId: number};
   bottom_bar: NavigatorScreenParams<BottomBarParamList>;
-  chapter_selection_modal: undefined;
+  chapter_selection_modal: {
+    mangaId: number;
+    currentChapter: number;
+    totalChapter: number;
+  };
 };
 
 export type BottomBarParamList = {

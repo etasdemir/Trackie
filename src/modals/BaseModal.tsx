@@ -33,15 +33,15 @@ function BaseModal(props: Props) {
 
   return (
     <Container color={theme.primaryLight}>
-      <Title color={theme.onView}>{title}</Title>
+      <Title color={theme.primaryDark}>{title}</Title>
       <Description color={theme.onView}>{description}</Description>
       {children}
       <ButtonContainer>
         <Button color={theme.primaryDark} onPress={onCancelCallback}>
-          <ButtonText color={theme.onView}>{cancelBtn}</ButtonText>
+          <ButtonText color={theme.primaryDark}>{cancelBtn}</ButtonText>
         </Button>
         <Button color={theme.primaryDark} onPress={onSuccessCallback}>
-          <ButtonText color={theme.onView}>{doneBtn}</ButtonText>
+          <ButtonText color={theme.primaryDark}>{doneBtn}</ButtonText>
         </Button>
       </ButtonContainer>
     </Container>
@@ -56,13 +56,13 @@ const Container = styled.View<ColorProps>`
 `;
 
 const Title = styled.Text<ColorProps>`
-  font-size: 21px;
+  font-size: 20px;
   margin-bottom: 20px;
   color: ${({color}) => color};
 `;
 
 const Description = styled.Text<ColorProps>`
-  font-size: 17px;
+  font-size: 16px;
   margin-bottom: 20px;
   color: ${({color}) => color};
 `;
@@ -79,13 +79,13 @@ const Button = styled.TouchableOpacity<ColorProps>`
   align-items: center;
   border: 1px solid ${({color}) => color};
   border-radius: 30px;
-  padding: 6px 40px;
+  padding: 5px 40px;
   margin: 0 10px;
 `;
 
 const ButtonText = styled.Text<ColorProps>`
   color: ${({color}) => color};
-  font-size: 18px;
+  font-size: 16px;
 `;
 
-export default BaseModal;
+export default React.memo(BaseModal);
