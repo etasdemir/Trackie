@@ -8,6 +8,7 @@ import {ColorProps} from 'src/shared/Types';
 import {ChapterSelectionModalProp} from 'src/navigation/types';
 import BaseModal from './BaseModal';
 import {updateReadingStatusAction} from 'src/redux/actions/UserActions';
+import language from 'src/shared/language';
 
 interface ChapterItem {
   item: {
@@ -28,8 +29,6 @@ function ChapterSelectModal(props: ChapterSelectionModalProp) {
   } = props;
   const [selectedChapter, setSelectedChapter] = useState(currentChapter);
   const dispatch = useAppDispatch();
-  const title = 'Chapter Selection';
-  const description = 'Select the last chapter you were on:';
 
   const onSuccess = useCallback(() => {
     const isFinished = selectedChapter === totalChapter;
@@ -63,7 +62,7 @@ function ChapterSelectModal(props: ChapterSelectionModalProp) {
     for (let i = 0; i <= totalChapter; i += 1) {
       const item: ChapterItem = {
         item: {
-          name: `Chapter: ${i}`,
+          name: language.getText('chapter_name_with_num', i.toString()),
           chapter: i,
         },
         selectedChapter,
@@ -75,8 +74,8 @@ function ChapterSelectModal(props: ChapterSelectionModalProp) {
 
   return (
     <BaseModal
-      title={title}
-      description={description}
+      title={language.getText('chapter_select_title')}
+      description={language.getText('chapter_select_description')}
       onSuccess={onSuccess}
       navigation={navigation}>
       <FlatList

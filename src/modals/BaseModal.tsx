@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 import {RootChildScreenProp} from 'src/navigation/types';
+import language from 'src/shared/language';
 
 interface Props {
   title: string;
@@ -28,9 +29,6 @@ function BaseModal(props: Props) {
     onCancel && onCancel();
   };
 
-  const cancelBtn = 'Cancel';
-  const doneBtn = 'Done';
-
   return (
     <Container color={theme.primaryLight}>
       <Title color={theme.primaryDark}>{title}</Title>
@@ -38,10 +36,14 @@ function BaseModal(props: Props) {
       {children}
       <ButtonContainer>
         <Button color={theme.primaryDark} onPress={onCancelCallback}>
-          <ButtonText color={theme.primaryDark}>{cancelBtn}</ButtonText>
+          <ButtonText color={theme.primaryDark}>
+            {language.getText('cancel')}
+          </ButtonText>
         </Button>
         <Button color={theme.primaryDark} onPress={onSuccessCallback}>
-          <ButtonText color={theme.primaryDark}>{doneBtn}</ButtonText>
+          <ButtonText color={theme.primaryDark}>
+            {language.getText('done')}
+          </ButtonText>
         </Button>
       </ButtonContainer>
     </Container>

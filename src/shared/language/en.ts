@@ -2,6 +2,8 @@ import {StringToLang} from 'src/shared/Types';
 
 export const en: StringToLang = {
   // General
+  done: 'Done',
+  cancel: 'Cancel',
   home: 'Home',
   search: 'Search',
   bookmark: 'Bookmark',
@@ -62,4 +64,9 @@ export const en: StringToLang = {
 
   // Category
   top_mangas: 'Top Manga',
+
+  // Modals
+  chapter_select_title: 'Chapter Selection',
+  chapter_select_description: 'Select the last chapter you were on:',
+  chapter_name_with_num: (chapter: number) => `Chapter: ${chapter}`,
 };

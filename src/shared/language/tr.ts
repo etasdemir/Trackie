@@ -2,6 +2,8 @@ import {StringToLang} from 'src/shared/Types';
 
 export const tr: StringToLang = {
   // General
+  done: 'Tamam',
+  cancel: 'Kapat',
   home: 'Ana Sayfa',
   search: 'Arama',
   bookmark: 'Listelerim',
@@ -62,4 +64,9 @@ export const tr: StringToLang = {
 
   // Category
   top_mangas: 'En İyiler',
+
+  // Modals
+  chapter_select_title: 'Bölüm Seçimi',
+  chapter_select_description: 'Okuduğunuz son bölümü seçin:',
+  chapter_name_with_num: (chapter: number) => `Bölüm: ${chapter}`,
 };
