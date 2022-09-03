@@ -28,24 +28,32 @@ function Greeting(props: Props) {
   );
   const dispatch = useAppDispatch();
 
-  if (!status || (manga && !manga.chapters)) {
-    return null;
-  }
-  if (!manga) {
+  // if (!status || (manga && !manga.chapters)) {
+  //   return null;
+  // }
+
+  if (status && !manga) {
     dispatch(getMangaThunk(status.mangaId));
     return null;
   }
+  if (manga && !manga.chapters) {
+    return null;
+  }
 
-  const progress = parseInt(
-    ((status.last_read_page / manga.chapters!!) * 100).toFixed(0),
-    10,
-  );
-  const fullDate = new Date(status.last_read_time);
+  const progress = status
+    ? parseInt(
+        ((status.last_read_page / manga!!.chapters!!) * 100).toFixed(0),
+        10,
+      )
+    : 0;
+  const fullDate = new Date(status?.last_read_time ?? 0);
   const utcDate = fullDate.toUTCString();
   const parsedDate = utcDate.substring(0, utcDate.length - 13);
 
   const onUnfinishedMangaClick = () => {
-    navigation.navigate('manga_detail', {mangaId: status.mangaId});
+    if (status) {
+      navigation.navigate('manga_detail', {mangaId: status.mangaId});
+    }
   };
 
   const showAllUnfinishedManga = () => {
@@ -53,49 +61,57 @@ function Greeting(props: Props) {
   };
 
   return (
-    <Container>
-      <GreetingContainer color={theme.primary}>
+    <Container isStatusAvailable={status !== null}>
+      <GreetingContainer
+        isStatusAvailable={status !== null}
+        color={theme.primary}>
         <GreetingTitle color={theme.onView}>
           {language.getText('greeting')}
         </GreetingTitle>
-        <UnfinishedMangaContainer color={theme.primaryLight}>
-          <UnfinishedMangaTitle color={theme.onView}>
-            {language.getText('home_unfinished_manga', parsedDate)}
-          </UnfinishedMangaTitle>
-          <ViewAllButton color={theme.primary} onPress={showAllUnfinishedManga}>
-            <TitleText>{language.getText('view_all')}</TitleText>
-          </ViewAllButton>
-          <UnfinishedMangaView onPress={onUnfinishedMangaClick}>
-            <MangaCoverImage url={manga.img} />
-            <MangaInnerContainer>
-              <MangaNameText color={theme.onView} numberOfLines={1}>
-                {manga.title}
-              </MangaNameText>
-              <ProgressBarContainer>
-                <ProgressBar
-                  targetProgress={progress}
-                  style={{
-                    outerColor: theme.primaryDark,
-                    progressColor: theme.primary,
-                  }}
-                />
-                <ProgressText
-                  color={theme.onViewFaint}>{`${progress}%`}</ProgressText>
-              </ProgressBarContainer>
-            </MangaInnerContainer>
-          </UnfinishedMangaView>
-        </UnfinishedMangaContainer>
+        {status && manga ? (
+          <UnfinishedMangaContainer color={theme.primaryLight}>
+            <UnfinishedMangaTitle color={theme.onView}>
+              {language.getText('home_unfinished_manga', parsedDate)}
+            </UnfinishedMangaTitle>
+            <ViewAllButton
+              color={theme.primary}
+              onPress={showAllUnfinishedManga}>
+              <TitleText>{language.getText('view_all')}</TitleText>
+            </ViewAllButton>
+            <UnfinishedMangaView onPress={onUnfinishedMangaClick}>
+              <MangaCoverImage url={manga.img} />
+              <MangaInnerContainer>
+                <MangaNameText color={theme.onView} numberOfLines={1}>
+                  {manga.title}
+                </MangaNameText>
+                <ProgressBarContainer>
+                  <ProgressBar
+                    targetProgress={progress}
+                    style={{
+                      outerColor: theme.primaryDark,
+                      progressColor: theme.primary,
+                    }}
+                  />
+                  <ProgressText
+                    color={theme.onViewFaint}>{`${progress}%`}</ProgressText>
+                </ProgressBarContainer>
+              </MangaInnerContainer>
+            </UnfinishedMangaView>
+          </UnfinishedMangaContainer>
+        ) : null}
       </GreetingContainer>
     </Container>
   );
 }
 
-const Container = styled.View`
-  height: 370px;
+const Container = styled.View<{isStatusAvailable: boolean}>`
+  height: ${({isStatusAvailable}) => (isStatusAvailable ? 370 + 'px' : 'auto')};
 `;
 
-const GreetingContainer = styled.View<ColorProps>`
-  height: 50%;
+const GreetingContainer = styled.View<
+  ColorProps & {isStatusAvailable: boolean}
+>`
+  height: ${({isStatusAvailable}) => (isStatusAvailable ? 50 + '%' : 'auto')};
   background-color: ${({color}) => color};
   align-items: center;
   border-radius: 40px;
