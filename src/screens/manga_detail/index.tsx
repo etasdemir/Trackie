@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux';
 import TopBar from 'src/components/TopBar';
 import {ColorProps, Genre} from 'src/shared/Types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
-import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import StarRating from 'src/components/StarRating';
 import CategoryChip from './components/CategoryChip';
@@ -26,6 +25,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
   } = props;
   const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const manga = useSelector((state: RootState) => state.mangas.mangas[mangaId]);
 
   const onBackPress = useCallback(() => {
@@ -69,20 +69,17 @@ function MangaDetailScreen(props: MangaScreenProp) {
         <RankingContainer>
           {manga.rank && (
             <RankingText color={theme.onViewFaint}>
-              {language.getText('manga_ranked', manga.rank.toString())}
+              {language.manga_ranked(manga.rank.toString())}
             </RankingText>
           )}
           {manga.popularity && (
             <RankingText color={theme.onViewFaint}>
-              {language.getText(
-                'manga_popularity',
-                manga.popularity.toString(),
-              )}
+              {language.manga_popularity(manga.popularity.toString())}
             </RankingText>
           )}
           {manga.members && (
             <RankingText color={theme.onViewFaint}>
-              {language.getText('manga_members', manga.members.toString())}
+              {language.manga_members(manga.members.toString())}
             </RankingText>
           )}
         </RankingContainer>
@@ -101,11 +98,11 @@ function MangaDetailScreen(props: MangaScreenProp) {
       </Header>
       <SubContainer>
         <CategoryTitle color={theme.onView}>
-          {language.getText('manga_synopsis')}
+          {language.manga_synopsis}
         </CategoryTitle>
         <SynopsisText color={theme.onView}>{manga.synopsis}</SynopsisText>
         <CategoryTitle color={theme.onView}>
-          {language.getText('characters')}
+          {language.characters}
         </CategoryTitle>
         <MangaCharacterList mangaId={mangaId} navigation={navigation} />
       </SubContainer>

@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps, Genre} from 'src/shared/Types';
 import ViewAllButton from 'src/components/ViewAllButton';
-import language from 'src/shared/language';
 import {RootChildScreenProp} from 'src/navigation/types';
 
 interface Props {
@@ -19,6 +18,7 @@ function HorizontalList(props: Props) {
   const {genre, ListComponent, navigation, isViewAllVisible} = props;
   console.log('Inner horizontal list rendered', genre);
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
 
   const onCategoryViewAllPress = useCallback(() => {
     navigation.navigate('category', {genre});
@@ -31,7 +31,7 @@ function HorizontalList(props: Props) {
         {isViewAllVisible ? (
           <ViewAllButton
             onPress={onCategoryViewAllPress}
-            text={language.getText('view_all') + ' >'}
+            text={language.view_all + ' >'}
           />
         ) : null}
       </CategoryHeader>

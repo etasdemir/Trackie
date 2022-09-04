@@ -5,7 +5,6 @@ import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIIcon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
 
-import language from 'src/shared/language';
 import Home from 'src/screens/home';
 import Category from 'src/screens/category';
 import Search from 'src/screens/search';
@@ -19,12 +18,14 @@ import {BottomBarParamList, RootStackParamList} from './types';
 import {RootState} from 'src/redux/AppStore';
 import ChapterSelectModal from 'src/modals/ChapterSelectModal';
 import ThemeSelectModal from 'src/modals/ThemeSelectModal';
+import LanguageSelectModal from 'src/modals/LanguageSelectModal';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
 
 function BottomBarTab() {
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
 
   return (
     <BottomBar.Navigator
@@ -52,7 +53,7 @@ function BottomBarTab() {
         name="bottom_bar_home"
         component={Home}
         options={{
-          title: language.getText('home'),
+          title: language.home,
           tabBarIcon: ({focused, size, color}) => {
             return (
               <MCIIcon
@@ -68,7 +69,7 @@ function BottomBarTab() {
         name="bottom_bar_search"
         component={Search}
         options={{
-          title: language.getText('search'),
+          title: language.search,
           tabBarIcon: ({focused, size, color}) => {
             return (
               <MIIcon
@@ -84,7 +85,7 @@ function BottomBarTab() {
         name="bottom_bar_bookmark"
         component={Bookmark}
         options={{
-          title: language.getText('bookmark'),
+          title: language.bookmark,
           tabBarIcon: ({focused, size, color}) => {
             return (
               <MCIIcon
@@ -102,7 +103,7 @@ function BottomBarTab() {
         name="bottom_bar_profile"
         component={Profile}
         options={{
-          title: language.getText('profile'),
+          title: language.profile,
           tabBarIcon: ({focused, size, color}) => {
             return (
               <MCIIcon
@@ -146,6 +147,10 @@ function AppNavigation() {
         <AppStack.Screen
           name="theme_selection_modal"
           component={ThemeSelectModal}
+        />
+        <AppStack.Screen
+          name="language_selection_modal"
+          component={LanguageSelectModal}
         />
       </AppStack.Group>
     </AppStack.Navigator>

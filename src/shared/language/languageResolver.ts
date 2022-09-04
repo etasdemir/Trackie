@@ -1,17 +1,15 @@
+import LanguageInterface from './languageInterface';
 import {LANGUAGE} from 'src/shared/Constant';
-import {StringToLang} from 'src/shared/Types';
 import {en} from './en';
 import {tr} from './tr';
 
 interface StringToObject {
-  [key: string]: StringToLang;
+  [key: string]: LanguageInterface;
 }
 
-const abbrToObj: StringToObject = {
+const languageJson: StringToObject = {
   [LANGUAGE.ENGLISH]: en,
   [LANGUAGE.TURKISH]: tr,
 };
 
-export const resolveLanguage = (abbr: string, key: string) => {
-  return abbrToObj[abbr][key];
-};
+export default languageJson;

@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
 import {ColorProps, CoverManga} from 'src/shared/Types';
-import language from 'src/shared/language';
 import SocialMediaIcon, {SocialMedia} from './components/SocialMediaIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import FavouriteIcon from 'src/components/FavouriteIcon';
@@ -22,6 +21,7 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
     navigation,
   } = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const author = useSelector(
     (state: RootState) => state.people.authors[authorId],
   );
@@ -92,11 +92,11 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
       </SocialsContainer>
       <SubContainer>
         <CategoryTitle color={theme.onView}>
-          {language.getText('author_bio')}
+          {language.author_bio}
         </CategoryTitle>
         <BioText color={theme.onView}>{author.bio}</BioText>
         <CategoryTitle color={theme.onView}>
-          {language.getText('author_works')}
+          {language.author_works}
         </CategoryTitle>
         <MangaFlatList
           showsHorizontalScrollIndicator={false}

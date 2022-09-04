@@ -5,7 +5,6 @@ import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchIcon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
 
-import language from 'src/shared/language';
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 
@@ -32,6 +31,7 @@ let lastSearch: LastTextSearch = {timestamp: getSec(), text: ''};
 function SearchInput(props: Props) {
   const {searchText, onTextClear, inputRef} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const [input, setInput] = useState<string>('');
   const isTextTyped = input.length > 0;
 
@@ -96,7 +96,7 @@ function SearchInput(props: Props) {
         ref={inputRef}
         value={input}
         onChangeText={onChangeText}
-        placeholder={language.getText('search_place_holder')}
+        placeholder={language.search_place_holder}
         textColor={theme.onView}
         placeholderTextColor={theme.onViewFaint}
         numberOfLines={1}

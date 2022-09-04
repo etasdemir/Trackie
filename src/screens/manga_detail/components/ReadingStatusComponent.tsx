@@ -10,7 +10,6 @@ import {
   updateReadingStatusAction,
 } from 'src/redux/actions/UserActions';
 import {getMangaThunk} from 'src/redux/actions/MangaActions';
-import language from 'src/shared/language';
 import {RootChildScreenProp} from 'src/navigation/types';
 
 interface Props {
@@ -23,6 +22,7 @@ function ReadingStatusComponent(props: Props) {
   const dispatch = useAppDispatch();
 
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const status = useSelector((state: RootState) => {
     const filtered = state.user.reading_statuses.filter(
       item => item.mangaId === mangaId,
@@ -87,13 +87,13 @@ function ReadingStatusComponent(props: Props) {
   return (
     <Container>
       <SectionTitle color={theme.onView}>
-        {language.getText('manga_my_reading_status')}
+        {language.manga_my_reading_status}
       </SectionTitle>
       <ButtonContainer padding={status?.is_finished ? 0 : 40}>
         <ReadingStatusButton color={theme.primary} onPress={onReadingPress}>
           {!status?.is_reading ? (
             <ButtonText color={theme.onView}>
-              {language.getText('manga_start_reading')}
+              {language.manga_start_reading}
             </ButtonText>
           ) : (
             <ReadingNowContainer>
@@ -115,12 +115,12 @@ function ReadingStatusComponent(props: Props) {
           onPress={onFinishedPress}>
           {!status?.is_finished ? (
             <ButtonText color={theme.onView}>
-              {language.getText('manga_finish_reading')}
+              {language.manga_finish_reading}
             </ButtonText>
           ) : (
             <ButtonText color={theme.onView}>
               {parsedFinishDate &&
-                language.getText('manga_finished_reading', parsedFinishDate)}
+                language.manga_finished_reading(parsedFinishDate)}
             </ButtonText>
           )}
         </ReadingStatusButton>

@@ -1,29 +1,13 @@
 import {NativeModules, Platform} from 'react-native';
 
-import {resolveLanguage} from './languageResolver';
-import {store} from 'src/redux/AppStore';
+import languageJson from './languageResolver';
 import {LANGUAGE} from 'src/shared/Constant';
 
 class Language {
-  getText(key: string, ...params: String[]): string {
-    const lang = store.getState().user.language;
-    if (!lang) {
-      console.error('Language::getText language state is null');
-      return '';
-    }
-    const text = resolveLanguage(lang, key);
-    if (text instanceof Function) {
-      if (params && params.length > 0) {
-        return text(params);
-      } else {
-        console.error(
-          'Language text is a function but called without parameters',
-        );
-        return 'Error';
-      }
-    } else {
-      return text.toString();
-    }
+  defaultLanguage = LANGUAGE.ENGLISH;
+
+  constructor() {
+    this.defaultLanguage = this.getDefaultLanguage();
   }
 
   getDefaultLanguage(): string {
@@ -45,4 +29,6 @@ class Language {
   }
 }
 
-export default new Language();
+const languageStore = new Language();
+export default languageJson[languageStore.defaultLanguage];
+export {languageStore, languageJson};

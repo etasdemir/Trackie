@@ -8,7 +8,6 @@ import SearchInput from './components/SearchInput';
 import SearchRecent from './components/SearchRecent';
 import VerticalMangaList from 'src/components/VerticalMangaList';
 import {CategoryManga, ColorProps} from 'src/shared/Types';
-import language from 'src/shared/language';
 import {SearchScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {mostPopularMangasThunk} from 'src/redux/actions/CategoryActions';
@@ -27,6 +26,7 @@ export interface SearchProps extends SearchScreenProp {
 function Search(props: SearchScreenProp) {
   const {navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const mostPopulars = useSelector(
     (state: RootState) => state.category.mostPopulars,
   );
@@ -104,7 +104,7 @@ function Search(props: SearchScreenProp) {
       )}
       {!isSearchActive && mostPopulars.length > 0 && (
         <MostPopularMangaTitle color={theme.onView}>
-          {language.getText('genre_most_popular')}
+          {language.genre_most_popular}
         </MostPopularMangaTitle>
       )}
       {!isSearchActive && (

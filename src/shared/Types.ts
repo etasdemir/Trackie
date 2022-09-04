@@ -1,7 +1,3 @@
-export interface StringToLang {
-  [key: string]: String | Function;
-}
-
 export interface ColorProps {
   color: string;
 }

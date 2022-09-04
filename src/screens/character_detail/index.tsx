@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
 import {ColorProps} from 'src/shared/Types';
-import language from 'src/shared/language';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
@@ -21,6 +20,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
     },
   } = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const dispatcher = useAppDispatch();
   const character = useSelector(
     (state: RootState) => state.people.characters[characterId],
@@ -58,7 +58,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
         <CharacterImage resizeMode="cover" source={imageSource} />
         <BioText color={theme.onView}>{character.about}</BioText>
         <CategoryTitle color={theme.onView}>
-          {language.getText('character_appearances')}
+          {language.character_appearances}
         </CategoryTitle>
         <FlatList
           horizontal

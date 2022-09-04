@@ -15,7 +15,10 @@ import {
 import Repository from 'src/data/Repository';
 import {UserState} from '../ReduxTypes';
 import defaultTheme, {themeJson} from 'src/shared/theme';
-import {default as Language} from 'src/shared/language';
+import defaultLanguage, {
+  languageJson,
+  languageStore,
+} from 'src/shared/language';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
 import {readingStatusesSort} from 'src/data/local/dao/UserDao';
 
@@ -23,7 +26,11 @@ const initialState: UserState = {
   user: {
     theme: defaultTheme,
     persisted_theme: {theme: defaultTheme.theme, isDeviceTheme: true},
-    language: Language.getDefaultLanguage(),
+    language: defaultLanguage,
+    persisted_language: {
+      language: languageStore.defaultLanguage,
+      isDeviceLanguage: true,
+    },
     is_first_install: true,
     modify_date: 0,
     reading_statuses: [],
@@ -45,10 +52,18 @@ export const userReducer = createReducer(initialState.user, builder => {
       persistedTheme = user.persisted_theme;
     }
 
+    let language = state.language;
+    let persistedLanguage = state.persisted_language;
+    if (!user.persisted_language.isDeviceLanguage) {
+      persistedLanguage = user.persisted_language;
+      language = languageJson[persistedLanguage.language];
+    }
+
     state = Object.assign(user, {
       theme,
       persisted_theme: persistedTheme,
-      language: user.language ?? state.language,
+      language,
+      persisted_language: persistedLanguage,
       search_recent: user.search_recent.slice(),
       reading_statuses: readingStatusesSort(user.reading_statuses.slice()),
     });
@@ -61,9 +76,10 @@ export const userReducer = createReducer(initialState.user, builder => {
     state.persisted_theme = newPersistedState;
   });
   builder.addCase(setLanguageAction, (state, action) => {
-    const {language} = action.payload;
-    Repository.setLanguage(language);
-    state.language = language;
+    const newPersistedLanguage = action.payload;
+    Repository.setLanguage(newPersistedLanguage);
+    state.language = languageJson[newPersistedLanguage.language];
+    state.persisted_language = newPersistedLanguage;
   });
   builder.addCase(setIsFirstInstallAction, (state, action) => {
     const value = action.payload;

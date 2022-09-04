@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import {ColorProps, MangaDetail} from 'src/shared/Types';
 import ViewAllButton from 'src/components/ViewAllButton';
-import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import {topMangasThunk} from 'src/redux/actions/CategoryActions';
@@ -23,15 +22,16 @@ function TopMangas(props: Props) {
   const {navigation} = props;
   const dispatch = useAppDispatch();
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const topMangas = useSelector((state: RootState) => state.category.topMangas);
 
   const genre = useMemo(
     () => ({
       id: TOP_MANGA_GENRE_ID,
-      name: language.getText('top_mangas'),
+      name: language.top_mangas,
       count: topMangas.length,
     }),
-    [topMangas.length],
+    [language.top_mangas, topMangas.length],
   );
 
   const onCategoryViewAllPress = useCallback(() => {
@@ -50,7 +50,7 @@ function TopMangas(props: Props) {
         <CategoryTitle color={theme.onView}>{genre.name}</CategoryTitle>
         <ViewAllButton
           onPress={onCategoryViewAllPress}
-          text={language.getText('view_all') + ' >'}
+          text={language.view_all + ' >'}
         />
       </CategoryHeader>
       <MangaFlatList

@@ -192,7 +192,7 @@ class Repository {
     return await UserDao.getLanguage();
   }
 
-  async setLanguage(language: string) {
+  async setLanguage(language: UserSchema['persisted_language']) {
     await UserDao.setLanguage(language);
   }
 

@@ -9,7 +9,7 @@ export const UserSchema = {
   properties: {
     id: 'int',
     persisted_theme: '{}',
-    language: 'string?',
+    persisted_language: '{}',
     is_first_install: {type: 'bool', default: true},
     reading_statuses: `${SCHEMA_NAME.READING_STATUS}[]`,
     favourite_mangas: `${SCHEMA_NAME.MANGA_DETAIL}[]`,
@@ -49,7 +49,10 @@ export interface UserSchema {
     theme: string;
     isDeviceTheme: boolean;
   };
-  language?: string;
+  persisted_language: {
+    language: string;
+    isDeviceLanguage: boolean;
+  };
   is_first_install: boolean;
   reading_statuses: ReadingStatusSchema[];
   favourite_mangas: MangaSchema[];

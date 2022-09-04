@@ -3,7 +3,6 @@ import {useSelector} from 'react-redux';
 import {Appearance} from 'react-native';
 
 import BaseModal from 'src/modals/BaseModal';
-import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {ThemeSelectionModalProp} from 'src/navigation/types';
 import {THEME} from 'src/shared/Constant';
@@ -12,12 +11,13 @@ import {setThemeAction} from 'src/redux/actions/UserActions';
 
 function ThemeSelectModal(props: ThemeSelectionModalProp) {
   const {navigation} = props;
+  const language = useSelector((state: RootState) => state.user.language);
   const persistedTheme = useSelector(
     (state: RootState) => state.user.persisted_theme,
   );
   const dispatch = useAppDispatch();
-  const title = language.getText('theme_select_title');
-  const description = language.getText('theme_select_description');
+  const title = language.theme_select_title;
+  const description = language.theme_select_description;
 
   const [selectedOption, setSelectedOption] = useState({
     theme: persistedTheme.theme,
@@ -43,7 +43,7 @@ function ThemeSelectModal(props: ThemeSelectionModalProp) {
       onSuccess={onSaveTheme}>
       <>
         <RadioButton
-          name={language.getText('light_theme')}
+          name={language.light_theme}
           onPress={() =>
             setSelectedOption({theme: THEME.LIGHT, isDevice: false})
           }
@@ -52,7 +52,7 @@ function ThemeSelectModal(props: ThemeSelectionModalProp) {
           }
         />
         <RadioButton
-          name={language.getText('dark_theme')}
+          name={language.dark_theme}
           onPress={() =>
             setSelectedOption({theme: THEME.DARK, isDevice: false})
           }
@@ -61,7 +61,7 @@ function ThemeSelectModal(props: ThemeSelectionModalProp) {
           }
         />
         <RadioButton
-          name={language.getText('system_default')}
+          name={language.system_default}
           onPress={() =>
             setSelectedOption({theme: systemTheme, isDevice: true})
           }

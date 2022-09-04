@@ -1,6 +1,6 @@
-import {StringToLang} from 'src/shared/Types';
+import LanguageInterface from './LanguageInterface';
 
-export const tr: StringToLang = {
+export const tr: LanguageInterface = {
   // General
   done: 'Tamam',
   cancel: 'Kapat',

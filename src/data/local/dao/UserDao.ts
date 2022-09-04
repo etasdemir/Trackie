@@ -28,6 +28,10 @@ class UserDao {
           theme: '',
           isDeviceTheme: true,
         },
+        persisted_language: {
+          language: '',
+          isDeviceLanguage: true,
+        },
         modify_date: Date.now(),
         is_first_install: true,
         reading_statuses: [],
@@ -62,17 +66,21 @@ class UserDao {
     return user?.persisted_theme;
   }
 
-  async setLanguage(language: string) {
-    const obj = {id: USER_ID, language};
-    await BaseDao.createObject(SCHEMA_NAME.USER, obj);
+  async setLanguage(language: UserSchema['persisted_language']) {
+    await BaseDao.updateDictionaries(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['persisted_language'],
+      [language],
+    );
   }
 
-  async getLanguage(): Promise<string | undefined> {
+  async getLanguage(): Promise<UserSchema['persisted_language'] | undefined> {
     const user = await BaseDao.getObjectById<UserSchema>(
       SCHEMA_NAME.USER,
       USER_ID,
     );
-    return user?.language;
+    return user?.persisted_language;
   }
 
   async getIsFirstInstall(): Promise<boolean> {

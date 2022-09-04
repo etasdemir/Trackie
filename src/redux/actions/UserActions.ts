@@ -20,7 +20,7 @@ export const setThemeAction = createAction(
 
 export const setLanguageAction = createAction(
   'SET_LANGUAGE_ACTION',
-  withPayloadType<{language: string}>(),
+  withPayloadType<UserSchema['persisted_language']>(),
 );
 
 export const setIsFirstInstallAction = createAction(

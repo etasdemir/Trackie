@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 
 import ViewAllButton from 'src/components/ViewAllButton';
-import language from 'src/shared/language';
 import {ColorProps} from 'src/shared/Types';
 import RecentChip from './RecentChip';
 import {
@@ -24,6 +23,7 @@ export interface SearchRecentProps {
 function SearchRecent(props: SearchRecentProps) {
   const {callback, navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const searchRecents = useSelector(
     (state: RootState) => state.user.search_recent,
   );
@@ -83,12 +83,10 @@ function SearchRecent(props: SearchRecentProps) {
   return (
     <Container>
       <RecentHeader>
-        <RecentTitle color={theme.onView}>
-          {language.getText('search_recent')}
-        </RecentTitle>
+        <RecentTitle color={theme.onView}>{language.search_recent}</RecentTitle>
         <ViewAllButton
           onPress={clearSearchRecent}
-          text={language.getText('search_clear_recent')}
+          text={language.search_clear_recent}
         />
       </RecentHeader>
       <ChipContainer>

@@ -4,7 +4,6 @@ import {Rating} from 'react-native-ratings';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 
-import language from 'src/shared/language';
 import {ColorProps} from 'src/shared/Types';
 import {RootState} from 'src/redux/AppStore';
 
@@ -18,6 +17,7 @@ export interface StarRatingProps extends ViewProps {
 function StarRating(props: StarRatingProps) {
   const {score, scoredBy} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
 
   return (
     <RatingContainer>
@@ -36,7 +36,7 @@ function StarRating(props: StarRatingProps) {
       ) : null}
       {scoredBy && (
         <ReviewText color={theme.onViewFaint}>
-          {language.getText('reviews', score.toString(), scoredBy.toString())}
+          {language.reviews(score.toString(), scoredBy.toString())}
         </ReviewText>
       )}
     </RatingContainer>

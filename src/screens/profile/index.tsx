@@ -5,7 +5,6 @@ import {useSelector} from 'react-redux';
 
 import Stat from './components/Stat';
 import {ColorProps} from 'src/shared/Types';
-import language from 'src/shared/language';
 import {RootState} from 'src/redux/AppStore';
 import SettingsButton from 'src/components/SettingsButton';
 import {ProfileScreenProp} from 'src/navigation/types';
@@ -19,7 +18,10 @@ enum MODAL_KEY {
 function Profile(props: ProfileScreenProp) {
   const {navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
-  const langState = useSelector((state: RootState) => state.user.language);
+  const language = useSelector((state: RootState) => state.user.language);
+  const persistedLanguage = useSelector(
+    (state: RootState) => state.user.persisted_language,
+  );
   const tabBarHeight = useBottomTabBarHeight();
   const readingStatuses = useSelector(
     (state: RootState) => state.user.reading_statuses,
@@ -39,15 +41,15 @@ function Profile(props: ProfileScreenProp) {
 
   const stats = [
     {
-      name: language.getText('currently_reading'),
+      name: language.currently_reading,
       count: readingCount,
     },
     {
-      name: language.getText('reading_finished'),
+      name: language.reading_finished,
       count: finishedCount,
     },
     {
-      name: language.getText('favourite_list'),
+      name: language.favourite_list,
       count: favouriteMangas.length,
     },
   ];
@@ -59,7 +61,7 @@ function Profile(props: ProfileScreenProp) {
         break;
       }
       case MODAL_KEY.LANGUAGE: {
-        console.log('show language modal');
+        navigation.navigate('language_selection_modal');
         break;
       }
       case MODAL_KEY.CLEAR_DATA: {
@@ -83,19 +85,19 @@ function Profile(props: ProfileScreenProp) {
         ))}
       </StatContainer>
       <SettingsButton
-        name={language.getText('theme')}
+        name={language.theme}
         iconName="theme-light-dark"
-        value={language.getText(theme.theme + '_theme')}
+        value={language[(theme.theme + '_theme') as never]}
         onSettingPress={() => onSettingsPress(MODAL_KEY.THEME)}
       />
       <SettingsButton
-        name={language.getText('language')}
+        name={language.language}
         iconName="earth"
-        value={language.getText(langState ?? 'en')}
+        value={language[persistedLanguage.language as never]}
         onSettingPress={() => onSettingsPress(MODAL_KEY.LANGUAGE)}
       />
       <SettingsButton
-        name={language.getText('clear_all_data')}
+        name={language.clear_all_data}
         iconName="delete-forever"
         value={'>'}
         onSettingPress={() => onSettingsPress(MODAL_KEY.CLEAR_DATA)}

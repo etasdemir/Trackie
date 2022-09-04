@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
 
 import {ColorProps} from 'src/shared/Types';
-import language from 'src/shared/language';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import MangaCoverImage from 'src/components/MangaCoverImage';
 import ProgressBar from 'src/components/ProgressBar';
@@ -17,6 +16,7 @@ interface Props {
 function Greeting(props: Props) {
   const {navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const language = useSelector((state: RootState) => state.user.language);
   const status = useSelector((state: RootState) => {
     const filtered = state.user.reading_statuses.filter(
       item => item.is_reading && !item.is_finished,
@@ -65,18 +65,16 @@ function Greeting(props: Props) {
       <GreetingContainer
         isStatusAvailable={status !== null}
         color={theme.primary}>
-        <GreetingTitle color={theme.onView}>
-          {language.getText('greeting')}
-        </GreetingTitle>
+        <GreetingTitle color={theme.onView}>{language.greeting}</GreetingTitle>
         {status && manga ? (
           <UnfinishedMangaContainer color={theme.primaryLight}>
             <UnfinishedMangaTitle color={theme.onView}>
-              {language.getText('home_unfinished_manga', parsedDate)}
+              {language.home_unfinished_manga(parsedDate)}
             </UnfinishedMangaTitle>
             <ViewAllButton
               color={theme.primary}
               onPress={showAllUnfinishedManga}>
-              <TitleText>{language.getText('view_all')}</TitleText>
+              <TitleText>{language.view_all}</TitleText>
             </ViewAllButton>
             <UnfinishedMangaView onPress={onUnfinishedMangaClick}>
               <MangaCoverImage url={manga.img} />
