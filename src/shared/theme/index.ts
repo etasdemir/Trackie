@@ -1,6 +1,5 @@
 import {Appearance} from 'react-native';
 
-import Repository from 'src/data/Repository';
 import {THEME} from 'src/shared/Constant';
 
 export const themeJson: ITheme = require('./theme.json');
@@ -23,16 +22,11 @@ export interface ThemeInterface {
 class ThemeStore {
   defaultTheme = THEME.LIGHT;
 
-  async getInitialTheme() {
-    const persistedValue = await Repository.getTheme();
-    if (persistedValue) {
-      return persistedValue;
-    }
+  constructor() {
     const deviceTheme = Appearance.getColorScheme();
     if (deviceTheme) {
-      return deviceTheme;
+      this.defaultTheme = deviceTheme;
     }
-    return this.defaultTheme;
   }
 }
 

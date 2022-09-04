@@ -18,6 +18,7 @@ import Onboarding from 'src/screens/onboarding';
 import {BottomBarParamList, RootStackParamList} from './types';
 import {RootState} from 'src/redux/AppStore';
 import ChapterSelectModal from 'src/modals/ChapterSelectModal';
+import ThemeSelectModal from 'src/modals/ThemeSelectModal';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
@@ -141,6 +142,10 @@ function AppNavigation() {
         <AppStack.Screen
           name="chapter_selection_modal"
           component={ChapterSelectModal}
+        />
+        <AppStack.Screen
+          name="theme_selection_modal"
+          component={ThemeSelectModal}
         />
       </AppStack.Group>
     </AppStack.Navigator>

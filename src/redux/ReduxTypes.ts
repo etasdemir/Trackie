@@ -35,5 +35,5 @@ interface ModifiedUserProperties {
   theme: ThemeInterface;
 }
 export interface UserState {
-  user: Omit<UserSchema, 'theme'> & ModifiedUserProperties;
+  user: UserSchema & ModifiedUserProperties;
 }

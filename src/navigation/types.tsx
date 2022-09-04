@@ -18,6 +18,7 @@ export type RootStackParamList = {
     currentChapter: number;
     totalChapter: number;
   };
+  theme_selection_modal: undefined;
 };
 
 export type BottomBarParamList = {
@@ -62,6 +63,11 @@ export type ChapterSelectionModalProp = NativeStackScreenProps<
   'chapter_selection_modal'
 >;
 
+export type ThemeSelectionModalProp = NativeStackScreenProps<
+  RootStackParamList,
+  'theme_selection_modal'
+>;
+
 export type HomeScreenProp = CompositeScreenProps<
   BottomTabScreenProps<BottomBarParamList, 'bottom_bar_home'>,
   NativeStackScreenProps<RootStackParamList>
@@ -93,4 +99,5 @@ export type RootChildScreenProp =
   | CategoryScreenProp['navigation']
   | AuthorScreenProp['navigation']
   | CharacterScreenProp['navigation']
-  | ChapterSelectionModalProp['navigation'];
+  | ChapterSelectionModalProp['navigation']
+  | ThemeSelectionModalProp['navigation'];

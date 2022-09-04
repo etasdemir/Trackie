@@ -22,6 +22,7 @@ import {readingStatusesSort} from 'src/data/local/dao/UserDao';
 const initialState: UserState = {
   user: {
     theme: defaultTheme,
+    persisted_theme: {theme: defaultTheme.theme, isDeviceTheme: true},
     language: Language.getDefaultLanguage(),
     is_first_install: true,
     modify_date: 0,
@@ -36,8 +37,17 @@ const initialState: UserState = {
 export const userReducer = createReducer(initialState.user, builder => {
   builder.addCase(setUserAction, (state, action) => {
     const {user} = action.payload;
+
+    let theme = state.theme;
+    let persistedTheme = state.persisted_theme;
+    if (!user.persisted_theme.isDeviceTheme) {
+      theme = themeJson[user.persisted_theme.theme];
+      persistedTheme = user.persisted_theme;
+    }
+
     state = Object.assign(user, {
-      theme: state.theme,
+      theme,
+      persisted_theme: persistedTheme,
       language: user.language ?? state.language,
       search_recent: user.search_recent.slice(),
       reading_statuses: readingStatusesSort(user.reading_statuses.slice()),
@@ -45,9 +55,10 @@ export const userReducer = createReducer(initialState.user, builder => {
     return state;
   });
   builder.addCase(setThemeAction, (state, action) => {
-    const {theme} = action.payload;
-    Repository.setTheme(theme);
-    state.theme = {...themeJson[theme], theme};
+    const newPersistedState = action.payload;
+    Repository.setTheme(newPersistedState);
+    state.theme = themeJson[newPersistedState.theme];
+    state.persisted_theme = newPersistedState;
   });
   builder.addCase(setLanguageAction, (state, action) => {
     const {language} = action.payload;

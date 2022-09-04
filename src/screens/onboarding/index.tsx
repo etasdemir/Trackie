@@ -2,11 +2,9 @@ import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/native';
 
 import {OnboardingScreenProp} from 'src/navigation/types';
-import {themeStore} from 'src/shared/theme';
 import {
   getUserThunk,
   setIsFirstInstallAction,
-  setThemeAction,
 } from 'src/redux/actions/UserActions';
 import {useAppDispatch} from 'src/redux/AppStore';
 import Repository from 'src/data/Repository';
@@ -35,11 +33,6 @@ function Onboarding({navigation}: OnboardingScreenProp) {
     dispatcher(getUserThunk());
 
     const dbIsFirstInstall = await Repository.getIsFirstInstall();
-
-    const persistedTheme = await themeStore.getInitialTheme();
-    if (persistedTheme !== themeStore.defaultTheme) {
-      dispatcher(setThemeAction({theme: persistedTheme}));
-    }
 
     setReadyState({
       isFirstInstall: dbIsFirstInstall,

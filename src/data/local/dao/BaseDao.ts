@@ -174,6 +174,27 @@ class BaseDao {
     const realm = await db.getConnection();
     realm.deleteAll();
   }
+
+  async updateDictionaries(
+    schema: string,
+    id: number,
+    dictionaries: string[],
+    values: {[key: string]: {}}[],
+  ) {
+    const realm = await db.getConnection();
+    realm.write(() => {
+      const obj: {[key: string]: unknown} | undefined =
+        realm.objectForPrimaryKey(schema, id);
+      if (obj) {
+        dictionaries.forEach((name, index) => {
+          const field = obj[name] as Realm.DictionaryBase;
+          if (field.set) {
+            field.set(values[index]);
+          }
+        });
+      }
+    });
+  }
 }
 
 interface ComparedFields {

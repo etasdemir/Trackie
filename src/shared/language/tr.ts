@@ -37,8 +37,8 @@ export const tr: StringToLang = {
   // Profile
   reading_finished: 'Bitenler',
   theme: 'Tema',
-  light_theme: 'Açık Tema',
-  dark_theme: 'Koyu Tema',
+  light_theme: 'Açık tema',
+  dark_theme: 'Koyu tema',
   language: 'Dil',
   en: 'English',
   tr: 'Türkçe',
@@ -69,4 +69,8 @@ export const tr: StringToLang = {
   chapter_select_title: 'Bölüm Seçimi',
   chapter_select_description: 'Okuduğunuz son bölümü seçin:',
   chapter_name_with_num: (chapter: number) => `Bölüm: ${chapter}`,
+  theme_select_title: 'Görünüm',
+  theme_select_description: 'Uygulama genelinde kullanılacak temayı seçiniz.',
+  language_select_description: 'Uygulama genelinde kullanılacak dili seçiniz.',
+  system_default: 'Sistem varsayılanı',
 };

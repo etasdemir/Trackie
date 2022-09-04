@@ -8,6 +8,7 @@ import {ColorProps} from 'src/shared/Types';
 import language from 'src/shared/language';
 import {RootState} from 'src/redux/AppStore';
 import SettingsButton from 'src/components/SettingsButton';
+import {ProfileScreenProp} from 'src/navigation/types';
 
 enum MODAL_KEY {
   'THEME',
@@ -15,7 +16,8 @@ enum MODAL_KEY {
   'CLEAR_DATA',
 }
 
-function Profile() {
+function Profile(props: ProfileScreenProp) {
+  const {navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
   const langState = useSelector((state: RootState) => state.user.language);
   const tabBarHeight = useBottomTabBarHeight();
@@ -53,7 +55,7 @@ function Profile() {
   const onSettingsPress = (key: MODAL_KEY) => {
     switch (key) {
       case MODAL_KEY.THEME: {
-        console.log('show theme modal');
+        navigation.navigate('theme_selection_modal');
         break;
       }
       case MODAL_KEY.LANGUAGE: {

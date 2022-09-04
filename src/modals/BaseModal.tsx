@@ -10,7 +10,7 @@ import language from 'src/shared/language';
 interface Props {
   title: string;
   description: string;
-  children: JSX.Element;
+  children?: JSX.Element;
   onSuccess?: () => void;
   onCancel?: () => void;
   navigation: RootChildScreenProp;

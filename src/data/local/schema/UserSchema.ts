@@ -8,7 +8,7 @@ export const UserSchema = {
   primaryKey: 'id',
   properties: {
     id: 'int',
-    theme: 'string?',
+    persisted_theme: '{}',
     language: 'string?',
     is_first_install: {type: 'bool', default: true},
     reading_statuses: `${SCHEMA_NAME.READING_STATUS}[]`,
@@ -45,7 +45,10 @@ export const SearchRecentSchema = {
 export interface UserSchema {
   id?: number;
   modify_date: number;
-  theme?: string;
+  persisted_theme: {
+    theme: string;
+    isDeviceTheme: boolean;
+  };
   language?: string;
   is_first_install: boolean;
   reading_statuses: ReadingStatusSchema[];

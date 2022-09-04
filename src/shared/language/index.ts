@@ -1,7 +1,7 @@
 import {NativeModules, Platform} from 'react-native';
 
 import {resolveLanguage} from './languageResolver';
-import {store} from '../../redux/AppStore';
+import {store} from 'src/redux/AppStore';
 import {LANGUAGE} from 'src/shared/Constant';
 
 class Language {

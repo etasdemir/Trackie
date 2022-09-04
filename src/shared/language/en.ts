@@ -37,8 +37,8 @@ export const en: StringToLang = {
   // Profile
   reading_finished: 'Finished',
   theme: 'Theme',
-  light_theme: 'Light Theme',
-  dark_theme: 'Dark Theme',
+  light_theme: 'Light theme',
+  dark_theme: 'Dark theme',
   language: 'Language',
   en: 'English',
   tr: 'Türkçe',
@@ -69,4 +69,10 @@ export const en: StringToLang = {
   chapter_select_title: 'Chapter Selection',
   chapter_select_description: 'Select the last chapter you were on:',
   chapter_name_with_num: (chapter: number) => `Chapter: ${chapter}`,
+  theme_select_title: 'Appereance',
+  theme_select_description:
+    'Select the theme to be applied throughout the application.',
+  language_select_description:
+    'Select the language to be applied throughout the application.',
+  system_default: 'System default',
 };

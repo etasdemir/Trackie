@@ -17,6 +17,7 @@ import BaseDao from './local/dao/BaseDao';
 import {
   ReadingStatusSchema,
   SearchRecentSchema,
+  UserSchema,
 } from './local/schema/UserSchema';
 
 class Repository {
@@ -183,7 +184,7 @@ class Repository {
     return await UserDao.getTheme();
   }
 
-  async setTheme(theme: string) {
+  async setTheme(theme: UserSchema['persisted_theme']) {
     await UserDao.setTheme(theme);
   }
 

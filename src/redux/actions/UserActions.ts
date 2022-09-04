@@ -15,7 +15,7 @@ function withPayloadType<T>() {
 
 export const setThemeAction = createAction(
   'SET_USER_THEME',
-  withPayloadType<{theme: string}>(),
+  withPayloadType<UserSchema['persisted_theme']>(),
 );
 
 export const setLanguageAction = createAction(

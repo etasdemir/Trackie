@@ -24,6 +24,10 @@ class UserDao {
     if (!user) {
       const newUser: UserSchema = {
         id: USER_ID,
+        persisted_theme: {
+          theme: '',
+          isDeviceTheme: true,
+        },
         modify_date: Date.now(),
         is_first_install: true,
         reading_statuses: [],
@@ -41,17 +45,21 @@ class UserDao {
     return user;
   }
 
-  async setTheme(theme: string) {
-    const obj = {id: USER_ID, theme};
-    await BaseDao.createObject(SCHEMA_NAME.USER, obj);
+  async setTheme(theme: UserSchema['persisted_theme']) {
+    await BaseDao.updateDictionaries(
+      SCHEMA_NAME.USER,
+      USER_ID,
+      ['persisted_theme'],
+      [theme],
+    );
   }
 
-  async getTheme(): Promise<string | undefined> {
+  async getTheme(): Promise<UserSchema['persisted_theme'] | undefined> {
     const user = await BaseDao.getObjectById<UserSchema>(
       SCHEMA_NAME.USER,
       USER_ID,
     );
-    return user?.theme;
+    return user?.persisted_theme;
   }
 
   async setLanguage(language: string) {
