@@ -1,4 +1,4 @@
-import LanguageInterface from './LanguageInterface';
+import LanguageInterface from './languageInterface';
 
 export const en: LanguageInterface = {
   // General
@@ -75,4 +75,7 @@ export const en: LanguageInterface = {
   language_select_description:
     'Select the language to be applied throughout the application.',
   system_default: 'System default',
+  delete_data_warn_title: 'Delete All Data',
+  delete_data_warn_description:
+    'Are you sure you want to delete all of your data?',
 };

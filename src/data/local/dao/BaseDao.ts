@@ -172,7 +172,9 @@ class BaseDao {
 
   async deleteAll() {
     const realm = await db.getConnection();
-    realm.deleteAll();
+    realm.write(() => {
+      realm.deleteAll();
+    });
   }
 
   async updateDictionaries(

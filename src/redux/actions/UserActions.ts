@@ -95,3 +95,5 @@ export const removeReadingStatusAction = createAction(
   'USER_DELETE_READING_STATUS_ACTION',
   withPayloadType<ReadingStatusSchema>(),
 );
+
+export const deleteAllData = createAction('DELETE_ALL_DATA');

@@ -65,7 +65,7 @@ function Profile(props: ProfileScreenProp) {
         break;
       }
       case MODAL_KEY.CLEAR_DATA: {
-        console.log('show clear data modal');
+        navigation.navigate('delete_data_warn_modal');
         break;
       }
       default:

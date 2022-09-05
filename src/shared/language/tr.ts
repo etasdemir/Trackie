@@ -1,4 +1,4 @@
-import LanguageInterface from './LanguageInterface';
+import LanguageInterface from './languageInterface';
 
 export const tr: LanguageInterface = {
   // General
@@ -73,4 +73,7 @@ export const tr: LanguageInterface = {
   theme_select_description: 'Uygulama genelinde kullanılacak temayı seçiniz.',
   language_select_description: 'Uygulama genelinde kullanılacak dili seçiniz.',
   system_default: 'Sistem varsayılanı',
+  delete_data_warn_title: 'Tüm Verileri Sil',
+  delete_data_warn_description:
+    'Tüm verilerinizi silmek istediğinizden emin misiniz?',
 };

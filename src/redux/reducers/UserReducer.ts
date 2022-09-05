@@ -11,6 +11,7 @@ import {
   deleteAllSearchRecentAction,
   updateReadingStatusAction,
   removeReadingStatusAction,
+  deleteAllData,
 } from '../actions/UserActions';
 import Repository from 'src/data/Repository';
 import {UserState} from '../ReduxTypes';
@@ -146,5 +147,9 @@ export const userReducer = createReducer(initialState.user, builder => {
     state.reading_statuses = state.reading_statuses.filter(element => {
       element.mangaId !== readingStatus.mangaId;
     });
+  });
+  builder.addCase(deleteAllData, () => {
+    Repository.clearData();
+    return initialState.user;
   });
 });

@@ -19,6 +19,7 @@ import {RootState} from 'src/redux/AppStore';
 import ChapterSelectModal from 'src/modals/ChapterSelectModal';
 import ThemeSelectModal from 'src/modals/ThemeSelectModal';
 import LanguageSelectModal from 'src/modals/LanguageSelectModal';
+import DeleteDataWarnModal from 'src/modals/DeleteDataWarnModal';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
@@ -151,6 +152,10 @@ function AppNavigation() {
         <AppStack.Screen
           name="language_selection_modal"
           component={LanguageSelectModal}
+        />
+        <AppStack.Screen
+          name="delete_data_warn_modal"
+          component={DeleteDataWarnModal}
         />
       </AppStack.Group>
     </AppStack.Navigator>

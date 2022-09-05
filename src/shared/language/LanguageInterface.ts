@@ -69,6 +69,8 @@ interface LanguageInterface {
   theme_select_description: string;
   language_select_description: string;
   system_default: string;
+  delete_data_warn_title: string;
+  delete_data_warn_description: string;
 }
 
 export default LanguageInterface;

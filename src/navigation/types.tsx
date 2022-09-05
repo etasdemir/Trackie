@@ -20,6 +20,7 @@ export type RootStackParamList = {
   };
   theme_selection_modal: undefined;
   language_selection_modal: undefined;
+  delete_data_warn_modal: undefined;
 };
 
 export type BottomBarParamList = {
@@ -74,6 +75,11 @@ export type LanguageSelectionModalProp = NativeStackScreenProps<
   'language_selection_modal'
 >;
 
+export type DeleteDataWarnModalProp = NativeStackScreenProps<
+  RootStackParamList,
+  'delete_data_warn_modal'
+>;
+
 export type HomeScreenProp = CompositeScreenProps<
   BottomTabScreenProps<BottomBarParamList, 'bottom_bar_home'>,
   NativeStackScreenProps<RootStackParamList>
@@ -107,4 +113,5 @@ export type RootChildScreenProp =
   | CharacterScreenProp['navigation']
   | ChapterSelectionModalProp['navigation']
   | ThemeSelectionModalProp['navigation']
-  | LanguageSelectionModalProp['navigation'];
+  | LanguageSelectionModalProp['navigation']
+  | DeleteDataWarnModalProp['navigation'];
