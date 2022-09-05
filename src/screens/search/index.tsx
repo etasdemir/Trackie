@@ -85,7 +85,7 @@ function Search(props: SearchScreenProp) {
   }
 
   return (
-    <Container tabBarHeight={tabBarHeight}>
+    <Container color={theme.background} tabBarHeight={tabBarHeight}>
       <SearchInput
         inputRef={inputRef}
         searchText={searchText}
@@ -120,10 +120,12 @@ function Search(props: SearchScreenProp) {
 
 interface ContainerProps {
   tabBarHeight: number;
+  color: string;
 }
 
 const Container = styled.View<ContainerProps>`
   flex: 1;
+  background-color: ${({color}) => color};
   padding: 16px 16px ${({tabBarHeight}) => tabBarHeight}px 16px;
 `;
 

@@ -42,7 +42,7 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
   };
 
   return (
-    <Container>
+    <Container color={theme.background}>
       <TopBar
         onBackPress={onBackPress}
         title={character.name}
@@ -77,8 +77,9 @@ function CharacterDetailScreen(props: CharacterScreenProp) {
   );
 }
 
-const Container = styled.ScrollView`
+const Container = styled.ScrollView<ColorProps>`
   flex: 1;
+  background-color: ${({color}) => color};
 `;
 
 const ContentContainer = styled.View`

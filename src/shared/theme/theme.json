@@ -11,12 +11,12 @@
     },
     "dark": {
         "theme": "dark",
-        "background": "#FFFFFF",
-        "surface": "#FAFAFA",
-        "primary": "#DEC9AB",
-        "primaryDark": "#AC987C",
-        "primaryLight": "#FCF4E9",
-        "onView": "#0B0B0C",
-        "onViewFaint": "#9e9e9e"
+        "background": "#212121",
+        "surface": "#424242",
+        "primary": "#5d4037",
+        "primaryDark": "#321911",
+        "primaryLight": "#8b6b61",
+        "onView": "#FAFAFA",
+        "onViewFaint": "#FAFAFA"
     }
 }

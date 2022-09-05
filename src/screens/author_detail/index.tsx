@@ -45,7 +45,7 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
   };
 
   return (
-    <Container>
+    <Container color={theme.background}>
       <HeaderContainer>
         <BackgroundView color={theme.primary} />
         <Header color={theme.primaryLight}>
@@ -113,8 +113,9 @@ function getSocialMediaIcon(
   ) : null;
 }
 
-const Container = styled.ScrollView`
+const Container = styled.ScrollView<ColorProps>`
   flex: 1;
+  background-color: ${({color}) => color};
 `;
 
 const HeaderContainer = styled.View`

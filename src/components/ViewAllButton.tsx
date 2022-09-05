@@ -15,17 +15,16 @@ function ViewAllButton(props: ViewAllBtnProps) {
   const theme = useSelector((state: RootState) => state.user.theme);
 
   return (
-    <Button onPress={onPress} color={theme.onViewFaint}>
-      <ButtonText>{text}</ButtonText>
+    <Button onPress={onPress}>
+      <ButtonText color={theme.onViewFaint}>{text}</ButtonText>
     </Button>
   );
 }
 
-const Button = styled.TouchableOpacity<ColorProps>`
-  color: ${({color}) => color};
-`;
+const Button = styled.TouchableOpacity``;
 
-const ButtonText = styled.Text`
+const ButtonText = styled.Text<ColorProps>`
+  color: ${({color}) => color};
   font-size: 15px;
 `;
 

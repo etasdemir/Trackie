@@ -20,6 +20,7 @@ import ChapterSelectModal from 'src/modals/ChapterSelectModal';
 import ThemeSelectModal from 'src/modals/ThemeSelectModal';
 import LanguageSelectModal from 'src/modals/LanguageSelectModal';
 import DeleteDataWarnModal from 'src/modals/DeleteDataWarnModal';
+import {THEME} from 'src/shared/Constant';
 
 const AppStack = createNativeStackNavigator<RootStackParamList>();
 const BottomBar = createBottomTabNavigator<BottomBarParamList>();
@@ -27,14 +28,17 @@ const BottomBar = createBottomTabNavigator<BottomBarParamList>();
 function BottomBarTab() {
   const theme = useSelector((state: RootState) => state.user.theme);
   const language = useSelector((state: RootState) => state.user.language);
+  const isDarkMode = theme.theme === THEME.DARK;
 
   return (
     <BottomBar.Navigator
       initialRouteName="bottom_bar_home"
       screenOptions={() => ({
         headerShown: false,
-        tabBarActiveTintColor: '#000',
-        tabBarInactiveTintColor: theme.primaryDark,
+        tabBarActiveTintColor: theme.onView,
+        tabBarInactiveTintColor: isDarkMode
+          ? theme.primaryLight
+          : theme.primaryDark,
         tabBarStyle: {
           height: 60,
           position: 'absolute',
@@ -42,6 +46,7 @@ function BottomBarTab() {
           left: 16,
           right: 16,
           borderRadius: 30,
+          backgroundColor: theme.surface,
         },
         tabBarLabelStyle: {
           marginBottom: 5,

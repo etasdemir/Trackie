@@ -19,8 +19,8 @@ function TopBar(props: TopBarProps) {
 
   return (
     <Container color={backgroundColor ?? 'transparent'}>
-      <BackButton color={theme.onView} onPress={onBackPress}>
-        <Icon name="keyboard-backspace" size={36} color="#000" />
+      <BackButton onPress={onBackPress}>
+        <Icon name="keyboard-backspace" size={36} color={theme.onView} />
       </BackButton>
       {title ? (
         <Title numberOfLines={1} color={theme.onView}>
@@ -50,7 +50,7 @@ const Title = styled.Text<ColorProps>`
   color: ${({color}) => color};
 `;
 
-const BackButton = styled.TouchableOpacity<ColorProps>`
+const BackButton = styled.TouchableOpacity`
   position: absolute;
   left: 30px;
 `;

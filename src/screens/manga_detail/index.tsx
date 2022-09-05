@@ -48,7 +48,7 @@ function MangaDetailScreen(props: MangaScreenProp) {
   };
 
   return (
-    <Container>
+    <Container color={theme.background}>
       <Header color={theme.primaryLight}>
         <TopBar
           onBackPress={onBackPress}
@@ -110,8 +110,9 @@ function MangaDetailScreen(props: MangaScreenProp) {
   );
 }
 
-const Container = styled.ScrollView`
+const Container = styled.ScrollView<ColorProps>`
   flex: 1;
+  background-color: ${({color}) => color};
 `;
 
 const Header = styled.View<ColorProps>`
@@ -167,6 +168,7 @@ const RankingText = styled.Text<ColorProps>`
 
 const CategoryTitle = styled.Text<ColorProps>`
   color: ${({color}) => color};
+  margin-bottom: 10px;
   font-size: 24px;
   font-weight: bold;
 `;

@@ -11,6 +11,7 @@ import {
   topMangasThunk,
 } from 'src/redux/actions/CategoryActions';
 import {TOP_MANGA_GENRE_ID} from 'src/shared/Constant';
+import {ColorProps} from 'src/shared/Types';
 
 function Category(props: CategoryScreenProp) {
   const {
@@ -21,6 +22,7 @@ function Category(props: CategoryScreenProp) {
   } = props;
   const dispatch = useAppDispatch();
 
+  const theme = useSelector((state: RootState) => state.user.theme);
   const categoryToMangaList = useSelector(
     (state: RootState) => state.category.categoryToMangaList[genre.id],
   );
@@ -58,7 +60,7 @@ function Category(props: CategoryScreenProp) {
   };
 
   return (
-    <Container>
+    <Container color={theme.background}>
       <TopBar title={genre.name} onBackPress={onBackPress} />
       <VerticalMangaList
         categoryMangaList={getData()}
@@ -69,8 +71,9 @@ function Category(props: CategoryScreenProp) {
   );
 }
 
-const Container = styled.View`
+const Container = styled.View<ColorProps>`
   flex: 1;
+  background-color: ${({color}) => color};
 `;
 
 export default Category;

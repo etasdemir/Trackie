@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
+import {THEME} from 'src/shared/Constant';
 
 interface Props {
   name: string;
@@ -14,11 +15,12 @@ interface Props {
 function RadioButton(props: Props) {
   const {name, isEnabled, onPress} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
+  const themedColor = theme.theme === THEME.DARK ? theme.onView : theme.primary;
 
   return (
     <RadioButtonView onPress={onPress}>
-      <RadioOuterCircle color={theme.primary}>
-        {isEnabled ? <RadioInnerCircle color={theme.primary} /> : null}
+      <RadioOuterCircle color={themedColor}>
+        {isEnabled ? <RadioInnerCircle color={themedColor} /> : null}
       </RadioOuterCircle>
       <RadioText color={theme.onView}>{name}</RadioText>
     </RadioButtonView>

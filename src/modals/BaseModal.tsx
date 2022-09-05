@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import {RootState} from 'src/redux/AppStore';
 import {ColorProps} from 'src/shared/Types';
 import {RootChildScreenProp} from 'src/navigation/types';
+import {THEME} from 'src/shared/Constant';
 
 interface Props {
   title: string;
@@ -19,6 +20,8 @@ function BaseModal(props: Props) {
   const {title, description, children, onSuccess, onCancel, navigation} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
   const language = useSelector((state: RootState) => state.user.language);
+  const themedColor =
+    theme.theme === THEME.DARK ? theme.onView : theme.primaryDark;
 
   const onSuccessCallback = () => {
     navigation.pop();
@@ -31,15 +34,15 @@ function BaseModal(props: Props) {
 
   return (
     <Container color={theme.primaryLight}>
-      <Title color={theme.primaryDark}>{title}</Title>
+      <Title color={themedColor}>{title}</Title>
       <Description color={theme.onView}>{description}</Description>
       {children}
       <ButtonContainer>
-        <Button color={theme.primaryDark} onPress={onCancelCallback}>
-          <ButtonText color={theme.primaryDark}>{language.cancel}</ButtonText>
+        <Button color={themedColor} onPress={onCancelCallback}>
+          <ButtonText color={themedColor}>{language.cancel}</ButtonText>
         </Button>
-        <Button color={theme.primaryDark} onPress={onSuccessCallback}>
-          <ButtonText color={theme.primaryDark}>{language.done}</ButtonText>
+        <Button color={themedColor} onPress={onSuccessCallback}>
+          <ButtonText color={themedColor}>{language.done}</ButtonText>
         </Button>
       </ButtonContainer>
     </Container>

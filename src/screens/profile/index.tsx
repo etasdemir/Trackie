@@ -74,7 +74,7 @@ function Profile(props: ProfileScreenProp) {
   };
 
   return (
-    <Container tabBarHeight={tabBarHeight}>
+    <Container color={theme.background} tabBarHeight={tabBarHeight}>
       <StatContainer color={theme.primary}>
         {stats.map((stat, index) => (
           <Stat
@@ -110,8 +110,9 @@ interface ContainerProps {
   tabBarHeight: number;
 }
 
-const Container = styled.View<ContainerProps>`
+const Container = styled.View<ContainerProps & ColorProps>`
   flex: 1;
+  background-color: ${({color}) => color};
   padding: 16px 16px ${({tabBarHeight}) => tabBarHeight + 16}px 16px;
 `;
 

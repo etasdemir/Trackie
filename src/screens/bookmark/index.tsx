@@ -14,6 +14,7 @@ import {RootState} from 'src/redux/AppStore';
 function Bookmark(props: BookmarkScreenProp) {
   const {navigation} = props;
   const language = useSelector((state: RootState) => state.user.language);
+  const theme = useSelector((state: RootState) => state.user.theme);
   const tabBarHeight = useBottomTabBarHeight();
   const genres = [
     {
@@ -44,28 +45,33 @@ function Bookmark(props: BookmarkScreenProp) {
   ];
 
   return (
-    <ScrollContainer
-      showsVerticalScrollIndicator={false}
-      tabBarHeight={tabBarHeight}>
-      {genres.map(genre => (
-        <CategoryHorizontalList
-          key={genre.id}
-          genre={genre}
-          navigation={navigation}
-          type={genre.type}
-        />
-      ))}
-    </ScrollContainer>
+    <Container color={theme.background} tabBarHeight={tabBarHeight}>
+      <ScrollContainer showsVerticalScrollIndicator={false}>
+        {genres.map(genre => (
+          <CategoryHorizontalList
+            key={genre.id}
+            genre={genre}
+            navigation={navigation}
+            type={genre.type}
+          />
+        ))}
+      </ScrollContainer>
+    </Container>
   );
 }
 
 interface ContainerProps {
   tabBarHeight: number;
+  color: string;
 }
 
-const ScrollContainer = styled.ScrollView<ContainerProps>`
-  padding: 16px 16px 0 16px;
-  margin-bottom: ${({tabBarHeight}) => tabBarHeight + 10}px;
+const Container = styled.View<ContainerProps>`
+  flex: 1;
+  background-color: ${({color}) => color};
+  padding: 16px 16px ${({tabBarHeight}) => tabBarHeight + 10}px 16px;
+`;
+
+const ScrollContainer = styled.ScrollView`
   flex: 1;
 `;
 
