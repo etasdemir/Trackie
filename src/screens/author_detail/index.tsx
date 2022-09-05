@@ -5,13 +5,14 @@ import {useSelector} from 'react-redux';
 
 import TopBar from 'src/components/TopBar';
 import {ColorProps, CoverManga} from 'src/shared/Types';
-import SocialMediaIcon, {SocialMedia} from './components/SocialMediaIcon';
+import SocialMediaIcon from './components/SocialMediaIcon';
 import HorizontalMangaItem from 'src/components/HorizontalMangaItem';
 import FavouriteIcon from 'src/components/FavouriteIcon';
 import {AuthorScreenProp} from 'src/navigation/types';
 import {RootState, useAppDispatch} from 'src/redux/AppStore';
 import {getAuthorThunk} from 'src/redux/actions/PeopleActions';
 import {FAVOURITE_TYPE} from 'src/shared/Constant';
+import {SocialMedia, SocialMediaType} from './components/SocialMediaType';
 
 function AuthorDetailScreen(props: AuthorScreenProp) {
   const {
@@ -71,24 +72,12 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
         </Header>
       </HeaderContainer>
       <SocialsContainer color={theme.primary}>
-        {links.facebook && (
-          <SocialMediaIcon type={SocialMedia.Facebook} url={links.facebook} />
-        )}
-        {links.instagram && (
-          <SocialMediaIcon type={SocialMedia.Instagram} url={links.instagram} />
-        )}
-        {links.tumblr && (
-          <SocialMediaIcon type={SocialMedia.Tumblr} url={links.tumblr} />
-        )}
-        {links.twitter && (
-          <SocialMediaIcon type={SocialMedia.Twitter} url={links.twitter} />
-        )}
-        {links.website && (
-          <SocialMediaIcon type={SocialMedia.Website} url={links.website} />
-        )}
-        {links.tiktok && (
-          <SocialMediaIcon type={SocialMedia.Tiktok} url={links.tiktok} />
-        )}
+        {getSocialMediaIcon(links.facebook, SocialMedia.facebook)}
+        {getSocialMediaIcon(links.instagram, SocialMedia.instagram)}
+        {getSocialMediaIcon(links.tumblr, SocialMedia.tumblr)}
+        {getSocialMediaIcon(links.twitter, SocialMedia.twitter)}
+        {getSocialMediaIcon(links.tiktok, SocialMedia.tiktok)}
+        {getSocialMediaIcon(links.website, SocialMedia.website)}
       </SocialsContainer>
       <SubContainer>
         <CategoryTitle color={theme.onView}>
@@ -113,6 +102,15 @@ function AuthorDetailScreen(props: AuthorScreenProp) {
       </SubContainer>
     </Container>
   );
+}
+
+function getSocialMediaIcon(
+  link: string | undefined,
+  socialMedia: SocialMediaType,
+) {
+  return link ? (
+    <SocialMediaIcon link={link} socialMedia={socialMedia} />
+  ) : null;
 }
 
 const Container = styled.ScrollView`

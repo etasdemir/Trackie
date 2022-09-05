@@ -1,65 +1,43 @@
 import React, {useCallback} from 'react';
+import {Linking} from 'react-native';
 import styled from 'styled-components/native';
 import {useSelector} from 'react-redux';
-import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import FontAwesome5Icon from 'react-native-vector-icons/Ionicons';
 
 import {RootState} from 'src/redux/AppStore';
-
-export enum SocialMedia {
-  Facebook,
-  Tumblr,
-  Twitter,
-  Website,
-  Instagram,
-  Tiktok,
-}
+import {SocialMediaType} from './SocialMediaType';
 
 interface SocialMediaIconProps {
-  type: SocialMedia;
-  url: string;
+  link: string;
+  socialMedia: SocialMediaType;
 }
 
 function SocialMediaIcon(props: SocialMediaIconProps) {
-  const {type, url} = props;
+  const {link, socialMedia} = props;
   const theme = useSelector((state: RootState) => state.user.theme);
 
-  const onIconClick = () => {
-    console.log('social media:', type, 'url:', url);
-  };
+  const onIconClick = useCallback(async () => {
+    const urlScheme = socialMedia.urlScheme
+      ? socialMedia.urlScheme(link)
+      : undefined;
+    const webUrl = socialMedia.webUrl ? socialMedia.webUrl(link) : undefined;
+    console.log('urlScheme', urlScheme);
+    console.log('webUrl', webUrl);
 
-  const getIconByType = useCallback(() => {
-    const iconSize = 30;
-    const iconColor = theme.primaryDark;
-
-    switch (type) {
-      case SocialMedia.Facebook: {
-        return <MCIIcon name="facebook" size={iconSize} color={iconColor} />;
-      }
-      case SocialMedia.Instagram: {
-        return <MCIIcon name="instagram" size={iconSize} color={iconColor} />;
-      }
-      case SocialMedia.Tumblr: {
-        return <IonIcon name="logo-tumblr" size={iconSize} color={iconColor} />;
-      }
-      case SocialMedia.Website: {
-        return <MCIIcon name="web" size={iconSize} color={iconColor} />;
-      }
-      case SocialMedia.Twitter: {
-        return <MCIIcon name="twitter" size={iconSize} color={iconColor} />;
-      }
-      case SocialMedia.Tiktok: {
-        return (
-          <FontAwesome5Icon name="tiktok" size={iconSize} color={iconColor} />
-        );
-      }
-      default:
-        return null;
+    const isUrlSchemeSupported = urlScheme
+      ? await Linking.canOpenURL(urlScheme)
+      : false;
+    if (isUrlSchemeSupported && urlScheme) {
+      await Linking.openURL(urlScheme);
+    } else if (webUrl) {
+      await Linking.openURL(webUrl);
     }
-  }, [theme, type]);
+  }, [link, socialMedia]);
 
-  return <Button onPress={onIconClick}>{getIconByType()}</Button>;
+  return (
+    <Button onPress={onIconClick}>
+      {socialMedia.icon(30, theme.primaryDark)}
+    </Button>
+  );
 }
 
 const Button = styled.TouchableOpacity`
