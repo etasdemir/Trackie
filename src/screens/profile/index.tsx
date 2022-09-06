@@ -84,6 +84,7 @@ function Profile(props: ProfileScreenProp) {
           />
         ))}
       </StatContainer>
+      <SubTitle color={theme.onView}>{language.settings}</SubTitle>
       <SettingsButton
         name={language.theme}
         iconName="theme-light-dark"
@@ -123,6 +124,12 @@ const StatContainer = styled.View<ColorProps>`
   padding: 40px 20px;
   margin: 20px 0 50px;
   border-radius: 40px;
+`;
+
+const SubTitle = styled.Text<ColorProps>`
+  color: ${({color}) => color};
+  font-size: 20px;
+  margin-bottom: 12px;
 `;
 
 export default Profile;

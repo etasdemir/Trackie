@@ -13,6 +13,7 @@ export const tr: LanguageInterface = {
   favourite_list: 'Favoriler',
   reviews: (score: number, scoredBy: number) =>
     `${score.toFixed(1)} / ${scoredBy} değerlendirme`,
+  settings: 'Ayarlar',
 
   // Onboarding
   onboarding_title_part1: 'Sıradaki Harika',

@@ -10,6 +10,7 @@ interface LanguageInterface {
   currently_reading: string;
   favourite_list: string;
   reviews: Function;
+  settings: string;
 
   // Onboarding
   onboarding_title_part1: string;

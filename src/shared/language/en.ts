@@ -13,6 +13,7 @@ export const en: LanguageInterface = {
   favourite_list: 'Favourites',
   reviews: (score: number, scoredBy: number) =>
     `${score.toFixed(1)} / ${scoredBy} reviews`,
+  settings: 'Settings',
 
   // Onboarding
   onboarding_title_part1: 'Find Your Next',
