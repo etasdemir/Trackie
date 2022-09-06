@@ -11,8 +11,8 @@ export const en: LanguageInterface = {
   view_all: 'View All',
   currently_reading: 'Currently Reading',
   favourite_list: 'Favourites',
-  reviews: (params: string[]) =>
-    `${parseFloat(params[0]).toFixed(1)} / ${params[1]} reviews`,
+  reviews: (score: number, scoredBy: number) =>
+    `${score.toFixed(1)} / ${scoredBy} reviews`,
 
   // Onboarding
   onboarding_title_part1: 'Find Your Next',
@@ -21,8 +21,8 @@ export const en: LanguageInterface = {
 
   // Home
   greeting: 'Hello, which manga suits your current mood?',
-  home_unfinished_manga: (params: string[]) =>
-    `Remember, you have an unfinished manga since ${params[0]}`,
+  home_unfinished_manga: (date: string) =>
+    `Remember, you have an unfinished manga since ${date}`,
 
   // Search
   search_place_holder: 'Search manga, characters, or authors',

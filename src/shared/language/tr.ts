@@ -11,8 +11,8 @@ export const tr: LanguageInterface = {
   view_all: 'Hepsini Gör',
   currently_reading: 'Şu An Okunanlar',
   favourite_list: 'Favoriler',
-  reviews: (params: string[]) =>
-    `${parseFloat(params[0]).toFixed(1)} / ${params[1]} değerlendirme`,
+  reviews: (score: number, scoredBy: number) =>
+    `${score.toFixed(1)} / ${scoredBy} değerlendirme`,
 
   // Onboarding
   onboarding_title_part1: 'Sıradaki Harika',
@@ -21,7 +21,7 @@ export const tr: LanguageInterface = {
 
   // Home
   greeting: 'Selam, şu anki ruh haline hangi manga uyuyor?',
-  home_unfinished_manga: (date: String) =>
+  home_unfinished_manga: (date: string) =>
     `Unutma, ${date} tarihinden beri bitmemiş bir mangan var.`,
 
   // Search

@@ -36,7 +36,7 @@ function StarRating(props: StarRatingProps) {
       ) : null}
       {scoredBy && (
         <ReviewText color={theme.onViewFaint}>
-          {language.reviews(score.toString(), scoredBy.toString())}
+          {language.reviews(score, scoredBy)}
         </ReviewText>
       )}
     </RatingContainer>
