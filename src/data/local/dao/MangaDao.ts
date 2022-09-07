@@ -4,8 +4,8 @@ import CharacterDao from './CharacterDao';
 import AuthorDao from './AuthorDao';
 import BaseDao from './BaseDao';
 import {CharacterSchema} from '../schema/CharacterSchema';
-import GenreDao from './GenreDao';
 import {SCHEMA_NAME} from '../SchemaName';
+import {GenreSchema} from '../schema/GenreSchema';
 
 class MangaDao {
   async getMangaById(id: number): Promise<MangaSchema | undefined> {
@@ -22,12 +22,10 @@ class MangaDao {
     );
   }
 
-  async createManga(manga: MangaDetail) {
+  async createManga(manga: MangaDetail, genres: GenreSchema[]) {
     let author = await AuthorDao.getAuthorById(manga.author.id);
     const characterIds = manga.characters.map(item => item.id);
     const characters = await CharacterDao.getCharactersById(characterIds);
-    const genreIds = manga.genres.map(item => item.id);
-    const genres = await GenreDao.getGenresById(genreIds);
     if (!author) {
       await AuthorDao.createAuthor(manga.author);
       author = await AuthorDao.getAuthorById(manga.author.id);

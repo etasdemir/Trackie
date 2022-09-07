@@ -6,7 +6,6 @@ import {Character, CharacterDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
 import BaseDao from './BaseDao';
 import {SCHEMA_NAME} from '../SchemaName';
-import CoverMangaDao from './CoverMangaDao';
 
 class CharacterDao {
   async getCharacterDetailById(
@@ -24,25 +23,10 @@ class CharacterDao {
     );
   }
 
-  async createCharacterDetail(character: CharacterDetail) {
-    const mangaIds = character.mangaAppearances.map(item => item.id);
-    const mangaAppearances: CoverMangaSchema[] =
-      await CoverMangaDao.getCoverMangasById(mangaIds);
-    if (mangaIds.length !== mangaAppearances.length) {
-      mangaIds.forEach(async (id, index) => {
-        let isAvailable = false;
-        for (const manga of mangaAppearances) {
-          if (id === manga.id) {
-            isAvailable = true;
-          }
-        }
-        if (!isAvailable) {
-          await CoverMangaDao.createCoverManga(
-            character.mangaAppearances[index],
-          );
-        }
-      });
-    }
+  async createCharacterDetail(
+    character: CharacterDetail,
+    mangaAppearances: CoverMangaSchema[],
+  ) {
     const obj: CharacterDetailSchema = {
       id: character.id,
       modify_date: Date.now(),

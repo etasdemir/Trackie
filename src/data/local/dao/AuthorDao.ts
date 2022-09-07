@@ -3,7 +3,6 @@ import {Author, AuthorDetail} from 'src/shared/Types';
 import {CoverMangaSchema} from '../schema/MangaSchema';
 import BaseDao from './BaseDao';
 import {SCHEMA_NAME} from '../SchemaName';
-import CoverMangaDao from './CoverMangaDao';
 
 class AuthorDao {
   async getAuthorDetailById(
@@ -18,24 +17,7 @@ class AuthorDao {
     return await BaseDao.getObjectsById(SCHEMA_NAME.AUTHOR_DETAIL, authorIds);
   }
 
-  async createAuthorDetail(author: AuthorDetail) {
-    const workIds = author.works.map(item => item.id);
-    const works: CoverMangaSchema[] = await CoverMangaDao.getCoverMangasById(
-      workIds,
-    );
-    if (workIds.length !== works.length) {
-      workIds.forEach(async (id, index) => {
-        let isAvailable = false;
-        for (const work of works) {
-          if (id === work.id) {
-            isAvailable = true;
-          }
-        }
-        if (!isAvailable) {
-          await CoverMangaDao.createCoverManga(author.works[index]);
-        }
-      });
-    }
+  async createAuthorDetail(author: AuthorDetail, works: CoverMangaSchema[]) {
     const obj: AuthorDetailSchema = {
       id: author.id,
       modify_date: Date.now(),

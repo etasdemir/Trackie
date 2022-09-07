@@ -19,6 +19,7 @@ import {
   SearchRecentSchema,
   UserSchema,
 } from './local/schema/UserSchema';
+import CoverMangaDao from './local/dao/CoverMangaDao';
 
 class Repository {
   async getGenres(): Promise<Genre[]> {
@@ -82,7 +83,9 @@ class Repository {
       if (!remoteManga) {
         return undefined;
       }
-      MangaDao.createManga(remoteManga);
+      const genreIds = remoteManga.genres.map(item => item.id);
+      const genres = await GenreDao.getGenresById(genreIds);
+      MangaDao.createManga(remoteManga, genres);
       return remoteManga;
     }
   }
@@ -113,7 +116,24 @@ class Repository {
       if (!remoteChar) {
         return undefined;
       }
-      CharacterDao.createCharacterDetail(remoteChar);
+      const mangaIds = remoteChar.mangaAppearances.map(item => item.id);
+      const mangaAppearances = await CoverMangaDao.getCoverMangasById(mangaIds);
+      if (mangaIds.length !== mangaAppearances.length) {
+        mangaIds.forEach(async (mangaId, index) => {
+          let isAvailable = false;
+          for (const manga of mangaAppearances) {
+            if (mangaId === manga.id) {
+              isAvailable = true;
+            }
+          }
+          if (!isAvailable) {
+            await CoverMangaDao.createCoverManga(
+              remoteChar.mangaAppearances[index],
+            );
+          }
+        });
+      }
+      CharacterDao.createCharacterDetail(remoteChar, mangaAppearances);
       return remoteChar;
     }
   }
@@ -127,7 +147,22 @@ class Repository {
       if (!remoteAuthor) {
         return undefined;
       }
-      AuthorDao.createAuthorDetail(remoteAuthor);
+      const workIds = remoteAuthor.works.map(item => item.id);
+      const works = await CoverMangaDao.getCoverMangasById(workIds);
+      if (workIds.length !== works.length) {
+        workIds.forEach(async (workId, index) => {
+          let isAvailable = false;
+          for (const work of works) {
+            if (workId === work.id) {
+              isAvailable = true;
+            }
+          }
+          if (!isAvailable) {
+            await CoverMangaDao.createCoverManga(remoteAuthor.works[index]);
+          }
+        });
+      }
+      AuthorDao.createAuthorDetail(remoteAuthor, works);
       return remoteAuthor;
     }
   }
