@@ -21,11 +21,14 @@ class Language {
     }
     locale = locale.split('_')[0];
     locale = locale.split('-')[0];
-    if (locale) {
-      return locale;
-    } else {
-      return LANGUAGE.ENGLISH;
+    let key: keyof typeof LANGUAGE;
+    for (key in LANGUAGE) {
+      if (locale === LANGUAGE[key]) {
+        return locale;
+      }
     }
+
+    return LANGUAGE.ENGLISH;
   }
 }
 
