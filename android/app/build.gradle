@@ -78,7 +78,9 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: false,
+    hermesCommand: '../../node_modules/react-native/sdks/hermesc/%OS-BIN%/hermesc',
+    entryFile: "index.tsx",
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -128,6 +130,11 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 def reactNativeArchitectures() {
     def value = project.getProperties().get("reactNativeArchitectures")
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
+
+Properties localProperties = new Properties()
+if (rootProject.file("local.properties").exists()) {
+    localProperties.load(rootProject.file("local.properties").newDataInputStream())
 }
 
 android {
@@ -226,15 +233,21 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (localProperties["TRACKIE_KEY_PATH"]) {
+                storeFile file(localProperties["TRACKIE_KEY_PATH"])
+                storePassword localProperties["TRACKIE_KEY_PASS"]
+                keyAlias localProperties["TRACKIE_KEY_ALIAS"]
+                keyPassword localProperties["TRACKIE_KEY_ALIAS_PASS"]
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
