@@ -67,3 +67,6 @@ buck-out/
 .bundle
 .vscode
 *.jks
+*.aab
+*.apk
+*.ipa
