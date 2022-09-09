@@ -1,9 +1,10 @@
 {
-    "name": "Trackie",
-    "version": "0.0.1",
+    "name": "trackie",
+    "version": "1.0.1",
     "private": true,
     "scripts": {
         "android": "react-native run-android",
+        "android-release": "react-native run-android --variant release",
         "android-r": "adb shell am force-stop com.trackie && adb shell am start -n com.trackie/com.trackie.MainActivity",
         "ios": "react-native run-ios",
         "start": "react-native start",
