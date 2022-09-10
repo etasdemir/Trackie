@@ -109,7 +109,9 @@ class GenreService {
     mangas: MangaDetail[],
   ) {
     for (let manga of mangas) {
-      await MangaDao.createManga(manga);
+      const genreIds = manga.genres.map(item => item.id);
+      const genres = await this.getGenresById(genreIds);
+      await MangaDao.createManga(manga, genres);
     }
     const ids = mangas.map(item => item.id);
     const values = await MangaDao.getMangasById(ids);

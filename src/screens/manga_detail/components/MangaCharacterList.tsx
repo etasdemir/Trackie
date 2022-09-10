@@ -19,7 +19,7 @@ function MangaCharacterList(props: Props) {
   }));
   const dispatch = useAppDispatch();
 
-  if (!characters) {
+  if (!characters || characters.length === 0) {
     dispatch(getMangaCharactersThunk(mangaId));
   }
 

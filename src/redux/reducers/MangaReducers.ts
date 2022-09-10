@@ -16,15 +16,11 @@ const initialState: MangaState = {
 export const mangaReducer = createReducer(initialState, builder => {
   builder.addCase(getMangaAction, (state, action) => {
     const {id, value} = action.payload;
-    if (!state.mangas[id]) {
-      state.mangas[id] = value;
-    }
+    state.mangas[id] = value;
   });
   builder.addCase(getMangaCharactersAction, (state, action) => {
     const {id, value} = action.payload;
-    if (!state.mangaCharacters[id]) {
-      state.mangaCharacters[id] = value;
-    }
+    state.mangaCharacters[id] = value;
   });
   builder.addCase(searchMangaAction, (state, action) => {
     const mangaList = action.payload;
