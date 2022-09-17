@@ -11,6 +11,12 @@ With <strong>Trackie</strong> you can find the most popular genres, manga, autho
 - Search your favourite manga, character, and author
 - Bookmark your current readings, recently reads, and favorite mangas, characters, and authors
 
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.trackie" target="_blank">
+    <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="320" />
+  </a>
+</p>
+
 ## Tech Stack 
 - React Native
 - TypeScript
