@@ -4,6 +4,7 @@
     "compilerOptions": {
         "skipLibCheck": true, /* Skip type checking all .d.ts files. */
         "strict": true,
+        "jsx": "react",
         "target": "esnext",
         "baseUrl": ".",
         "paths": {
